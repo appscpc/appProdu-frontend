@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppProdu.Estadisticas">
+    <ContentPage.Content>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="70" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="150" />
+            </Grid.RowDefinitions>
+            <StackLayout Grid.Row="1">
+
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                    <Label Text="p =" FontSize="Medium" FontAttributes="Bold"/>
+                    <Entry Placeholder="" 
+                         WidthRequest="250"
+                         Keyboard="Numeric"
+                         IsEnabled="False"/>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                    <Label Text="q =" FontSize="Medium" FontAttributes="Bold"/>
+                    <Entry Placeholder="" 
+                           WidthRequest="250"
+                           Keyboard="Numeric"
+                           IsEnabled="False"/>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                    <Label Text="error =" FontSize="Medium" FontAttributes="Bold"/>
+                    <Entry Placeholder="error" 
+                           WidthRequest="250"
+                           HorizontalOptions="Center"
+                           Keyboard="Numeric"/>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                    <Label Text="Za/2 =" FontSize="Medium" FontAttributes="Bold"/>
+                    <Entry Placeholder="Za/2" 
+                           WidthRequest="250"
+                           HorizontalOptions="Center"
+                           Keyboard="Numeric"/>
+                </StackLayout>
+            </StackLayout>
+            <StackLayout Grid.Row="2">
+                <Button Text="Calcular" 
+                    TextColor="White"
+                    WidthRequest="200"
+                    HeightRequest="45"
+                    BorderRadius="10"
+                    BackgroundColor="#439dbb"
+                    HorizontalOptions="Center"
+                    Clicked="calcular_Clicked"/>
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

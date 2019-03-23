@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:Controls="clr-namespace:AppProdu.Droid"
+             x:Class="AppProdu.AgregarComentario">
+    <ContentPage.Content>
+        <StackLayout>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="70" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                
+                <Controls:PlaceholderEditor Grid.Row="0"
+                Placeholder="comentario"
+                WidthRequest="250"
+                HorizontalOptions="Center"
+                HeightRequest="150"/>
+                <Button Text="Guardar" Grid.Row="2"
+                    TextColor="White"
+                    WidthRequest="200"
+                    HeightRequest="45"
+                    BorderRadius="10"
+                    BackgroundColor="#439dbb"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"/>
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

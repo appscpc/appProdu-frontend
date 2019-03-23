@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppProdu.RegistrarUsuario">
+
+    <ScrollView>
+
+        <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <StackLayout Grid.Row="1" Grid.Column="0">
+            <!-- Place new controls here -->
+            <Entry Placeholder="nombre" x:Name="nombreEntry"
+               WidthRequest="250"
+               HeightRequest="65"
+               HorizontalOptions="Center"/>
+            <Entry Placeholder="primer apellido" x:Name="apellido1Entry"
+               HorizontalOptions="Center"
+               WidthRequest="250"
+               HeightRequest="65"/>
+            <Entry Placeholder="segundo apellido" x:Name="apellido2Entry"
+               HorizontalOptions="Center"
+               WidthRequest="250"
+               HeightRequest="65"/>
+            <Entry Placeholder="nombre de usuario" x:Name="correoEntry"
+               WidthRequest="250"
+               HeightRequest="65"
+               HorizontalOptions="Center"/>
+            <Entry Placeholder="contraseña" x:Name="passEntry"
+               HorizontalOptions="Center"
+               WidthRequest="250"
+               HeightRequest="65"
+               IsPassword="True" />
+            <Picker Title="tipo usuario" 
+                    HorizontalOptions="Center"
+                    x:Name="tipo"
+                    WidthRequest="250"
+                    HeightRequest="65"/>
+            <Button x:Name="registrarButton"
+                Text="Registrar" 
+                TextColor="White"
+                WidthRequest="125"
+                HeightRequest="45"
+                BorderRadius="10"
+                BackgroundColor="#439dbb"
+                HorizontalOptions="Center"
+                Margin="40"
+                Clicked="registrarButton_Clicked" />
+            <Label Text="¿Ya tienes cuenta?"
+                   x:Name="iniciar"
+                   TextColor="#439dbb"
+                   HorizontalOptions="Center"
+                   />
+            <Label Text="" 
+                   TextColor="Red"
+                   x:Name="errorLabel"
+                   HorizontalOptions="Center"/>
+        </StackLayout>
+    </Grid>
+        </ScrollView>
+</ContentPage>

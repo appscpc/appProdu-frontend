@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppProdu.CrearRecorrido">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackLayout Grid.Row="1">
+
+            <Entry Placeholder="cantidad operarios" 
+                    WidthRequest="250"
+                    HorizontalOptions="Center"
+                    Keyboard="Numeric"/>
+            <Entry Placeholder="temperatura" 
+                    WidthRequest="250"
+                    HorizontalOptions="Center"
+                    Keyboard="Numeric"/>
+            <Entry Placeholder="humedad" 
+                    WidthRequest="250"
+                    HorizontalOptions="Center"
+                    Keyboard="Numeric"/>
+            <Entry Placeholder="hora" 
+                    WidthRequest="250"
+                    HorizontalOptions="Center"
+                    Keyboard="Numeric"/>
+            <DatePicker 
+                MinimumDate="01/01/2018"
+                Date="{Binding SelectedDate}"
+                HorizontalOptions="Center"/>
+                
+        </StackLayout>
+        <StackLayout Grid.Row="2">
+            <Button Text="Crear Nuevo Recorrido" 
+                    TextColor="White"
+                    WidthRequest="200"
+                    HeightRequest="45"
+                    BorderRadius="10"
+                    BackgroundColor="#439dbb"
+                    HorizontalOptions="Center"
+                    Clicked="crearRec_Clicked"/>
+        </StackLayout>
+    </Grid>
+
+</ContentPage>
