@@ -32,9 +32,32 @@ namespace AppProdu
             if (e.Item == null)
                 return;
 
+            int faseActual = (int)Application.Current.Properties["fase"];
+            Console.WriteLine("CERO");
+            var faseSelected = (string)e.Item;
+            Console.WriteLine("PRIMERO");
+            if (faseActual == 1 && faseSelected.Equals("Preliminar"))
+            {
+                Console.WriteLine("SEGUNDO");
+                var recorridosPage = new Recorridos();
+                await Navigation.PushAsync(recorridosPage);
+                
+
+            }
+            else if (faseActual == 2 && faseSelected.Equals("Definitivo"))
+            {
+                Console.WriteLine("TERCERO");
+                var recorridosPage = new Recorridos();
+                await Navigation.PushAsync(recorridosPage);
+                
+            }
+            else
+            {
+                Console.WriteLine("NO HACE NADA!!!!!");
+                await DisplayAlert("Error!", "Etapa Bloqueada.", "OK");
+            }
             //await DisplayAlert("Item Tapped", "An item was tapped.", "OK");
-            var crearRecPage = new CrearRecorrido();
-            await Navigation.PushAsync(crearRecPage);
+            
 
             //Deselect Item
             ((ListView)sender).SelectedItem = null;

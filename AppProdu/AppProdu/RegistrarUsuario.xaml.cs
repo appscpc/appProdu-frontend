@@ -39,57 +39,59 @@ namespace AppProdu
 
         async private void registrarButton_Clicked(object sender, EventArgs e)
         {
-            /*
-            BackendRequest client = new BackendRequest();
-            var url = new Uri("https://app-produ.herokuapp.com");
-            string jsonData = @"{""correo"" : "+correo+", "+"password"+" : "+pass+"}";
-            Console.WriteLine(correo+" "+pass);*/
-
-
-            var client = new HttpClient
+            if (!String.IsNullOrEmpty(nombreEntry.Text) && !String.IsNullOrEmpty(apellido1Entry.Text)&& !String.IsNullOrEmpty(apellido2Entry.Text) &&
+                !String.IsNullOrEmpty(tipo.SelectedItem.ToString()) && !String.IsNullOrEmpty(correoEntry.Text) && !String.IsNullOrEmpty(passEntry.Text))
             {
-                BaseAddress = new Uri("https://app-produ.herokuapp.com")
-            };
-            var idType = userTypes.FirstOrDefault(x => x.Value == tipo.SelectedItem.ToString()).Key;
-            Console.WriteLine("HOLAAAAAAA "+ idType);
-            var newUser = new User
-            {
-                nombre = nombreEntry.Text,
-                apellido1 = apellido1Entry.Text,
-                apellido2 = apellido2Entry.Text,
-                position_id = idType,
-                correo = correoEntry.Text,
-                password = passEntry.Text
-            };
-            
-            string jsonData = JsonConvert.SerializeObject(newUser);
-            Console.WriteLine("AQUI");
-            var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-            HttpResponseMessage response = await client.PostAsync("/users/signup.json", content);
-            Console.WriteLine(response.StatusCode.ToString());
-            if (response.StatusCode == HttpStatusCode.Created)
-            {
-                Console.WriteLine("AQUI2");
-                var result = await response.Content.ReadAsStringAsync();
-                Console.WriteLine(result.ToString());
-                var jobject = JObject.Parse(result);
-                Console.WriteLine("AQUI3" + jobject["usuario"].ToString());
-                var data = JsonConvert.DeserializeObject<User>(jobject["usuario"].ToString());
-
-                try
+                var client = new HttpClient
                 {
-                    Console.WriteLine("AQUI5");
-                    Console.WriteLine(data.id + " & " + data.nombre);
+                    BaseAddress = new Uri("https://app-produ.herokuapp.com")
+                };
+                var idType = userTypes.FirstOrDefault(x => x.Value == tipo.SelectedItem.ToString()).Key;
+                Console.WriteLine("HOLAAAAAAA " + idType);
+                var newUser = new User
+                {
+                    nombre = nombreEntry.Text,
+                    apellido1 = apellido1Entry.Text,
+                    apellido2 = apellido2Entry.Text,
+                    position_id = idType,
+                    correo = correoEntry.Text,
+                    password = passEntry.Text
+                };
 
-                    //var result = await client.Get<User>(url.ToString(), jsonData);
+                string jsonData = JsonConvert.SerializeObject(newUser);
+                Console.WriteLine("AQUI");
+                var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+                HttpResponseMessage response = await client.PostAsync("/users/signup.json", content);
+                Console.WriteLine(response.StatusCode.ToString());
+                if (response.StatusCode == HttpStatusCode.Created)
+                {
+                    Console.WriteLine("AQUI2");
+                    var result = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine(result.ToString());
+                    var jobject = JObject.Parse(result);
+                    Console.WriteLine("AQUI3" + jobject["usuario"].ToString());
+                    var data = JsonConvert.DeserializeObject<User>(jobject["usuario"].ToString());
 
-                    Application.Current.Properties["id"] = data.id;
-                    Application.Current.Properties["currentToken"] = data.token;
-                    var proyectosPage = new Proyectos();
-                    await Navigation.PushAsync(proyectosPage);
+                    try
+                    {
+                        Console.WriteLine("AQUI5");
+                        Console.WriteLine(data.id + " & " + data.nombre);
 
+                        //var result = await client.Get<User>(url.ToString(), jsonData);
+
+                        Application.Current.Properties["id"] = data.id;
+                        Application.Current.Properties["currentToken"] = data.token;
+                        var proyectosPage = new Proyectos();
+                        await Navigation.PushAsync(proyectosPage);
+
+                    }
+                    catch (Exception)
+                    {
+                        Console.WriteLine("AQUI6\nError al registrar usuario!");
+                        errorLabel.Text = "Error\nCorreo ya registrado";
+                    }
                 }
-                catch (Exception)
+                else
                 {
                     Console.WriteLine("AQUI6\nError al registrar usuario!");
                     errorLabel.Text = "Error\nCorreo ya registrado";
@@ -97,10 +99,9 @@ namespace AppProdu
             }
             else
             {
-                Console.WriteLine("AQUI6\nError al registrar usuario!");
-                errorLabel.Text = "Error\nCorreo ya registrado";
+                Console.WriteLine("AQUI6\nEspacios vacíos");
+                errorLabel.Text = "Error\nPor favor rellenar todos los campos!";
             }
-
         }
 
         async public void obtenerUserTypes()

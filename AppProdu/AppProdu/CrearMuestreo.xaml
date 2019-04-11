@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:Controls="clr-namespace:AppProdu.Droid"
-             x:Class="AppProdu.CrearMuestreo">
+             x:Class="AppProdu.CrearMuestreo"
+             Title="Crear Muestreo">
     <ContentPage.Content>
 
         <Grid>
@@ -15,17 +16,26 @@
             </Grid.RowDefinitions>
 
             <StackLayout Grid.Row="1">
-                <Entry Placeholder="nombre muestreo" 
+                <Entry x:Name="nombreMuestreoEntry" Placeholder="nombre muestreo" 
                        WidthRequest="250"
-                       HorizontalOptions="Center"/>
-                <Entry Placeholder="cantidad muestras" 
+                       HorizontalOptions="Center"
+                       FontSize="Micro"/>
+                <Entry x:Name="cantMuestrasEntry" Placeholder="cantidad muestras preliminares" 
                        WidthRequest="250"
-                       HorizontalOptions="Center"/>
-                <Controls:PlaceholderEditor Placeholder="descripción"
+                       HorizontalOptions="Center"
+                       FontSize="Micro"/>
+                <Picker Title="actividad"
+                        HorizontalOptions="Center"
+                        x:Name="tipo"
+                        WidthRequest="250"
+                        HeightRequest="65"
+                        FontSize="Micro"/>
+                <Controls:PlaceholderEditor x:Name="descripcionMuestreoEditor" Placeholder="descripción"
                                         WidthRequest="250"
                                         HorizontalOptions="Center"
-                                        HeightRequest="100"/>
-                <Button Text="Crear Nuevo Muestreo" 
+                                        HeightRequest="100"
+                                        FontSize="Micro"/>
+                <Button Text="Crear" 
                         TextColor="White"
                         WidthRequest="200"
                         HeightRequest="45"

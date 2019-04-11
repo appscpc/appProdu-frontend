@@ -14,39 +14,27 @@ using Xamarin.Forms.Xaml;
 
 namespace AppProdu
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class AgregarActividad : ContentPage
-	{
-        ObservableCollection<Actividad> Items;
-        List<Actividad> actividades;
-        Actividad newAct = new Actividad();
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class AgregarColaborador : ContentPage
+    {
+        ObservableCollection<User> Items;
+        List<User> colaboradores;
+        User newColab = new User();
 
-
-        public AgregarActividad ()
-		{
-			InitializeComponent ();
-		}
-
-        public class Cadena
+        public AgregarColaborador()
         {
+            InitializeComponent();
+        }
+
+        public class Cadena{
             public string cadena { get; set; }
-            public int sampling_type_id { get; set; }
             public string token { get; set; }
         }
 
-        public class Actividad
+        public class Colaborador
         {
-            public int id { get; set; }
-            public string nombre { get; set; }
-            public int activity_type { get; set; }
-            public int sampling_type { get; set; }
-            public string token { get; set; }
-        }
-
-        public class OperatorRegister
-        {
-            public int activity_id { get; set; }
-            public int path_id { get; set; }
+            public int project_id { get; set; }
+            public int user_id { get; set; }
             public string token { get; set; }
         }
 
@@ -70,14 +58,13 @@ namespace AppProdu
             var newCadena = new Cadena
             {
                 cadena = buscar.Text,
-                sampling_type_id = (int)Application.Current.Properties["sampling-typ-id"],
                 token = Application.Current.Properties["currentToken"].ToString()
             };
             string jsonData = JsonConvert.SerializeObject(newCadena);
             Console.WriteLine("AQUI" + jsonData);
             var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
-            HttpResponseMessage response = await client.PostAsync("/activities/findactivity.json", content);
+            HttpResponseMessage response = await client.PostAsync("/users/finduser.json", content);
             Console.WriteLine(response.StatusCode.ToString());
             if (response.StatusCode == HttpStatusCode.OK)
             {
@@ -85,17 +72,17 @@ namespace AppProdu
                 var result = await response.Content.ReadAsStringAsync();
                 Console.WriteLine(result.ToString());
                 var jobject = JObject.Parse(result);
-                Console.WriteLine("AQUI3" + jobject["actividad"].ToString());
-                actividades = JsonConvert.DeserializeObject<List<Actividad>>(jobject["actividad"].ToString());
-
+                Console.WriteLine("AQUI3" + jobject["usuario"].ToString());
+                colaboradores = JsonConvert.DeserializeObject<List<User>>(jobject["usuario"].ToString());
+                
                 try
                 {
                     Console.WriteLine("AQUI5");
-                    Items = new ObservableCollection<Actividad> { };
+                    Items = new ObservableCollection<User> { };
                     //string temp;
-                    for (int i = 0; i < actividades.Count; i++)
+                    for (int i = 0; i < colaboradores.Count; i++)
                     {
-                        Actividad pro = actividades[i];
+                        User pro = colaboradores[i];
                         // temp = "";
                         //temp += pro.nombre + "\n\n" + pro.descripcion;
                         Items.Add(pro);
@@ -120,15 +107,16 @@ namespace AppProdu
             }
         }
 
+
         async void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
         {
             if (e.Item == null)
                 return;
 
-
-            newAct = (Actividad)e.Item;
-            Console.WriteLine("YESSSSS " + newAct.nombre);
-            bool answer = await DisplayAlert("Desea agregar esta actividad al recorrido?", "La actividad será registrada en el recorrido actual", "Sí", "No");
+            
+            newColab = (User)e.Item;
+            Console.WriteLine("YESSSSS " + newColab.nombre);
+            bool answer = await DisplayAlert("Desea agregar este colaborador?", "El usuario "+ newColab.correo +" será un colaborador", "Sí", "No");
             Console.WriteLine("Answer: " + answer);
             if (answer)
             {
@@ -136,17 +124,17 @@ namespace AppProdu
                 {
                     BaseAddress = new Uri("https://app-produ.herokuapp.com")
                 };
-                var newRegister = new OperatorRegister
+                var newColaborador = new Colaborador
                 {
-                    activity_id = newAct.id,
-                    path_id = (int)Application.Current.Properties["id-path"],
+                    project_id = (int)Application.Current.Properties["id-project"],
+                    user_id = newColab.id,
                     token = Application.Current.Properties["currentToken"].ToString()
                 };
-                string jsonData = JsonConvert.SerializeObject(newRegister);
+                string jsonData = JsonConvert.SerializeObject(newColaborador);
                 Console.WriteLine("AQUI" + jsonData);
                 var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
-                HttpResponseMessage response = await client.PostAsync("/operator_registers/newregister.json", content);
+                HttpResponseMessage response = await client.PostAsync("/colaborators/addcolaborator.json", content);
                 Console.WriteLine(response.StatusCode.ToString());
                 if (response.StatusCode == HttpStatusCode.Created)
                 {
@@ -156,7 +144,7 @@ namespace AppProdu
                     //var jobject = JObject.Parse(result);
                     //Console.WriteLine("AQUI3" + jobject["colaborador"].ToString());
                     //colaboradores = JsonConvert.DeserializeObject<List<Colaborador>>(jobject["colaborador"].ToString());
-                    //await Navigation.PopAsync();
+                    await Navigation.PopAsync();
 
                 }
                 else
@@ -174,10 +162,19 @@ namespace AppProdu
             ((ListView)sender).SelectedItem = null;
         }
 
-        private async Task agregarActividad_Clicked(object sender, EventArgs e)
+        private void agregarColab_Clicked(object sender, EventArgs e)
         {
-            var recorridosPage = new Recorridos();
-            await Navigation.PushAsync(recorridosPage);
+            Console.WriteLine("HHH " + newColab.id);
+            if(newColab.id != 0)
+            {
+                Console.WriteLine("ENTRA");
+                /*var muestreosPage = new Muestreos();
+                await Navigation.PushAsync(muestreosPage);*/
+            }
+            else
+            {
+                Console.WriteLine("NO ENTRA");
+            }
         }
     }
 }

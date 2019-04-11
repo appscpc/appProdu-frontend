@@ -13,37 +13,19 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace AppProdu
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class Proyectos : ContentPage
     {
-        public ObservableCollection<string> Items { get; set; }
+        ObservableCollection<Project> Items = new ObservableCollection<Project> { };
         List<Project> proyectos;
 
         public Proyectos()
         {
             InitializeComponent();
-            /*
-            BackendRequest client = new BackendRequest();
-            var url = new Uri("https://app-produ.herokuapp.com/projects/mostrar/1/:token.json");
-            var result = await client.Get<User>(url.ToString());
-            if (result != null)
-            {
-                User user = new User();
-                user.id = result.id;
-                user.nombre = result.nombre;
-                user.apellido1 = result.apellido1;
-                user.apellido2 = result.apellido2;
-                user.position_id = result.position_id;
-                user.correo = result.correo;
-                user.token = result.token;
-
-                Application.Current.Properties["id"] = user.id;
-                var proyectosPage = new Proyectos();
-                await Navigation.PushAsync(proyectosPage);
-            }*/
 
             getProjects();
 
@@ -51,42 +33,50 @@ namespace AppProdu
 
         async public void getProjects()
         {
-            var client = new HttpClient();
             try
             {
-                HttpResponseMessage response = await client.GetAsync("https://app-produ.herokuapp.com/projects.json");
+                var client = new HttpClient
+                {
+                    BaseAddress = new Uri("https://app-produ.herokuapp.com")
+                };
+                var userLogged = new User
+                {
+                    id = (int)Application.Current.Properties["id"],
+                    token = Application.Current.Properties["currentToken"].ToString()
+                };
+                string jsonData = JsonConvert.SerializeObject(userLogged);
+                //Console.WriteLine("AQUI");
+                var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = await client.PostAsync("/projects/userprojects.json", content);
+
                 response.EnsureSuccessStatusCode();
                 string responseBody = await response.Content.ReadAsStringAsync();
+                var jobject = JObject.Parse(responseBody);
+                Console.WriteLine("AQUI3" + jobject["projects"].ToString());
+                proyectos = JsonConvert.DeserializeObject<List<Project>>(jobject["projects"].ToString());
                 // Above three lines can be replaced with new helper method below
                 // string responseBody = await client.GetStringAsync(uri);
 
-                Console.WriteLine(responseBody);
-                proyectos = JsonConvert.DeserializeObject<List<Project>>(responseBody);
-                Console.WriteLine(proyectos[0].nombre);
-                Console.WriteLine("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+                //Console.WriteLine(responseBody);
+                //proyectos = JsonConvert.DeserializeObject<List<Project>>(responseBody);
+                //Console.WriteLine(proyectos[0].nombre);
+                //Console.WriteLine("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
 
 
-                Items = new ObservableCollection<string> { };
+                //Items = new ObservableCollection<Project> { };
                 //string temp;
                 for (int i = 0; i < proyectos.Count; i++)
                 {
                     Project pro = proyectos[i];
                    // temp = "";
                     //temp += pro.nombre + "\n\n" + pro.descripcion;
-                    Items.Add(pro.nombre);
-                    Console.WriteLine(pro.nombre);
+                    Items.Add(pro);
+                    //Console.WriteLine(pro.nombre);
                 }
 
 
-                Console.WriteLine("ASSSSS");
-
-
                 MyListView.ItemsSource = Items;
-                Console.WriteLine("asdasdasdasd");
-
-
-
-
 
             }
             catch (HttpRequestException e)
@@ -101,12 +91,27 @@ namespace AppProdu
             if (e.Item == null)
                 return;
 
-            //await DisplayAlert("Item Tapped", "An item was tapped.", "OK");
-            var crearProyectoPage = new Estadisticas();
-            await Navigation.PushAsync(crearProyectoPage);
+            var temp = (Project)e.Item;
+            //await DisplayAlert("Item Tapped", "An item was tapped. " + temp.nombre, "OK");
+            var idType = MyListView;
+            Application.Current.Properties["id-project"] = temp.id;
+            var muestreoPage = new Muestreos();
+            await Navigation.PushAsync(muestreoPage);
 
             //Deselect Item
             ((ListView)sender).SelectedItem = null;
+        }
+
+
+        async void OnPreviousPageButtonClicked(object sender, EventArgs e)
+        {
+            bool answer = await DisplayAlert("Desea cerrar sesión?", "El usuario cerrará cesión", "Sí", "No");
+            Console.WriteLine("Answer: " + answer);
+            if (answer)
+            {
+                await Navigation.PopAsync();
+            }
+            
         }
 
         private void crearProButton_Clicked(object sender, EventArgs e)

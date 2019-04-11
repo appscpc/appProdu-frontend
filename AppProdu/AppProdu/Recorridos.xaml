@@ -1,18 +1,53 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AppProdu.Recorridos">
-  <ContentView.Content>
+    <ContentPage.Content>
         <ScrollView>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
+                    <RowDefinition Height="60" />
                     <RowDefinition Height="*" />
                     <RowDefinition Height="60" />
                 </Grid.RowDefinitions>
+                <Picker Title="Fecha"  Grid.Row="0"
+                    HorizontalOptions="Center"
+                    x:Name="fechaPicker"
+                    WidthRequest="250"
+                    HeightRequest="65"
+                    FontSize="Micro"/>
+                <ListView x:Name="MyListView"
+                    ItemsSource="{Binding Items}"
+                    ItemTapped="Handle_ItemTapped"
+                    CachingStrategy="RecycleElement">
+
+                            <!--Built in Cells-->
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <TextCell Text="{Binding nombre}" />
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+
+
+                            <!--Custom View Cells-->
+                            <!--
+                <ListView.ItemTemplate>
+                  <DataTemplate>
+                    <ViewCell>
+                      <StackLayout>
+                        <Label Text="{Binding Text}" 
+                               Style="{DynamicResource ListItemTextStyle}" />
+                        <Label Text="{Binding Detail}" 
+                               Style="{DynamicResource ListItemDetailTextStyle}"/>
+                      </StackLayout>
+                    </ViewCell>
+                  </DataTemplate>
+                </ListView.ItemTemplate>
+                -->
+                </ListView>
                 <Button Grid.Row="2" Text="Crear Nuevo Recorrido" 
                         TextColor="White"
                         WidthRequest="200"
@@ -20,8 +55,9 @@
                         BorderRadius="10"
                         BackgroundColor="#439dbb"
                         HorizontalOptions="Center"
-                        Margin="5"/>
+                        Margin="5"
+                        Clicked="crearRecorrido_Clicked"/>
             </Grid>
         </ScrollView>
-    </ContentView.Content>
-</ContentView>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,7 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="AppProdu.CrearRecorrido">
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             x:Class="AppProdu.CrearRecorrido"
+             Title="Crear Recorrido">
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -16,28 +18,46 @@
 
             <Entry Placeholder="cantidad operarios" 
                     WidthRequest="250"
+                    HeightRequest="65"
                     HorizontalOptions="Center"
-                    Keyboard="Numeric"/>
+                    FontSize="Micro"
+                    Keyboard="Numeric"
+                   x:Name="cantOpEntry"/>
             <Entry Placeholder="temperatura" 
                     WidthRequest="250"
+                    HeightRequest="65"
                     HorizontalOptions="Center"
-                    Keyboard="Numeric"/>
+                    FontSize="Micro"
+                    Keyboard="Numeric"
+                   x:Name="temperaturaEntry"/>
             <Entry Placeholder="humedad" 
                     WidthRequest="250"
+                    HeightRequest="65"
                     HorizontalOptions="Center"
-                    Keyboard="Numeric"/>
+                    FontSize="Micro"
+                    Keyboard="Numeric"
+                   x:Name="humedadEntry"/>
             <Entry Placeholder="hora" 
                     WidthRequest="250"
+                    HeightRequest="65"
                     HorizontalOptions="Center"
-                    Keyboard="Numeric"/>
+                    FontSize="Micro"
+                    Keyboard="Numeric"
+                   x:Name="horaEntry"
+                   IsEnabled="False"
+                   Text="{Binding .}"/>
             <DatePicker 
                 MinimumDate="01/01/2018"
-                Date="{Binding SelectedDate}"
-                HorizontalOptions="Center"/>
+                HeightRequest="65"
+                HorizontalOptions="Center"
+                FontSize="Micro"
+                x:Name="fechaPicker"
+                Date="{x:Static system:DateTime.Today}"
+                IsEnabled="False"/>
                 
         </StackLayout>
         <StackLayout Grid.Row="2">
-            <Button Text="Crear Nuevo Recorrido" 
+            <Button Text="Crear" 
                     TextColor="White"
                     WidthRequest="200"
                     HeightRequest="45"

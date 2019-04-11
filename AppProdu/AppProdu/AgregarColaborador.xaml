@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="AppProdu.AgregarActividad"
-             Title="Agregar Actividad">
+             x:Class="AppProdu.AgregarColaborador"
+             Title="Agregar Colaborador">
     <ContentPage.Content>
         <StackLayout>
             <Grid>
@@ -20,31 +20,31 @@
                            TextChanged="SearchBar_TextChanged" 
                            x:Name="buscar"
                            WidthRequest="250"
-                           HeightRequest="50"
-                           FontSize="Micro"/>
+                           HeightRequest="50"/>
                 </StackLayout>
                 <StackLayout Grid.Row="1">
+                    <ListView x:Name="listAdded"
+                    ItemsSource="{Binding Items}"
+                    ItemTapped="Handle_ItemTapped"
+                    CachingStrategy="RecycleElement">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <TextCell Text="{Binding correo}"></TextCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackLayout>
+                <StackLayout Grid.Row="2">
                     <ListView x:Name="list"
                     ItemsSource="{Binding Items}"
                     ItemTapped="Handle_ItemTapped"
                     CachingStrategy="RecycleElement">
                         <ListView.ItemTemplate>
                             <DataTemplate>
-                                <TextCell Text="{Binding .}"></TextCell>
+                                <TextCell Text="{Binding correo}"></TextCell>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
-                </StackLayout>
-                <StackLayout Grid.Row="2">
-                    <Button Text="Agregar Actividad" Grid.Row="2"
-                    TextColor="White"
-                    WidthRequest="200"
-                    HeightRequest="45"
-                    BorderRadius="10"
-                    BackgroundColor="#439dbb"
-                    VerticalOptions="Center"
-                    HorizontalOptions="Center"
-                    Clicked="agregarActividad_Clicked"/>
                 </StackLayout>
             </Grid>
         </StackLayout>

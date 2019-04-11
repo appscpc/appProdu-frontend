@@ -2,11 +2,13 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:Controls="clr-namespace:AppProdu.Droid"
-             x:Class="AppProdu.CrearProyecto">
+             x:Class="AppProdu.CrearProyecto"
+             Title="Crear Proyecto">
 
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
+            
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="60" />
@@ -18,27 +20,38 @@
             <Entry Placeholder="nombre proyecto" 
                    x:Name="nombreProyectoEntry"
                    WidthRequest="250"
-                   HorizontalOptions="Center"/>
+                   HorizontalOptions="Center"
+                   FontSize="Micro"/>
             <Controls:PlaceholderEditor 
                 Placeholder="descripción"
                 x:Name="descripcionProyectoEditor"
                 WidthRequest="250"
                 HorizontalOptions="Center"
-                HeightRequest="100"/>
+                HeightRequest="100"
+                FontSize="Micro"/>
 
         </StackLayout>
 
         <StackLayout Grid.Row="2">
-            <!--
-            <Label Text="Colaboradores" 
+        <!--    <Label Text="Colaboradores" 
                    HorizontalOptions="CenterAndExpand"
                    FontSize="Medium"
                    FontAttributes="Bold"/>
+            <Button Text="Agregar Colaboradores" 
+                TextColor="White"
+                WidthRequest="300"
+                HeightRequest="45"
+                BorderRadius="10"
+                BackgroundColor="#439dbb"
+                HorizontalOptions="CenterAndExpand"
+                Margin="10"
+                Clicked="agregarColab_Clicked"
+                />
 
             <ListView x:Name="MyListView"
-                ItemsSource="{Binding Items}"
-                ItemTapped="Handle_ItemTapped"
-                CachingStrategy="RecycleElement">-->
+            ItemsSource="{Binding Items}"
+            ItemTapped="Handle_ItemTapped"
+            CachingStrategy="RecycleElement">-->
 
                 <!--Built in Cells
                 <ListView.ItemTemplate>
@@ -61,10 +74,10 @@
                           </StackLayout>
                         </ViewCell>
                       </DataTemplate>
-                    </ListView.ItemTemplate>
+                    </ListView.ItemTemplate>-->
                     
-            </ListView>-->
-            <Button Text="Crear Nuevo Proyecto" 
+         <!--   </ListView>-->
+            <Button Text="Crear" 
                     TextColor="White"
                     WidthRequest="200"
                     HeightRequest="45"
