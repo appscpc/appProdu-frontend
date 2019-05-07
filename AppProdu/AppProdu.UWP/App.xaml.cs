@@ -52,6 +52,7 @@ namespace AppProdu.UWP
 
                 rootFrame.NavigationFailed += OnNavigationFailed;
 
+                Rg.Plugins.Popup.Popup.Init();
                 Xamarin.Forms.Forms.Init(e);
 
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)

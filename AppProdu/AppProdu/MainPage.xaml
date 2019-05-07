@@ -15,19 +15,19 @@
 
         <StackLayout Grid.Row="1" Grid.Column="0">
             <!-- Place new controls here -->
-            <Entry Placeholder="correo" x:Name="correoEntry"
+            <Entry Placeholder="Correo" x:Name="correoEntry"
                WidthRequest="250"
                HeightRequest="75"
                HorizontalOptions="Center"
-               Text="{Binding correo}"
-               FontSize="Micro"/>
-            <Entry Placeholder="contraseña" x:Name="passEntry"
+               Text=""
+               FontSize="Small"/>
+            <Entry Placeholder="Contraseña" x:Name="passEntry"
                HorizontalOptions="Center"
                WidthRequest="250"
                HeightRequest="75"
                IsPassword="True" 
-               Text="{Binding password}"
-                FontSize="Micro"/>
+               Text=""
+                FontSize="Small"/>
             <Button x:Name="ingresarButton"
                 Text="Ingresar" 
                 TextColor="White"

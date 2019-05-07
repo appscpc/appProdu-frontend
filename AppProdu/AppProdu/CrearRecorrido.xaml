@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:behavior="clr-namespace:AppProdu"
              x:Class="AppProdu.CrearRecorrido"
              Title="Crear Recorrido">
 
@@ -10,50 +11,58 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="70" />
+            <RowDefinition Height="60" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <StackLayout Grid.Row="1">
 
-            <Entry Placeholder="cantidad operarios" 
+            <Entry Placeholder="Cantidad Operarios" 
                     WidthRequest="250"
                     HeightRequest="65"
                     HorizontalOptions="Center"
-                    FontSize="Micro"
+                    FontSize="Small"
                     Keyboard="Numeric"
                    x:Name="cantOpEntry"/>
-            <Entry Placeholder="temperatura" 
+            <Entry Placeholder="Temperatura" 
                     WidthRequest="250"
                     HeightRequest="65"
                     HorizontalOptions="Center"
-                    FontSize="Micro"
+                    FontSize="Small"
                     Keyboard="Numeric"
-                   x:Name="temperaturaEntry"/>
-            <Entry Placeholder="humedad" 
+                   x:Name="temperaturaEntry">
+                <Entry.Behaviors>
+                    <behavior:MaskedBehavior Mask="XX,XX" />
+                </Entry.Behaviors>
+            </Entry>
+            <Picker Title="Porcentaje de Humedad" 
                     WidthRequest="250"
                     HeightRequest="65"
                     HorizontalOptions="Center"
-                    FontSize="Micro"
-                    Keyboard="Numeric"
-                   x:Name="humedadEntry"/>
-            <Entry Placeholder="hora" 
+                    FontSize="Small"
+                   x:Name="humedadPicker"/>
+            <Entry Placeholder="Hora" 
                     WidthRequest="250"
                     HeightRequest="65"
                     HorizontalOptions="Center"
-                    FontSize="Micro"
+                    FontSize="Small"
                     Keyboard="Numeric"
                    x:Name="horaEntry"
-                   IsEnabled="False"
-                   Text="{Binding .}"/>
+                   IsEnabled="True"
+                   Text="{Binding .}">
+                <Entry.Behaviors>
+                    <behavior:MaskedBehavior Mask="XX:XX:XX" />
+                </Entry.Behaviors>
+            </Entry>
             <DatePicker 
                 MinimumDate="01/01/2018"
                 HeightRequest="65"
+                WidthRequest="150"
                 HorizontalOptions="Center"
-                FontSize="Micro"
+                FontSize="Small"
                 x:Name="fechaPicker"
                 Date="{x:Static system:DateTime.Today}"
-                IsEnabled="False"/>
+                IsEnabled="True"/>
                 
         </StackLayout>
         <StackLayout Grid.Row="2">
@@ -64,6 +73,7 @@
                     BorderRadius="10"
                     BackgroundColor="#439dbb"
                     HorizontalOptions="Center"
+                    Margin="25"
                     Clicked="crearRec_Clicked"/>
         </StackLayout>
     </Grid>

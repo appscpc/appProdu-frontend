@@ -17,38 +17,38 @@
 
         <StackLayout Grid.Row="1" Grid.Column="0">
             <!-- Place new controls here -->
-            <Entry Placeholder="nombre" x:Name="nombreEntry"
+            <Entry Placeholder="Nombre" x:Name="nombreEntry"
                 WidthRequest="250"
                 HeightRequest="65"
                 HorizontalOptions="Center"
-                FontSize="Micro"/>
-            <Entry Placeholder="primer apellido" x:Name="apellido1Entry"
+                FontSize="Small"/>
+            <Entry Placeholder="Primer Apellido" x:Name="apellido1Entry"
                 HorizontalOptions="Center"
                 WidthRequest="250"
                 HeightRequest="65"
-                FontSize="Micro"/>
-            <Entry Placeholder="segundo apellido" x:Name="apellido2Entry"
+                FontSize="Small"/>
+            <Entry Placeholder="Segundo Apellido" x:Name="apellido2Entry"
                 HorizontalOptions="Center"
                 WidthRequest="250"
                 HeightRequest="65"
-                FontSize="Micro"/>
-            <Entry Placeholder="correo" x:Name="correoEntry"
+                FontSize="Small"/>
+            <Entry Placeholder="Correo" x:Name="correoEntry"
                 WidthRequest="250"
                 HeightRequest="65"
                 HorizontalOptions="Center"
-                FontSize="Micro"/>
-            <Entry Placeholder="contraseña" x:Name="passEntry"
+                FontSize="Small"/>
+            <Entry Placeholder="Contraseña" x:Name="passEntry"
                 HorizontalOptions="Center"
                 WidthRequest="250"
                 HeightRequest="65"
                 IsPassword="True" 
-                FontSize="Micro"/>
-            <Picker Title="tipo usuario" 
+                FontSize="Small"/>
+            <Picker Title="Tipo Usuario" 
                     HorizontalOptions="Center"
                     x:Name="tipo"
                     WidthRequest="250"
                     HeightRequest="65"
-                    FontSize="Micro"/>
+                    FontSize="Small"/>
             <Button x:Name="registrarButton"
                 Text="Registrar" 
                 TextColor="White"

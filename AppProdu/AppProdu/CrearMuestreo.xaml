@@ -16,25 +16,26 @@
             </Grid.RowDefinitions>
 
             <StackLayout Grid.Row="1">
-                <Entry x:Name="nombreMuestreoEntry" Placeholder="nombre muestreo" 
+                <Entry x:Name="nombreMuestreoEntry" Placeholder="Nombre Muestreo" 
                        WidthRequest="250"
                        HorizontalOptions="Center"
-                       FontSize="Micro"/>
-                <Entry x:Name="cantMuestrasEntry" Placeholder="cantidad muestras preliminares" 
+                       FontSize="Small"/>
+                <Entry x:Name="cantMuestrasEntry" Placeholder="Cantidad Muestras Preliminares" 
                        WidthRequest="250"
                        HorizontalOptions="Center"
-                       FontSize="Micro"/>
-                <Picker Title="actividad"
+                       FontSize="Small"/>
+                <Picker Title="Actividad"
                         HorizontalOptions="Center"
                         x:Name="tipo"
                         WidthRequest="250"
                         HeightRequest="65"
-                        FontSize="Micro"/>
-                <Controls:PlaceholderEditor x:Name="descripcionMuestreoEditor" Placeholder="descripción"
+                        FontSize="Small"
+                        SelectedIndexChanged="Tipo_SelectedIndexChanged"/>
+                <Controls:PlaceholderEditor x:Name="descripcionMuestreoEditor" Placeholder="Descripción"
                                         WidthRequest="250"
                                         HorizontalOptions="Center"
                                         HeightRequest="100"
-                                        FontSize="Micro"/>
+                                        FontSize="Small"/>
                 <Button Text="Crear" 
                         TextColor="White"
                         WidthRequest="200"

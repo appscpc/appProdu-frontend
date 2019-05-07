@@ -96,7 +96,19 @@ namespace AppProdu
             //await DisplayAlert("Item Tapped", "An item was tapped.", "OK");
             var samplingSelected = (Sampling)e.Item;
             Application.Current.Properties["fase"] = samplingSelected.fase;
-            Application.Current.Properties["sampling-type-id"] = samplingSelected.tipo;
+            Application.Current.Properties["id-sampling"] = samplingSelected.id;
+            Console.WriteLine("DAMN BRO: " + samplingSelected.sampling_type_id + " & " + samplingSelected.nombre);
+            Application.Current.Properties["sampling-type-id"] = samplingSelected.sampling_type_id;
+            if(samplingSelected.fase == 1)
+            {
+                Application.Current.Properties["preliminar-done"] = 0;
+                Application.Current.Properties["definitive-done"] = 0;
+            }
+            else
+            {
+                Application.Current.Properties["preliminar-done"] = 2;
+                Application.Current.Properties["definitive-done"] = 0;
+            }
             var etapasPage = new Etapas();
             await Navigation.PushAsync(etapasPage);
 

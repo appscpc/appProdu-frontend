@@ -17,18 +17,18 @@
         </Grid.RowDefinitions>
         <StackLayout Grid.Row="1">
             
-            <Entry Placeholder="nombre proyecto" 
+            <Entry Placeholder="Nombre Proyecto" 
                    x:Name="nombreProyectoEntry"
                    WidthRequest="250"
                    HorizontalOptions="Center"
-                   FontSize="Micro"/>
+                   FontSize="Small"/>
             <Controls:PlaceholderEditor 
-                Placeholder="descripción"
+                Placeholder="Descripción"
                 x:Name="descripcionProyectoEditor"
                 WidthRequest="250"
                 HorizontalOptions="Center"
                 HeightRequest="100"
-                FontSize="Micro"/>
+                FontSize="Small"/>
 
         </StackLayout>
 

@@ -81,6 +81,7 @@ namespace AppProdu
 
                         Application.Current.Properties["id"] = data.id;
                         Application.Current.Properties["currentToken"] = data.token;
+                        await DisplayAlert("El usuario ha sido creado con éxito!", "Se desplegará a la pantalla de proyectos del usuario!", "OK");
                         var proyectosPage = new Proyectos();
                         await Navigation.PushAsync(proyectosPage);
 
@@ -88,19 +89,19 @@ namespace AppProdu
                     catch (Exception)
                     {
                         Console.WriteLine("AQUI6\nError al registrar usuario!");
-                        errorLabel.Text = "Error\nCorreo ya registrado";
+                        
                     }
                 }
                 else
                 {
                     Console.WriteLine("AQUI6\nError al registrar usuario!");
-                    errorLabel.Text = "Error\nCorreo ya registrado";
+                    await DisplayAlert("Error!", "Correo ya está registrado!\nPor favor utilice otro!", "OK");
                 }
             }
             else
             {
                 Console.WriteLine("AQUI6\nEspacios vacíos");
-                errorLabel.Text = "Error\nPor favor rellenar todos los campos!";
+                await DisplayAlert("Error!", "Espacios vacíos!\nPor favor rellenar todos los espacios!", "OK");
             }
         }
 
@@ -121,7 +122,7 @@ namespace AppProdu
 
                 userTypes = types.ToDictionary(m => m.id, m => m.nombre);
 
-
+                
                 foreach (string type in userTypes.Values)
                 {
                     tipo.Items.Add(type);

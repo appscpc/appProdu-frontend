@@ -40,7 +40,7 @@ namespace AppProdu
 
         private async Task crearPro_Clicked(object sender, EventArgs e)
         {
-            if (!String.IsNullOrEmpty(nombreProyectoEntry.Text) && !String.IsNullOrEmpty(descripcionProyectoEditor.Text)) {
+            if (!String.IsNullOrEmpty(nombreProyectoEntry.Text)) {
                 var client = new HttpClient
                 {
                     BaseAddress = new Uri("https://app-produ.herokuapp.com")
@@ -74,8 +74,8 @@ namespace AppProdu
                         Console.WriteLine(data.id + " & " + data.nombre);
 
                         Application.Current.Properties["id-project"] = data.id;
-                        var agregarColab = new AgregarColaborador();
-                        await Navigation.PushAsync(agregarColab);
+                        var muestreosPage = new Muestreos();
+                        await Navigation.PushAsync(muestreosPage);
                         
 
                     }
@@ -92,7 +92,7 @@ namespace AppProdu
                 }
             }
             else {
-                Console.WriteLine("AQUI6\nEspacios vacíos");
+                await DisplayAlert("Error!", "Espacios vacíos!\nPor favor inserte el Nombre del Proyecto!", "OK");
             }
         }
         /*

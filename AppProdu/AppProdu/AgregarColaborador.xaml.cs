@@ -18,6 +18,7 @@ namespace AppProdu
     public partial class AgregarColaborador : ContentPage
     {
         ObservableCollection<User> Items;
+        ObservableCollection<User> ItemsAdded;
         List<User> colaboradores;
         User newColab = new User();
 
@@ -120,38 +121,14 @@ namespace AppProdu
             Console.WriteLine("Answer: " + answer);
             if (answer)
             {
-                var client = new HttpClient
+                Console.WriteLine("CANT: " + ItemsAdded.Count + " & ");
+                if (!ItemsAdded.Contains(newColab))
                 {
-                    BaseAddress = new Uri("https://app-produ.herokuapp.com")
-                };
-                var newColaborador = new Colaborador
-                {
-                    project_id = (int)Application.Current.Properties["id-project"],
-                    user_id = newColab.id,
-                    token = Application.Current.Properties["currentToken"].ToString()
-                };
-                string jsonData = JsonConvert.SerializeObject(newColaborador);
-                Console.WriteLine("AQUI" + jsonData);
-                var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-
-                HttpResponseMessage response = await client.PostAsync("/colaborators/addcolaborator.json", content);
-                Console.WriteLine(response.StatusCode.ToString());
-                if (response.StatusCode == HttpStatusCode.Created)
-                {
-                    Console.WriteLine("AQUI2");
-                    var result = await response.Content.ReadAsStringAsync();
-                    Console.WriteLine(result.ToString());
-                    //var jobject = JObject.Parse(result);
-                    //Console.WriteLine("AQUI3" + jobject["colaborador"].ToString());
-                    //colaboradores = JsonConvert.DeserializeObject<List<Colaborador>>(jobject["colaborador"].ToString());
-                    await Navigation.PopAsync();
-
+                    ItemsAdded.Add(newColab);
+                    listAdded.ItemsSource = ItemsAdded;
                 }
-                else
-                {
-                    Console.WriteLine("AQUI6\nNo se pudo crear");
-                    //errorLabel.Text = "Error\nUsuario o contraseña inválido";
-                }
+                
+                
             }
             else
             {
@@ -160,6 +137,7 @@ namespace AppProdu
 
             //Deselect Item
             ((ListView)sender).SelectedItem = null;
+
         }
 
         private void agregarColab_Clicked(object sender, EventArgs e)

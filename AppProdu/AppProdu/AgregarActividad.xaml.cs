@@ -20,11 +20,17 @@ namespace AppProdu
         ObservableCollection<Actividad> Items;
         List<Actividad> actividades;
         Actividad newAct = new Actividad();
+        List<RegistroUsuario> listaDeOperarios;
+        int index;
 
 
-        public AgregarActividad ()
+        public AgregarActividad ( List<RegistroUsuario> listaOperarios)
 		{
 			InitializeComponent ();
+            index = (int)Application.Current.Properties["index-activity"];
+            Console.WriteLine("HELLO MOTO: ", index);
+            operarioActualLabel.Text = "Asignar actividad al Operario " + index + 1;
+            listaDeOperarios = listaOperarios;
 		}
 
         public class Cadena
@@ -38,31 +44,14 @@ namespace AppProdu
         {
             public int id { get; set; }
             public string nombre { get; set; }
-            public int activity_type { get; set; }
-            public int sampling_type { get; set; }
+            public int activity_type_id { get; set; }
+            public int sampling_type_id { get; set; }
             public string token { get; set; }
         }
 
-        public class OperatorRegister
-        {
-            public int activity_id { get; set; }
-            public int path_id { get; set; }
-            public string token { get; set; }
-        }
 
         private async Task SearchBar_TextChanged(object sender, TextChangedEventArgs e)
         {
-            //thats all you need to make a search  
-            /*
-            if (string.IsNullOrEmpty(e.NewTextValue))
-            {
-                list.ItemsSource = tempdata;
-            }
-
-            else
-            {
-                list.ItemsSource = tempdata.Where(x => x.Name.StartsWith(e.NewTextValue));
-            }*/
             var client = new HttpClient
             {
                 BaseAddress = new Uri("https://app-produ.herokuapp.com")
@@ -70,9 +59,10 @@ namespace AppProdu
             var newCadena = new Cadena
             {
                 cadena = buscar.Text,
-                sampling_type_id = (int)Application.Current.Properties["sampling-typ-id"],
+                sampling_type_id = (int)Application.Current.Properties["sampling-type-id"],
                 token = Application.Current.Properties["currentToken"].ToString()
             };
+            Console.WriteLine("ID SAMPLING: " + newCadena.sampling_type_id);
             string jsonData = JsonConvert.SerializeObject(newCadena);
             Console.WriteLine("AQUI" + jsonData);
             var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
@@ -132,37 +122,32 @@ namespace AppProdu
             Console.WriteLine("Answer: " + answer);
             if (answer)
             {
-                var client = new HttpClient
+                Console.WriteLine("CANT: " + listaDeOperarios.Count + " & " + index);
+                if (index >= listaDeOperarios.Count)
                 {
-                    BaseAddress = new Uri("https://app-produ.herokuapp.com")
-                };
-                var newRegister = new OperatorRegister
-                {
-                    activity_id = newAct.id,
-                    path_id = (int)Application.Current.Properties["id-path"],
-                    token = Application.Current.Properties["currentToken"].ToString()
-                };
-                string jsonData = JsonConvert.SerializeObject(newRegister);
-                Console.WriteLine("AQUI" + jsonData);
-                var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-
-                HttpResponseMessage response = await client.PostAsync("/operator_registers/newregister.json", content);
-                Console.WriteLine(response.StatusCode.ToString());
-                if (response.StatusCode == HttpStatusCode.Created)
-                {
-                    Console.WriteLine("AQUI2");
-                    var result = await response.Content.ReadAsStringAsync();
-                    Console.WriteLine(result.ToString());
-                    //var jobject = JObject.Parse(result);
-                    //Console.WriteLine("AQUI3" + jobject["colaborador"].ToString());
-                    //colaboradores = JsonConvert.DeserializeObject<List<Colaborador>>(jobject["colaborador"].ToString());
-                    //await Navigation.PopAsync();
-
+                    await DisplayAlert("Error!", "Ya se agregaron todas las actividades!", "OK");
+                    Console.WriteLine("HOLA SOY JUANITO");
                 }
                 else
                 {
-                    Console.WriteLine("AQUI6\nNo se pudo crear");
-                    //errorLabel.Text = "Error\nUsuario o contraseña inválido";
+                    listaDeOperarios[index].activity_id = newAct.id;
+                    listaDeOperarios[index].nombre_activity = newAct.nombre;
+                    listaDeOperarios[index].activity_type_id = newAct.activity_type_id;
+                    if (listaDeOperarios[index].activity_type_id == 1)
+                    {
+                        listaDeOperarios[index].nombre_activity_type = "Trabajo productivo";
+                    }
+                    else if (listaDeOperarios[index].activity_type_id == 2)
+                    {
+                        listaDeOperarios[index].nombre_activity_type = "Trabajo contributivo";
+                    }
+                    else if (listaDeOperarios[index].activity_type_id == 3)
+                    {
+                        listaDeOperarios[index].nombre_activity_type = "Trabajo no productivo";
+                    }
+                    index = index + 1;
+                    Application.Current.Properties["index-activity"] = index;
+                    operarioActualLabel.Text = "Asignar actividad al Operario " + index+1;
                 }
             }
             else

@@ -26,16 +26,10 @@ namespace AppProdu
             obtenerActividades();
 		}
 
-        public class Fase
-        {
-            public int fase_type_id { get; set; }
-            public int sampling_id { get; set; }
-            public string token { get; set; }
-        }
 
         private async Task crearMue_Clicked(object sender, EventArgs e)
         {
-            if (!String.IsNullOrEmpty(nombreMuestreoEntry.Text) && !String.IsNullOrEmpty(cantMuestrasEntry.Text) && !String.IsNullOrEmpty(descripcionMuestreoEditor.Text))
+            if (!String.IsNullOrEmpty(nombreMuestreoEntry.Text) && !String.IsNullOrEmpty(cantMuestrasEntry.Text))
             {
                 var client = new HttpClient
                 {
@@ -50,8 +44,9 @@ namespace AppProdu
                     cantMuestrasTotal = System.Convert.ToInt32(cantMuestrasEntry.Text),
                     descripcion = descripcionMuestreoEditor.Text,
                     fase = 1,
-                    tipo = idType,
+                    sampling_type_id = idType,
                     project_id = (int)Application.Current.Properties["id-project"],
+                    muestrasActual = 0,
                     token = Application.Current.Properties["currentToken"].ToString()
                 };
                 string jsonData = JsonConvert.SerializeObject(newSampling);
@@ -76,6 +71,10 @@ namespace AppProdu
                         Console.WriteLine(data.id + " & " + data.nombre);
 
                         Application.Current.Properties["id-sampling"] = data.id;
+                        Application.Current.Properties["fase"] = data.fase;
+                        Console.WriteLine("YEAH BABY: " + data.sampling_type_id);
+                        Application.Current.Properties["sampling-type-id"] = data.sampling_type_id;
+                        await crearFaseAsync();
                         var etapasPage = new Etapas();
                         await Navigation.PushAsync(etapasPage);
 
@@ -94,7 +93,7 @@ namespace AppProdu
             }
             else
             {
-                Console.WriteLine("AQUI6\nEspacios vacíos");
+                await DisplayAlert("Error!", "Espacios vacíos!\nPor favor inserte el Nombre de Muestreo y la Cantidad de Muestras!", "OK");
             }
 
         }
@@ -136,18 +135,56 @@ namespace AppProdu
             {
                 BaseAddress = new Uri("https://app-produ.herokuapp.com")
             };
-            var newSampling = new Fase
+            var newFase = new Fase
             {
                 fase_type_id = 1,
                 sampling_id = (int)Application.Current.Properties["id-sampling"],
+                extraFlag = 0,
                 token = Application.Current.Properties["currentToken"].ToString()
             };
-            string jsonData = JsonConvert.SerializeObject(newSampling);
+            string jsonData = JsonConvert.SerializeObject(newFase);
             Console.WriteLine("AQUI" + jsonData);
             var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
-            HttpResponseMessage response = await client.PostAsync("/samplings/newsampling.json", content);
+            HttpResponseMessage response = await client.PostAsync("/fases/newfase.json", content);
             Console.WriteLine(response.StatusCode.ToString());
+            if (response.StatusCode == HttpStatusCode.Created)
+            {
+                Console.WriteLine("AQUI2");
+                var result = await response.Content.ReadAsStringAsync();
+                Console.WriteLine(result.ToString());
+                var jobject = JObject.Parse(result);
+                Console.WriteLine("AQUI3" + jobject["fase"].ToString());
+                var data = JsonConvert.DeserializeObject<Sampling>(jobject["fase"].ToString());
+
+
+                try
+                {
+                    Console.WriteLine("AQUI5");
+                    Console.WriteLine(data.id);
+
+                    Application.Current.Properties["id-fase"] = data.id;
+                    Application.Current.Properties["preliminar-done"] = 0;
+                    Application.Current.Properties["definitive-done"] = 0;
+
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("AQUI6\nNo se pudo crear el muestreo");
+                    //errorLabel.Text = "Error\nUsuario o contraseña inválido";
+                }
+            }
+            else
+            {
+                Console.WriteLine("AQUI6\nNo se pudo crear el muestreo");
+                //errorLabel.Text = "Error\nUsuario o contraseña inválido";
+            }
+        }
+
+        private void Tipo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var idType = samplingTypes.FirstOrDefault(x => x.Value == tipo.SelectedItem.ToString()).Key;
+            Console.WriteLine("ACA ES LO MEJOR: " + idType);
         }
     }
 }

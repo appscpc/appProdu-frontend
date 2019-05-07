@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="AppProdu.Recorridos">
+             x:Class="AppProdu.Recorridos"
+             Title="Recorridos">
     <ContentPage.Content>
         <ScrollView>
             <Grid>
@@ -10,16 +11,29 @@
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="60" />
+                    <RowDefinition Height="60" />
                     <RowDefinition Height="*" />
                     <RowDefinition Height="60" />
                 </Grid.RowDefinitions>
-                <Picker Title="Fecha"  Grid.Row="0"
+                <Label Text="" Grid.Row="0"
+                       x:Name="muestrasRestantesLabel"
+                       FontSize="Small"
+                       HorizontalOptions="Center"
+                       HeightRequest="65"
+                       WidthRequest="250"/>
+                <Label Text="" Grid.Row="0"
+                       x:Name="muestrasActualesLabel"
+                       FontSize="Small"
+                       HorizontalOptions="Center"
+                       HeightRequest="65"
+                       WidthRequest="250"/>
+                <Picker Title="Fecha"  Grid.Row="1"
                     HorizontalOptions="Center"
                     x:Name="fechaPicker"
                     WidthRequest="250"
                     HeightRequest="65"
-                    FontSize="Micro"/>
-                <ListView x:Name="MyListView"
+                    FontSize="Small"/>
+                <ListView x:Name="MyListView" Grid.Row="2"
                     ItemsSource="{Binding Items}"
                     ItemTapped="Handle_ItemTapped"
                     CachingStrategy="RecycleElement">
@@ -48,7 +62,7 @@
                 </ListView.ItemTemplate>
                 -->
                 </ListView>
-                <Button Grid.Row="2" Text="Crear Nuevo Recorrido" 
+                <Button Grid.Row="3" Text="Crear" 
                         TextColor="White"
                         WidthRequest="200"
                         HeightRequest="45"

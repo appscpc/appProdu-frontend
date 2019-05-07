@@ -1,9 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="AppProdu.Estadisticas"
-             xmlns:behavior="clr-namespace:AppProdu"
-             Title="Calcular Estadísticas">
+             x:Class="AppProdu.CalculosHechos"
+             Title="Calculos Realizados">
     <ContentPage.Content>
         <Grid>
             <Grid.ColumnDefinitions>
@@ -17,55 +16,51 @@
             <StackLayout Grid.Row="1">
 
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                    <Label Text="p =" FontSize="Small" FontAttributes="Bold"/>
+                    <Label Text="N =" FontSize="Small" FontAttributes="Bold"/>
                     <Entry Placeholder="" 
                          WidthRequest="250"
                          Keyboard="Numeric"
                          IsEnabled="False"
-                         x:Name="pEntry"/>
+                           FontSize="Small"
+                         x:Name="NEntry"/>
                 </StackLayout>
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                    <Label Text="q =" FontSize="Small" FontAttributes="Bold"/>
+                    <Label Text="n =" FontSize="Small" FontAttributes="Bold"/>
                     <Entry Placeholder="" 
                            WidthRequest="250"
                            Keyboard="Numeric"
                            IsEnabled="False"
-                           x:Name="qEntry"/>
+                           FontSize="Small"
+                           x:Name="nEntry"/>
                 </StackLayout>
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                    <Label Text="error =" FontSize="Small" FontAttributes="Bold"/>
-                    <Entry Placeholder="Error" 
+                    <Label Text="n Def. =" FontSize="Small" FontAttributes="Bold"/>
+                    <Entry Placeholder="" 
                            WidthRequest="250"
                            HorizontalOptions="Center"
-                           x:Name="errorEntry">
-                        <Entry.Behaviors>
-                            <behavior:MaskedBehavior Mask="0,XXX" />
-                        </Entry.Behaviors>
-                    </Entry>
-                </StackLayout>
-                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                    <Label Text="Za/2 =" FontSize="Small" FontAttributes="Bold"/>
-                    <Picker Title="Za/2"
-                            WidthRequest="250"
-                            HorizontalOptions="Center"
-                            x:Name="zPicker"
-                            HeightRequest="65"
-                            FontSize="Small"/>
-                </StackLayout>
-                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                    <Label Text="" FontSize="Small" FontAttributes="Bold" HorizontalOptions="Center"
-                           TextColor="Red" x:Name="errorLabel"/>
+                           Keyboard="Numeric"
+                           IsEnabled="False"
+                           FontSize="Small"
+                           x:Name="nDefEntry"/>
                 </StackLayout>
             </StackLayout>
             <StackLayout Grid.Row="2">
-                <Button Text="Calcular" 
+                <Button Text="Aceptar" 
                     TextColor="White"
                     WidthRequest="200"
                     HeightRequest="45"
                     BorderRadius="10"
                     BackgroundColor="#439dbb"
                     HorizontalOptions="Center"
-                    Clicked="calcular_Clicked"/>
+                    Clicked="aceptar_Clicked"/>
+                <Button Text="Calcular de nuevo" 
+                    TextColor="White"
+                    WidthRequest="200"
+                    HeightRequest="45"
+                    BorderRadius="10"
+                    BackgroundColor="#439dbb"
+                    HorizontalOptions="Center"
+                    Clicked="back_Clicked"/>
             </StackLayout>
         </Grid>
     </ContentPage.Content>

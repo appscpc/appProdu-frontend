@@ -11,16 +11,18 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="auto" />
                     <RowDefinition Height="70" />
+                    <RowDefinition Height="auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 
-                <Controls:PlaceholderEditor Grid.Row="0"
-                Placeholder="comentario"
-                WidthRequest="250"
-                HorizontalOptions="Center"
-                HeightRequest="150"/>
+                <Controls:PlaceholderEditor Grid.Row="1"
+                    Placeholder="Comentario"
+                    WidthRequest="250"
+                    HorizontalOptions="Center"
+                    HeightRequest="250"
+                    x:Name="comentarioEditor"
+                    FontSize="Small"/>
                 <Button Text="Guardar" Grid.Row="2"
                     TextColor="White"
                     WidthRequest="200"
@@ -28,7 +30,8 @@
                     BorderRadius="10"
                     BackgroundColor="#439dbb"
                     VerticalOptions="Center"
-                    HorizontalOptions="Center"/>
+                    HorizontalOptions="Center"
+                    Clicked="agregarComentario_Clicked"/>
             </Grid>
         </StackLayout>
     </ContentPage.Content>

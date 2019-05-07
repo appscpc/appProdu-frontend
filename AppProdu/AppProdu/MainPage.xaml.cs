@@ -41,8 +41,11 @@ namespace AppProdu
             Console.WriteLine(correo+" "+pass);*/
             Console.WriteLine(userLogged.correo + " " + userLogged.password);
 
-            if (!String.IsNullOrEmpty(userLogged.correo) && !String.IsNullOrEmpty(userLogged.password))
+            if (!String.IsNullOrEmpty(correoEntry.Text) && !String.IsNullOrEmpty(passEntry.Text))
             {
+                userLogged.correo = correoEntry.Text;
+                userLogged.password = passEntry.Text;
+                userLogged.correo = userLogged.correo.Trim();
                 var client = new HttpClient
                 {
                     BaseAddress = new Uri("https://app-produ.herokuapp.com")
@@ -79,20 +82,19 @@ namespace AppProdu
                     catch (Exception)
                     {
                         Console.WriteLine("AQUI6\nError al iniciar sesión!");
-                        errorLabel.Text = "Error\nUsuario o contraseña inválido";
                     }
                 }
                 else
                 {
                     Console.WriteLine("AQUI6\nError al iniciar sesión!");
-                    errorLabel.Text = "Error\nUsuario o contraseña inválido";
+                    await DisplayAlert("Error!", "Usuario o contraseña inválidos!", "OK");
                 }
 
             }
             else
             {
                 Console.WriteLine("AQUI6\nEspacios vacíos!");
-                errorLabel.Text = "Error\nEspacios vacíos\nPor favor rellenar todos los campos!";
+                await DisplayAlert("Error!", "Espacios vacíos!\nPor favor rellenar todos los espacios!", "OK");
             }
         }
 
