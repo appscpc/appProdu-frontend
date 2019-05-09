@@ -21,14 +21,14 @@
                     WidthRequest="250"
                     HeightRequest="65"
                     HorizontalOptions="Center"
-                    FontSize="Small"
+                    FontSize="18"
                     Keyboard="Numeric"
                    x:Name="cantOpEntry"/>
             <Entry Placeholder="Temperatura" 
                     WidthRequest="250"
                     HeightRequest="65"
                     HorizontalOptions="Center"
-                    FontSize="Small"
+                    FontSize="18"
                     Keyboard="Numeric"
                    x:Name="temperaturaEntry">
                 <Entry.Behaviors>
@@ -39,13 +39,13 @@
                     WidthRequest="250"
                     HeightRequest="65"
                     HorizontalOptions="Center"
-                    FontSize="Small"
+                    FontSize="18"
                    x:Name="humedadPicker"/>
             <Entry Placeholder="Hora" 
                     WidthRequest="250"
                     HeightRequest="65"
                     HorizontalOptions="Center"
-                    FontSize="Small"
+                    FontSize="18"
                     Keyboard="Numeric"
                    x:Name="horaEntry"
                    IsEnabled="True"
@@ -59,7 +59,7 @@
                 HeightRequest="65"
                 WidthRequest="150"
                 HorizontalOptions="Center"
-                FontSize="Small"
+                FontSize="18"
                 x:Name="fechaPicker"
                 Date="{x:Static system:DateTime.Today}"
                 IsEnabled="True"/>

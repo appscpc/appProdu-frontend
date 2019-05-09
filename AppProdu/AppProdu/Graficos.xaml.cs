@@ -8,12 +8,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using Entry = Microcharts.Entry;
+using Cell = DocumentFormat.OpenXml.Spreadsheet.Cell;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using DocumentFormat.OpenXml.Spreadsheet;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml;
+using Xamarin.Essentials;
 
 namespace AppProdu
 {
@@ -21,17 +23,17 @@ namespace AppProdu
     public partial class Graficos : ContentPage
     {
         string ConnectionString = "Server=ec2-107-20-185-27.compute-1.amazonaws.com; Port=5432; User Id=wdxcskrixgrlrg; Password=cf1d8afae86ffe18a9216dac407650b8d67a79d8e9d040e5404c4fa3ff8670d8; Database=d5bugk5ss3gtcc; SSL Mode=Require; Trust Server Certificate=true";
-        string[,] colors = { { "#4edb5c", "#18c929", "#03a012", "#18ce79", "#2b6331", "#21c432", "#b3e0b8", "#698c6d", "#414f43", "#7f7f7f" },
-        { "#4e60db", "#001291", "#000947", "#8796ff", "#4d558e", "#292d47", "#bfc7fc", "#666a84", "#8f3fb5", "#7f7f7f" },
-        { "#db645c", "#8c413c", "#421e1c", "#ffb5b5", "#ff0d00", "#b70900", "#f74238", "#c1837f", "#ff7338", "#7f7f7f" }};
+        string[,] colors = { { "#827d05", "#d3ce58", "#d8d6a6", "#0b8276", "#59c6bb", "#85b5b0", "#320d7c", "#6840b7", "#8b79af", "#303030" },
+        { "#aa7211", "#e5b35e", "#968261", "#b20cac", "#c94ec5", "#cc9bca", "#119bdb", "#5890aa", "#8eb8cc", "#303030" },
+        { "#0a9b0a", "#2e5e2e", "#a1c9a1", "#081191", "#434ccc", "#8d90c4", "#d80d0d", "#562b2b", "#e09191", "#303030" }};
         List<int> totalPaths = new List<int>();
         List<string> bestDays = new List<string>();
         List<string> worstDays = new List<string>();
 
-        List<Microcharts.Entry> tpList = new List<Microcharts.Entry>();
-        List<Microcharts.Entry> tcList = new List<Microcharts.Entry>();
-        List<Microcharts.Entry> tiList = new List<Microcharts.Entry>();
-        List<Microcharts.Entry> dayList = new List<Microcharts.Entry>();
+        List<Entry> tpList = new List<Entry>();
+        List<Entry> tcList = new List<Entry>();
+        List<Entry> tiList = new List<Entry>();
+        List<Entry> dayList = new List<Entry>();
 
 
         int totalTP;
@@ -44,44 +46,16 @@ namespace AppProdu
         List<string> tiDataA = new List<string>();
         List<string> daysData = new List<string>();
 
+
+
+
         string nombreMuestreo;
         string tipoActividad;
         string nombreProyecto;
         string desMuestreo;
         string idMuestreo;
 
-        public Graficos()
-        {
-            InitializeComponent();
-            int sampling_id = (int)Application.Current.Properties["id-sampling"];
-            IniData(sampling_id.ToString());
-            CrossDeviceOrientation.Current.LockOrientation(DeviceOrientations.Landscape);
 
-
-
-
-            Chart1.Chart = new DonutChart() { Entries = generalChart() };
-            Chart2.Chart = new DonutChart()
-            {
-                Entries = tpList,
-                HoleRadius = 0.5f,
-            };
-            Chart3.Chart = new DonutChart()
-            {
-                Entries = tcList,
-                HoleRadius = 0.5f,
-            };
-            Chart4.Chart = new DonutChart()
-            {
-                Entries = tiList,
-                HoleRadius = 0.5f,
-            };
-            Chart5.Chart = new LineChart()
-            {
-                Entries = dayList,
-
-            };
-        }
 
         async void getNumberTasks(string sampling, string activity)
         {
@@ -107,7 +81,7 @@ namespace AppProdu
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                titulo.Text = "Error de conexión";
             }
 
 
@@ -143,7 +117,7 @@ namespace AppProdu
 
                     if (counter < 9)
                     {
-                        Microcharts.Entry temp = new Microcharts.Entry(Int32.Parse(reader[1].ToString()));
+                        Entry temp = new Entry(Int32.Parse(reader[1].ToString()));
                         temp.Label = reader[0].ToString();
                         temp.Color = SKColor.Parse(colors[indxColor, counter]);
                         int num = Int32.Parse(reader[1].ToString());
@@ -202,7 +176,7 @@ namespace AppProdu
                     }
 
                 }
-                Microcharts.Entry other = new Microcharts.Entry(othersSum);
+                Entry other = new Entry(othersSum);
                 other.Label = "Otros";
                 other.Color = SKColor.Parse(colors[indxColor, counter]);
                 if (activity.Equals("1"))
@@ -235,29 +209,31 @@ namespace AppProdu
 
         }
 
-        List<Microcharts.Entry> generalChart()
+        List<Entry> generalChart()
         {
             int total = totalTC + totalTI + totalTP;
             string vlTP = Math.Round(((double)totalTP * 100.0 / (double)total), 2).ToString() + "%";
             string vlTC = Math.Round(((double)totalTC * 100.0 / (double)total), 2).ToString() + "%";
             string vlTI = Math.Round(((double)totalTI * 100.0 / (double)total), 2).ToString() + "%";
             string[] param = { "Tareas productivas (TP)", totalTP.ToString(), vlTP, "Tareas contributivas (TC)", totalTC.ToString(), vlTC, "Tareas improductivas (TI)", totalTI.ToString(), vlTI, "Total", total.ToString(), "100%" };
+            generalData = param.OfType<string>().ToList();
+
             createGeneralTableHeader();
             createGeneralTable(param);
-            return new List<Microcharts.Entry> {
-                 new Microcharts.Entry(totalTP)
+            return new List<Entry> {
+                 new Entry(totalTP)
                  {
                      Label = "Productivas",
                      ValueLabel = vlTP,
                      Color = SKColor.Parse("#4edb5c")
                  },
-                  new Microcharts.Entry(totalTC)
+                  new Entry(totalTC)
                  {
                      Label = "Colaborativas",
                      ValueLabel = vlTC,
                      Color = SKColor.Parse("#4e60db")
                  },
-                   new Microcharts.Entry(totalTI)
+                   new Entry(totalTI)
                  {
                      Label = "No productivas",
                      ValueLabel = vlTI,
@@ -410,7 +386,9 @@ namespace AppProdu
             if (task.Equals("1"))
             {
 
-
+                tpDataA.Add(tarea);
+                tpDataA.Add(total);
+                tpDataA.Add(porcentaje);
                 gridTP.Children.Add(h1, 0, row);
                 gridTP.Children.Add(h2, 1, row);
                 gridTP.Children.Add(h3, 2, row);
@@ -419,7 +397,9 @@ namespace AppProdu
             }
             if (task.Equals("2"))
             {
-
+                tcDataA.Add(tarea);
+                tcDataA.Add(total);
+                tcDataA.Add(porcentaje);
                 gridTC.Children.Add(h1, 0, row);
                 gridTC.Children.Add(h2, 1, row);
                 gridTC.Children.Add(h3, 2, row);
@@ -428,6 +408,9 @@ namespace AppProdu
             if (task.Equals("3"))
             {
 
+                tiDataA.Add(tarea);
+                tiDataA.Add(total);
+                tiDataA.Add(porcentaje);
                 gridTI.Children.Add(h1, 0, row);
                 gridTI.Children.Add(h2, 1, row);
                 gridTI.Children.Add(h3, 2, row);
@@ -438,10 +421,11 @@ namespace AppProdu
         }
 
         //string date, string pro, string impro, string obs, string actPro, string actImpro
-        void AddDateTable(string[] data, int row)
+        void addDateTable(string[] data, int row)
         {
             for (int i = 0; i < 6; i++)
             {
+                daysData.Add(data[i]);
                 var temp = new Label
                 {
                     Text = data[i],
@@ -457,108 +441,135 @@ namespace AppProdu
         async void getPathsxDay(string sampling)
         {
 
-
-            NpgsqlConnection connection = new NpgsqlConnection(ConnectionString);
-            connection.Open();
-
-
-            NpgsqlCommand command = connection.CreateCommand();
-            command.CommandText = "SELECT fecha, count(*) FROM  (operator_registers o INNER JOIN paths p ON p.id = o.path_id) b INNER JOIN activities a ON b.activity_id = a.id  WHERE sampling_id =  " + sampling + " group by fecha order by fecha asc;";
-
-            NpgsqlDataReader reader = command.ExecuteReader();
-
-            while (reader.Read())
+            try
             {
-                totalPaths.Add(Int32.Parse(reader[1].ToString()));
+                NpgsqlConnection connection = new NpgsqlConnection(ConnectionString);
+                connection.Open();
 
+
+                NpgsqlCommand command = connection.CreateCommand();
+                command.CommandText = "SELECT fecha, count(*) FROM  (operator_registers o INNER JOIN paths p ON p.id = o.path_id) b INNER JOIN activities a ON b.activity_id = a.id  WHERE sampling_id =  " + sampling + " group by fecha order by fecha asc;";
+
+                NpgsqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    totalPaths.Add(Int32.Parse(reader[1].ToString()));
+
+                }
+
+                connection.Close();
             }
-
-            connection.Close();
+            catch (Exception e)
+            {
+                titulo.Text = "Error de conexión";
+            }
 
         }
 
         async void fillBest(string sampling)
         {
-            NpgsqlConnection connection = new NpgsqlConnection(ConnectionString);
-            connection.Open();
 
-
-            NpgsqlCommand command = connection.CreateCommand();
-            command.CommandText = "SELECT fecha, nombre, count FROM (SELECT fecha, nombre, count(nombre), ROW_NUMBER() OVER (PARTITION BY fecha  ORDER BY count(nombre) DESC) num  FROM  (operator_registers o INNER JOIN paths p ON p.id = o.path_id) b INNER JOIN activities a ON b.activity_id = a.id  WHERE sampling_id = " + sampling + " AND activity_type_id = 1 group by fecha, nombre) act WHERE num = 1;";
-
-            NpgsqlDataReader reader = command.ExecuteReader();
-
-            while (reader.Read())
+            try
             {
-                bestDays.Add(reader[1].ToString());
+                NpgsqlConnection connection = new NpgsqlConnection(ConnectionString);
+                connection.Open();
 
+
+                NpgsqlCommand command = connection.CreateCommand();
+                command.CommandText = "SELECT fecha, nombre, count FROM (SELECT fecha, nombre, count(nombre), ROW_NUMBER() OVER (PARTITION BY fecha  ORDER BY count(nombre) DESC) num  FROM  (operator_registers o INNER JOIN paths p ON p.id = o.path_id) b INNER JOIN activities a ON b.activity_id = a.id  WHERE sampling_id = " + sampling + " AND activity_type_id = 1 group by fecha, nombre) act WHERE num = 1;";
+
+                NpgsqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    bestDays.Add(reader[1].ToString());
+
+                }
+
+                connection.Close();
             }
-
-            connection.Close();
+            catch (Exception ex)
+            {
+                titulo.Text = "Error de conexión";
+            }
 
         }
 
         async void fillWorst(string sampling)
         {
-            NpgsqlConnection connection = new NpgsqlConnection(ConnectionString);
-            connection.Open();
-
-
-            NpgsqlCommand command = connection.CreateCommand();
-            command.CommandText = "SELECT fecha, nombre, count FROM (SELECT fecha, nombre, count(nombre), ROW_NUMBER() OVER (PARTITION BY fecha  ORDER BY count(nombre) DESC) num  FROM  (operator_registers o INNER JOIN paths p ON p.id = o.path_id) b INNER JOIN activities a ON b.activity_id = a.id  WHERE sampling_id = " + sampling + " AND NOT activity_type_id = 1 group by fecha, nombre) act WHERE num = 1 ORDER BY fecha asc;";
-
-            NpgsqlDataReader reader = command.ExecuteReader();
-
-            while (reader.Read())
+            try
             {
-                worstDays.Add(reader[1].ToString());
+                NpgsqlConnection connection = new NpgsqlConnection(ConnectionString);
+                connection.Open();
 
+
+                NpgsqlCommand command = connection.CreateCommand();
+                command.CommandText = "SELECT fecha, nombre, count FROM (SELECT fecha, nombre, count(nombre), ROW_NUMBER() OVER (PARTITION BY fecha  ORDER BY count(nombre) DESC) num  FROM  (operator_registers o INNER JOIN paths p ON p.id = o.path_id) b INNER JOIN activities a ON b.activity_id = a.id  WHERE sampling_id = " + sampling + " AND NOT activity_type_id = 1 group by fecha, nombre) act WHERE num = 1 ORDER BY fecha asc;";
+
+                NpgsqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    worstDays.Add(reader[1].ToString());
+
+                }
+
+                connection.Close();
             }
-
-            connection.Close();
+            catch (Exception ex)
+            {
+                titulo.Text = "Error de conexión";
+            }
 
         }
 
         async void fillPathsxDays(string sampling)
         {
-            NpgsqlConnection connection = new NpgsqlConnection(ConnectionString);
-            connection.Open();
-
-            fillBest(sampling);
-            fillWorst(sampling);
-            string[] header = { "Fecha", "TP", "TI", "Observaciones", "TP Destacada", "TI Destacada" };
-            AddDateTable(header, 0);
-
-
-            NpgsqlCommand command = connection.CreateCommand();
-            command.CommandText = "SELECT fecha, count(*) FROM  (operator_registers o INNER JOIN paths p ON p.id = o.path_id) b INNER JOIN activities a ON b.activity_id = a.id  WHERE sampling_id =  " + sampling + " AND activity_type_id = 1 group by fecha order by fecha asc;";
-
-            NpgsqlDataReader reader = command.ExecuteReader();
-            int count = 0;
-            while (reader.Read())
+            try
             {
+                NpgsqlConnection connection = new NpgsqlConnection(ConnectionString);
+                connection.Open();
 
-                Microcharts.Entry temp = new Microcharts.Entry(Int32.Parse(reader[1].ToString()));
-                string lab = reader[0].ToString();
-                var indx = lab.IndexOf(" ");
-                temp.Label = lab.Substring(0, indx);
-                temp.Color = SKColor.Parse("#1155c1");
-                int tc = Int32.Parse(reader[1].ToString());
-                int ti = totalPaths[count] - tc;
-                temp.ValueLabel = Math.Round(((double)tc * 100.0 / (double)totalPaths[count]), 2).ToString() + "%";
-                string tiTot = Math.Round(((double)ti * 100.0 / (double)totalPaths[count]), 2).ToString() + "%";
-                dayList.Add(temp);
-                string[] row = { temp.Label, temp.ValueLabel, tiTot, totalPaths[count].ToString(), bestDays[count], worstDays[count] };
-                AddDateTable(row, count + 1);
-
-                count++;
+                fillBest(sampling);
+                fillWorst(sampling);
+                string[] header = { "Fecha", "TP", "TI", "Observaciones", "TP Destacada", "TI Destacada" };
+                addDateTable(header, 0);
 
 
+                NpgsqlCommand command = connection.CreateCommand();
+                command.CommandText = "SELECT fecha, count(*) FROM  (operator_registers o INNER JOIN paths p ON p.id = o.path_id) b INNER JOIN activities a ON b.activity_id = a.id  WHERE sampling_id =  " + sampling + " AND activity_type_id = 1 group by fecha order by fecha asc;";
+
+                NpgsqlDataReader reader = command.ExecuteReader();
+                int count = 0;
+                while (reader.Read())
+                {
+
+                    Entry temp = new Entry(Int32.Parse(reader[1].ToString()));
+                    string lab = reader[0].ToString();
+                    var indx = lab.IndexOf(" ");
+                    temp.Label = lab.Substring(0, indx);
+                    temp.Color = SKColor.Parse("#1155c1");
+                    int tc = Int32.Parse(reader[1].ToString());
+                    int ti = totalPaths[count] - tc;
+                    temp.ValueLabel = Math.Round(((double)tc * 100.0 / (double)totalPaths[count]), 2).ToString() + "%";
+                    string tiTot = Math.Round(((double)ti * 100.0 / (double)totalPaths[count]), 2).ToString() + "%";
+                    dayList.Add(temp);
+                    string[] row = { temp.Label, temp.ValueLabel, tiTot, totalPaths[count].ToString(), bestDays[count], worstDays[count] };
+                    addDateTable(row, count + 1);
+
+                    count++;
+
+
+                }
+                connection.Close();
             }
-            connection.Close();
+            catch (Exception ex)
+            {
+                titulo.Text = "Error de conexión";
+            }
 
         }
-        /*
         async void getNames(string sampling)
         {
             try
@@ -582,10 +593,31 @@ namespace AppProdu
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                titulo.Text = "Error de conexión";
             }
 
         }
+
+
+
+        void IniData(string sampling)
+        {
+            getNumberTasks(sampling, "1");
+            getNumberTasks(sampling, "2");
+            getNumberTasks(sampling, "3");
+            getDataCharts(sampling, "1");
+            getDataCharts(sampling, "2");
+            getDataCharts(sampling, "3");
+            getPathsxDay(sampling);
+            fillPathsxDays(sampling);
+            getNames(sampling);
+            idMuestreo = sampling;
+
+            titulo.Text = nombreMuestreo + " (" + tipoActividad + ")";
+
+
+        }
+
 
 
         public async Task SendEmail(string subject, string body)
@@ -641,7 +673,7 @@ namespace AppProdu
             return columnName;
         }
 
-        private DocumentFormat.OpenXml.Spreadsheet.Cell InsertCell(uint rowIndex, uint columnIndex, Worksheet worksheet, string value)
+        private Cell InsertCell(uint rowIndex, uint columnIndex, Worksheet worksheet, string value)
         {
             Row row = null;
             var sheetData = worksheet.GetFirstChild<SheetData>();
@@ -659,13 +691,13 @@ namespace AppProdu
             var cellReference = columnName + rowIndex;      // e.g. A1
 
             // Check if the row contains a cell with the specified column name.
-            var cell = row.Elements<DocumentFormat.OpenXml.Spreadsheet.Cell>()
+            var cell = row.Elements<Cell>()
                        .FirstOrDefault(c => c.CellReference.Value == cellReference);
             if (cell == null)
             {
                 if (int.TryParse(value, out int n))
                 {
-                    cell = new DocumentFormat.OpenXml.Spreadsheet.Cell() { CellReference = cellReference, CellValue = new CellValue(value), DataType = CellValues.Number };
+                    cell = new Cell() { CellReference = cellReference, CellValue = new CellValue(value), DataType = CellValues.Number };
                 }
                 else if (value[value.Length - 1] == '%')
                 {
@@ -674,11 +706,11 @@ namespace AppProdu
                     result = Convert.ToDouble(value);
                     result = result / 100.00;
                     value = result.ToString();
-                    cell = new DocumentFormat.OpenXml.Spreadsheet.Cell() { CellReference = cellReference, CellValue = new CellValue(value), DataType = CellValues.Number };
+                    cell = new Cell() { CellReference = cellReference, CellValue = new CellValue(value), DataType = CellValues.Number };
                 }
                 else
                 {
-                    cell = new DocumentFormat.OpenXml.Spreadsheet.Cell() { CellReference = cellReference, CellValue = new CellValue(value), DataType = CellValues.String };
+                    cell = new Cell() { CellReference = cellReference, CellValue = new CellValue(value), DataType = CellValues.String };
                 }
                 if (row.ChildElements.Count < columnIndex)
                     row.AppendChild(cell);
@@ -690,6 +722,8 @@ namespace AppProdu
         }
 
         //Excel Chart
+
+
 
 
         //Create table
@@ -708,7 +742,11 @@ namespace AppProdu
                 InsertCell(fr + ront, fc + cont, wrk, values[i]);
                 cont++;
             }
+
+
         }
+
+
 
         async void OnButtonClicked(object sender, EventArgs args)
         {
@@ -809,30 +847,40 @@ namespace AppProdu
             ExperimentalFeatures.Enable(ExperimentalFeatures.EmailAttachments);
 
             SendEmail("MAC - Proyecto (" + nombreProyecto + ") - Datos del muestreo (" + nombreMuestreo + ")", "Mensaje enviado usando el app móvil de Muestreo de Actividades Constructivas (MAC) \n Nombre del Proyecto: " + nombreProyecto + "\n Nombre del Muestreo: " + nombreMuestreo + "\n ID muestreo: " + idMuestreo + "\n Tipo Actividad: " + tipoActividad + "\n Descripcion: " + desMuestreo);
-        }*/
+        }
 
 
-        void IniData(string sampling)
+        public Graficos()
         {
 
-            try {
-                getNumberTasks(sampling, "1");
-                getNumberTasks(sampling, "2");
-                getNumberTasks(sampling, "3");
-                getDataCharts(sampling, "1");
-                getDataCharts(sampling, "2");
-                getDataCharts(sampling, "3");
-                getPathsxDay(sampling);
-                //getNames(sampling);
-                fillPathsxDays(sampling);
-            }
-            catch
+            InitializeComponent();
+            BindingContext = this;
+
+            int sampling_id = (int)Application.Current.Properties["id-sampling"];
+            IniData(sampling_id.ToString());
+            CrossDeviceOrientation.Current.LockOrientation(DeviceOrientations.Landscape);
+
+            Chart1.Chart = new DonutChart() { Entries = generalChart() };
+            Chart2.Chart = new DonutChart()
             {
-                Navigation.PopAsync();
+                Entries = tpList,
+                HoleRadius = 0.5f,
+            };
+            Chart3.Chart = new DonutChart()
+            {
+                Entries = tcList,
+                HoleRadius = 0.5f,
+            };
+            Chart4.Chart = new DonutChart()
+            {
+                Entries = tiList,
+                HoleRadius = 0.5f,
+            };
+            Chart5.Chart = new LineChart()
+            {
+                Entries = dayList,
 
-            }
-            
-
+            };
         }
     }
 }

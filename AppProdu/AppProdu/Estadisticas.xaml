@@ -17,7 +17,7 @@
             <StackLayout Grid.Row="1">
 
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                    <Label Text="p =" FontSize="Small" FontAttributes="Bold"/>
+                    <Label Text="p =" FontSize="18" FontAttributes="Bold"/>
                     <Entry Placeholder="" 
                          WidthRequest="250"
                          Keyboard="Numeric"
@@ -25,7 +25,7 @@
                          x:Name="pEntry"/>
                 </StackLayout>
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                    <Label Text="q =" FontSize="Small" FontAttributes="Bold"/>
+                    <Label Text="q =" FontSize="18" FontAttributes="Bold"/>
                     <Entry Placeholder="" 
                            WidthRequest="250"
                            Keyboard="Numeric"
@@ -33,7 +33,7 @@
                            x:Name="qEntry"/>
                 </StackLayout>
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                    <Label Text="error =" FontSize="Small" FontAttributes="Bold"/>
+                    <Label Text="error =" FontSize="18" FontAttributes="Bold"/>
                     <Entry Placeholder="Error" 
                            WidthRequest="250"
                            Keyboard="Numeric"
@@ -45,16 +45,16 @@
                     </Entry>
                 </StackLayout>
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                    <Label Text="Za/2 =" FontSize="Small" FontAttributes="Bold"/>
+                    <Label Text="Za/2 =" FontSize="18" FontAttributes="Bold"/>
                     <Picker Title="Za/2"
                             WidthRequest="250"
                             HorizontalOptions="Center"
                             x:Name="zPicker"
                             HeightRequest="65"
-                            FontSize="Small"/>
+                            FontSize="18"/>
                 </StackLayout>
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                    <Label Text="" FontSize="Small" FontAttributes="Bold" HorizontalOptions="Center"
+                    <Label Text="" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center"
                            TextColor="Red" x:Name="errorLabel"/>
                 </StackLayout>
             </StackLayout>

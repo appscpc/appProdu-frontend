@@ -22,7 +22,7 @@
                     HorizontalOptions="Center"
                     HeightRequest="250"
                     x:Name="comentarioEditor"
-                    FontSize="Small"/>
+                    FontSize="18"/>
                 <Button Text="Guardar" Grid.Row="2"
                     TextColor="White"
                     WidthRequest="200"

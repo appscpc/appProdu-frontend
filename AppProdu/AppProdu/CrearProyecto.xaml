@@ -21,14 +21,14 @@
                    x:Name="nombreProyectoEntry"
                    WidthRequest="250"
                    HorizontalOptions="Center"
-                   FontSize="Small"/>
+                   FontSize="18"/>
             <Controls:PlaceholderEditor 
                 Placeholder="Descripción"
                 x:Name="descripcionProyectoEditor"
                 WidthRequest="250"
                 HorizontalOptions="Center"
                 HeightRequest="100"
-                FontSize="Small"/>
+                FontSize="18"/>
 
         </StackLayout>
 

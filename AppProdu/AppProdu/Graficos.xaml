@@ -7,7 +7,7 @@
     <ScrollView>
         <StackLayout Orientation="Vertical">
 
-
+            <Label x:Name="titulo" FontSize="17" HorizontalOptions="Center"  VerticalOptions="Center" />
             <Label FontSize="15" Text=" &#10; &#10; Porcentaje general de tareas"/>
             <forms:ChartView x:Name="Chart1"  
                              HeightRequest="200"/>
@@ -31,12 +31,14 @@
 
             <Button Text="Enviar datos por e-mail"
                     TextColor="White"
-                    WidthRequest="200"
+                    WidthRequest="250"
                     HeightRequest="45"
                     BorderRadius="10"
                     BackgroundColor="#439dbb"
                     HorizontalOptions="Center"
-                    VerticalOptions="CenterAndExpand"   
+                    VerticalOptions="CenterAndExpand" 
+                    Margin="10"
+                    Clicked="OnButtonClicked"
                      />
         </StackLayout>
     </ScrollView>

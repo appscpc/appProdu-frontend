@@ -16,31 +16,31 @@
             <StackLayout Grid.Row="1">
 
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                    <Label Text="N =" FontSize="Small" FontAttributes="Bold"/>
+                    <Label Text="N =" FontSize="18" FontAttributes="Bold"/>
                     <Entry Placeholder="" 
                          WidthRequest="250"
                          Keyboard="Numeric"
                          IsEnabled="False"
-                           FontSize="Small"
+                           FontSize="18"
                          x:Name="NEntry"/>
                 </StackLayout>
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                    <Label Text="n =" FontSize="Small" FontAttributes="Bold"/>
+                    <Label Text="n =" FontSize="18" FontAttributes="Bold"/>
                     <Entry Placeholder="" 
                            WidthRequest="250"
                            Keyboard="Numeric"
                            IsEnabled="False"
-                           FontSize="Small"
+                           FontSize="18"
                            x:Name="nEntry"/>
                 </StackLayout>
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                    <Label Text="n Def. =" FontSize="Small" FontAttributes="Bold"/>
+                    <Label Text="n Def. =" FontSize="18" FontAttributes="Bold"/>
                     <Entry Placeholder="" 
                            WidthRequest="250"
                            HorizontalOptions="Center"
                            Keyboard="Numeric"
                            IsEnabled="False"
-                           FontSize="Small"
+                           FontSize="18"
                            x:Name="nDefEntry"/>
                 </StackLayout>
             </StackLayout>
