@@ -21,10 +21,10 @@ namespace AppProdu
 
             faseData = pFase;
 
-            zValues.Add("1,65","0,90");
-            zValues.Add("1,96", "0,95");
-            zValues.Add("2,245", "0,975");
-            zValues.Add("2,575", "0,99");
+            zValues.Add("1.65","0,90");
+            zValues.Add("1.96", "0,95");
+            zValues.Add("2.245", "0,975");
+            zValues.Add("2.575", "0,99");
             foreach (string type in zValues.Values)
             {
                 zPicker.Items.Add(type);
@@ -44,7 +44,7 @@ namespace AppProdu
             {
                 double error = double.Parse(errorEntry.Text);
                 Console.WriteLine("ERROR= " + error + " " + errorEntry.Text);
-                if(error < 0.1 && error > 0.01)
+                if(error <= 0.1 && error >= 0.01)
                 {
                     double p = (faseData.p / (faseData.p + faseData.q));
                     double q = (faseData.q / (faseData.p + faseData.q)); 
@@ -53,8 +53,9 @@ namespace AppProdu
                     double n = Math.Pow(z, 2) * p * q / Math.Pow(error, 2);
                     Console.WriteLine("El N= " + n);
 
-                    faseData.error = float.Parse(error.ToString());
-                    faseData.z = float.Parse(z.ToString());
+                    faseData.error = (float)error;
+                    Console.WriteLine("KEVIN"+faseData.error);
+                    faseData.z = (float)z;
                     var calculosPage = new CalculosHechos(System.Convert.ToInt32(Math.Round(n)), faseData, System.Convert.ToInt32(faseData.p + faseData.q));
                     await Navigation.PushAsync(calculosPage);
                 }

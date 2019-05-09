@@ -10,29 +10,33 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="80" />
                     <RowDefinition Height="60" />
-                    <RowDefinition Height="60" />
-                    <RowDefinition Height="*" />
+                    <RowDefinition Height="300" />
                     <RowDefinition Height="60" />
                 </Grid.RowDefinitions>
-                <Label Text="" Grid.Row="0"
+                <StackLayout Grid.Row="0">
+                    <Label Text="" 
                        x:Name="muestrasRestantesLabel"
                        FontSize="Small"
                        HorizontalOptions="Center"
-                       HeightRequest="65"
+                       HeightRequest="40"
                        WidthRequest="250"/>
-                <Label Text="" Grid.Row="0"
+                    <Label Text="" 
                        x:Name="muestrasActualesLabel"
                        FontSize="Small"
                        HorizontalOptions="Center"
-                       HeightRequest="65"
+                       HeightRequest="40"
                        WidthRequest="250"/>
+                </StackLayout>
+                
                 <Picker Title="Fecha"  Grid.Row="1"
                     HorizontalOptions="Center"
                     x:Name="fechaPicker"
                     WidthRequest="250"
-                    HeightRequest="65"
-                    FontSize="Small"/>
+                    HeightRequest="50"
+                    FontSize="Small"
+                        IsEnabled="False"/>
                 <ListView x:Name="MyListView" Grid.Row="2"
                     ItemsSource="{Binding Items}"
                     ItemTapped="Handle_ItemTapped"

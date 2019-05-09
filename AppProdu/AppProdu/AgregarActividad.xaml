@@ -20,7 +20,8 @@
                            x:Name="operarioActualLabel"
                            WidthRequest="250"
                            HeightRequest="50"
-                           FontSize="Small"/>
+                           FontSize="Small"
+                           HorizontalOptions="Center"/>
                 </StackLayout>
                 <StackLayout Grid.Row="1">
                     <SearchBar Placeholder="Buscar" 

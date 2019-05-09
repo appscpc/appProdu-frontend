@@ -36,10 +36,11 @@
                     <Label Text="error =" FontSize="Small" FontAttributes="Bold"/>
                     <Entry Placeholder="Error" 
                            WidthRequest="250"
+                           Keyboard="Numeric"
                            HorizontalOptions="Center"
                            x:Name="errorEntry">
                         <Entry.Behaviors>
-                            <behavior:MaskedBehavior Mask="0,XXX" />
+                            <behavior:MaskedBehavior Mask="0.XXX" />
                         </Entry.Behaviors>
                     </Entry>
                 </StackLayout>

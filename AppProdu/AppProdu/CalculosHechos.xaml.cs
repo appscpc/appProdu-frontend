@@ -84,8 +84,9 @@ namespace AppProdu
 
                     try
                     {
-                        Console.WriteLine("AQUI5");
+                        Console.WriteLine("AQUI5" + data.nombre);
                         Console.WriteLine(data.id + " & " + data.nombre);
+                        
                         await guardarErrorZ();
                         var etapasPage = new Etapas();
                         await Navigation.PushAsync(etapasPage);
@@ -110,7 +111,7 @@ namespace AppProdu
             {
                 id = faseData.id,
                 error = faseData.error,
-                z = float.Parse(zValues[faseData.z.ToString()]),
+                z = faseData.z,
                 token = Application.Current.Properties["currentToken"].ToString()
             };
             string jsonData = JsonConvert.SerializeObject(newFase);

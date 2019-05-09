@@ -29,7 +29,7 @@ namespace AppProdu
 			InitializeComponent ();
             index = (int)Application.Current.Properties["index-activity"];
             Console.WriteLine("HELLO MOTO: ", index);
-            operarioActualLabel.Text = "Asignar actividad al Operario " + index + 1;
+            operarioActualLabel.Text = "Asignar actividad al Operario " + (index + 1);
             listaDeOperarios = listaOperarios;
 		}
 
@@ -147,7 +147,14 @@ namespace AppProdu
                     }
                     index = index + 1;
                     Application.Current.Properties["index-activity"] = index;
-                    operarioActualLabel.Text = "Asignar actividad al Operario " + index+1;
+                    if (index >= listaDeOperarios.Count)
+                    {
+                        operarioActualLabel.Text = "Actividades asignadas a todos los operarios!";
+                    }
+                    else
+                    {
+                        operarioActualLabel.Text = "Asignar actividad al Operario " + (index + 1);
+                    }
                 }
             }
             else

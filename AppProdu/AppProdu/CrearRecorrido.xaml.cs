@@ -102,7 +102,7 @@ namespace AppProdu
                 }
                 else
                 {
-                    await DisplayAlert("La temperatura no debe ser menor a 0° ni mayor a 40°!", "Por favor cambiar este valor", "OK");
+                    await DisplayAlert("Error de temperatura!", "La temperatura no debe ser menor a 0° ni mayor a 40°!\nPor favor cambiar este valor!", "OK");
                 }
                 
             }

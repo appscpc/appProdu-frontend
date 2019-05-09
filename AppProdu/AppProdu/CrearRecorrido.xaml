@@ -32,7 +32,7 @@
                     Keyboard="Numeric"
                    x:Name="temperaturaEntry">
                 <Entry.Behaviors>
-                    <behavior:MaskedBehavior Mask="XX,XX" />
+                    <behavior:MaskedBehavior Mask="XX.XX" />
                 </Entry.Behaviors>
             </Entry>
             <Picker Title="Porcentaje de Humedad" 

@@ -823,6 +823,7 @@ namespace AppProdu
                 getDataCharts(sampling, "2");
                 getDataCharts(sampling, "3");
                 getPathsxDay(sampling);
+                //getNames(sampling);
                 fillPathsxDays(sampling);
             }
             catch

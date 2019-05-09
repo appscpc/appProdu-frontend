@@ -4,6 +4,7 @@
              x:Class="AppProdu.EstadisticasGenerales"
              Title="Estadísticas Generales">
     <ContentPage.Content>
+        <ScrollView>
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -12,12 +13,12 @@
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="60" />
-                <RowDefinition Height="75" />
-                <RowDefinition Height="75" />
-                <RowDefinition Height="75" />
-                <RowDefinition Height="75" />
-                <RowDefinition Height="75" />
-                <RowDefinition Height="45" />
+                <RowDefinition Height="70" />
+                <RowDefinition Height="70" />
+                <RowDefinition Height="70" />
+                <RowDefinition Height="70" />
+                <RowDefinition Height="70" />
+                <RowDefinition Height="100" />
             </Grid.RowDefinitions>
           
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Grid.Row="0" Grid.Column="0">
@@ -99,5 +100,6 @@
                         Clicked="cargarGraficos_Clicked"/>
             </StackLayout>
         </Grid>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

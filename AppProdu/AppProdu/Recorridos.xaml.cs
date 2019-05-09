@@ -33,12 +33,6 @@ namespace AppProdu
         {
             obtenerFechas();
             await obtenerSamplingAsync();
-            fechaPicker.SelectedIndexChanged += (object sender, EventArgs e) =>
-            {
-                Console.WriteLine("ES ESTE: " + fechaPicker.SelectedItem.ToString());
-                fechaPicker.Unfocus();
-                fechaPicker.SelectedIndex = 0;//On the screen picker stay at the old value
-            };
 
             await obtenerFaseAsync((int)Application.Current.Properties["id-fase"]);
             int preliminar = (int)Application.Current.Properties["preliminar-done"];
