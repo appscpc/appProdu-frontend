@@ -24,6 +24,8 @@ namespace AppProdu.iOS
         {
             Rg.Plugins.Popup.Popup.Init();
             global::Xamarin.Forms.Forms.Init();
+
+            Xamarin.Forms.DependencyService.Register<SavePath, SavePathIos>();
             LoadApplication(new App());
 
             return base.FinishedLaunching(app, options);
