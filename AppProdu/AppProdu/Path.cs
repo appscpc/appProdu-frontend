@@ -4,7 +4,7 @@ using System.Text;
 
 namespace AppProdu
 {
-    class Path
+    public class Path
     {
         public int id { get; set; }
         public int cantOperarios { get; set; }

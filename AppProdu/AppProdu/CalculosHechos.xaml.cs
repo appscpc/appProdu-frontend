@@ -88,8 +88,9 @@ namespace AppProdu
                         Console.WriteLine(data.id + " & " + data.nombre);
                         
                         await guardarErrorZ();
-                        var etapasPage = new Etapas();
-                        await Navigation.PushAsync(etapasPage);
+
+                        this.Navigation.RemovePage(this.Navigation.NavigationStack[this.Navigation.NavigationStack.Count - 2]);
+                        await Navigation.PopAsync(); //Hace pop a esta página
 
                     }
                     catch (Exception)

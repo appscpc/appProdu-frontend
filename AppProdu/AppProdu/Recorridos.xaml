@@ -36,16 +36,17 @@
                     WidthRequest="250"
                     HeightRequest="50"
                     FontSize="18"
-                        IsEnabled="False"/>
+                    SelectedIndexChanged="FechaPicker_SelectedIndexChanged"
+                    />
                 <ListView x:Name="MyListView" Grid.Row="2"
                     ItemsSource="{Binding Items}"
-                    ItemTapped="Handle_ItemTapped"
+                    ItemTapped="MyListView_ItemTapped"
                     CachingStrategy="RecycleElement">
 
                             <!--Built in Cells-->
                             <ListView.ItemTemplate>
                                 <DataTemplate>
-                                    <TextCell Text="{Binding nombre}" />
+                                    <TextCell Text="{Binding hora}" />
                                 </DataTemplate>
                             </ListView.ItemTemplate>
 

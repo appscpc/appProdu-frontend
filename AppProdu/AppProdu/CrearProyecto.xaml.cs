@@ -76,7 +76,9 @@ namespace AppProdu
                         Application.Current.Properties["id-project"] = data.id;
                         var muestreosPage = new Muestreos();
                         await Navigation.PushAsync(muestreosPage);
-                        
+                        Console.WriteLine("Se ha cerrado y seguido!");
+                        this.Navigation.RemovePage(this.Navigation.NavigationStack[this.Navigation.NavigationStack.Count - 2]);
+
 
                     }
                     catch (Exception)

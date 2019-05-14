@@ -77,6 +77,7 @@ namespace AppProdu
                         await crearFaseAsync();
                         var etapasPage = new Etapas();
                         await Navigation.PushAsync(etapasPage);
+                        this.Navigation.RemovePage(this.Navigation.NavigationStack[this.Navigation.NavigationStack.Count - 2]);
 
                     }
                     catch (Exception)

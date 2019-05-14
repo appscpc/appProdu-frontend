@@ -126,7 +126,6 @@ namespace AppProdu
                 if (index >= listaDeOperarios.Count)
                 {
                     await DisplayAlert("Error!", "Ya se agregaron todas las actividades!", "OK");
-                    Console.WriteLine("HOLA SOY JUANITO");
                 }
                 else
                 {
@@ -150,6 +149,7 @@ namespace AppProdu
                     if (index >= listaDeOperarios.Count)
                     {
                         operarioActualLabel.Text = "Actividades asignadas a todos los operarios!";
+                        await Navigation.PopAsync();
                     }
                     else
                     {

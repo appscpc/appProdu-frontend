@@ -24,6 +24,14 @@ namespace AppProdu
         {
             InitializeComponent();
 
+
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            Items = new ObservableCollection<Sampling>();
             getSamplings();
         }
 

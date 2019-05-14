@@ -64,6 +64,8 @@ namespace AppProdu
                             Console.WriteLine("AQUI5");
                             Console.WriteLine(data.id + " & " + data.nombre);
 
+                            Application.Current.Properties["muestras-mas"] = System.Convert.ToInt32(masMuestrasEntry.Text);
+
                             PopupNavigation.Instance.PopAsync(true);
                         }
                         catch (Exception)
@@ -118,6 +120,9 @@ namespace AppProdu
                         {
                             Console.WriteLine("AQUI5");
                             Console.WriteLine(data.id + " & " + data.nombre);
+
+                            Application.Current.Properties["muestras-mas"] = System.Convert.ToInt32(masMuestrasEntry.Text);
+
                             PopupNavigation.Instance.PopAsync(true);
 
                         }

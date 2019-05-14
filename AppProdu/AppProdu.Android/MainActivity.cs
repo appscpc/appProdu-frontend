@@ -19,11 +19,15 @@ namespace AppProdu.Droid
             ToolbarResource = Resource.Layout.Toolbar;
 
             CrossCurrentActivity.Current.Activity = this;
+            //Android.Support.V7.Widget.Toolbar toolbar = this.FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.toolbar);
+            //SetSupportActionBar(toolbar);
 
             base.OnCreate(savedInstanceState);
             Rg.Plugins.Popup.Popup.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             LoadApplication(new App());
         }
+
+        
     }
 }

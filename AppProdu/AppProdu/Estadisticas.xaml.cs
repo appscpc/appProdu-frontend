@@ -42,13 +42,15 @@ namespace AppProdu
         {
             if (!String.IsNullOrEmpty(errorEntry.Text) && !String.IsNullOrEmpty(zPicker.SelectedItem.ToString()))
             {
-                double error = double.Parse(errorEntry.Text);
+                double error;
+                double.TryParse(errorEntry.Text, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.GetCultureInfo("en-US"), out error);
                 Console.WriteLine("ERROR= " + error + " " + errorEntry.Text);
                 if(error <= 0.1 && error >= 0.01)
                 {
                     double p = (faseData.p / (faseData.p + faseData.q));
                     double q = (faseData.q / (faseData.p + faseData.q)); 
-                    double z = double.Parse(zValues.FirstOrDefault(x => x.Value == zPicker.SelectedItem.ToString()).Key);
+                    double z;
+                    double.TryParse(zValues.FirstOrDefault(x => x.Value == zPicker.SelectedItem.ToString()).Key, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.GetCultureInfo("en-US"), out z);
                     Console.WriteLine("HOLAAAAAAA " + z);
                     double n = Math.Pow(z, 2) * p * q / Math.Pow(error, 2);
                     Console.WriteLine("El N= " + n);

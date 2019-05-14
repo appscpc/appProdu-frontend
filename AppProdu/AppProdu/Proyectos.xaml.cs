@@ -26,9 +26,15 @@ namespace AppProdu
         public Proyectos()
         {
             InitializeComponent();
+            NavigationPage.SetHasBackButton(this, false);
 
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            Items = new ObservableCollection<Project> ();
             getProjects();
-
         }
 
         async public void getProjects()
@@ -55,24 +61,11 @@ namespace AppProdu
                 var jobject = JObject.Parse(responseBody);
                 Console.WriteLine("AQUI3" + jobject["projects"].ToString());
                 proyectos = JsonConvert.DeserializeObject<List<Project>>(jobject["projects"].ToString());
-                // Above three lines can be replaced with new helper method below
-                // string responseBody = await client.GetStringAsync(uri);
 
-                //Console.WriteLine(responseBody);
-                //proyectos = JsonConvert.DeserializeObject<List<Project>>(responseBody);
-                //Console.WriteLine(proyectos[0].nombre);
-                //Console.WriteLine("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-
-
-                //Items = new ObservableCollection<Project> { };
-                //string temp;
                 for (int i = 0; i < proyectos.Count; i++)
                 {
                     Project pro = proyectos[i];
-                   // temp = "";
-                    //temp += pro.nombre + "\n\n" + pro.descripcion;
                     Items.Add(pro);
-                    //Console.WriteLine(pro.nombre);
                 }
 
 
@@ -119,5 +112,26 @@ namespace AppProdu
             var crearProyectoPage = new CrearProyecto();
             Navigation.PushAsync(crearProyectoPage);
         }
+
+        protected override bool OnBackButtonPressed()
+        {
+            //await Navigation.PopAsync(true);
+            base.OnBackButtonPressed();
+            
+            Device.BeginInvokeOnMainThread(async () =>
+            {
+                bool answer = await DisplayAlert("Cerrar Sesión!", "Está seguro que desea cerrar sesión?", "Sí", "No");
+                if (answer)
+                {
+                    Application.Current.Properties["id"] = 0;
+                    Application.Current.Properties["currentToken"] = "";
+                    await Navigation.PopAsync(true);
+                }
+            });
+
+            return true;
+
+        }
+
     }
 }

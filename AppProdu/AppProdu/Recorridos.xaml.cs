@@ -3,6 +3,7 @@ using Newtonsoft.Json.Linq;
 using Rg.Plugins.Popup.Services;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -18,19 +19,22 @@ namespace AppProdu
     public partial class Recorridos : ContentPage
     {
         Dictionary<int?, string> pathDates = new Dictionary<int?, string>();
-        List<fechasPicker> dates;
+        List<String> dates;
+        List<Path> recorridos;
+        ObservableCollection<Path> Items = new ObservableCollection<Path> { };
         Fase currentFase = new Fase();
 
         public Recorridos()
         {
             InitializeComponent();
 
-
+            Application.Current.Properties["muestras-mas"] = 0;
 
         }
 
         protected override async void OnAppearing()
         {
+            dates = new List<String>();
             obtenerFechas();
             await obtenerSamplingAsync();
 
@@ -41,11 +45,11 @@ namespace AppProdu
                 if (currentFase.extraFlag == 0)
                 {
                     bool answer = await DisplayAlert("Número de muestras alcanzada!", "Desea agregar más muestras a la fase preliminar?", "Sí", "No");
-                    Console.WriteLine("Answer: " + answer);
                     if (answer)
                     {
                         await PopupNavigation.Instance.PushAsync(new PopupMore(1)); 
                         Application.Current.Properties["preliminar-done"] = 0;
+                        muestrasRestantesLabel.Text = "Muestras restantes: " + Application.Current.Properties["muestras-mas"];
                         await ActualizarFlag(1);
                     }
                     else
@@ -54,6 +58,7 @@ namespace AppProdu
                         await cambiarFase();
                         var calcularPage = new Estadisticas(currentFase);
                         await Navigation.PushAsync(calcularPage);
+                        this.Navigation.RemovePage(this.Navigation.NavigationStack[this.Navigation.NavigationStack.Count - 2]);
                     }
                 }
                 else
@@ -63,7 +68,9 @@ namespace AppProdu
                     await cambiarFase();
                     var calcularPage = new Estadisticas(currentFase);
                     await Navigation.PushAsync(calcularPage);
+                    this.Navigation.RemovePage(this.Navigation.NavigationStack[this.Navigation.NavigationStack.Count - 2]);
                 }
+                
             }
             else if (preliminar == 2)
             {
@@ -73,18 +80,20 @@ namespace AppProdu
                     if (currentFase.extraFlag == 0)
                     {
                         bool answer = await DisplayAlert("Número de muestras alcanzada!", "Desea agregar más muestras a la fase definitiva?", "Sí", "No");
-                        Console.WriteLine("Answer: " + answer);
                         if (answer)
                         {
                             await PopupNavigation.Instance.PushAsync(new PopupMore(2)); 
                             Application.Current.Properties["definitive-done"] = 0;
+                            muestrasRestantesLabel.Text = "Muestras restantes: " + Application.Current.Properties["muestras-mas"];
                             await ActualizarFlag(1);
                         }
                         else
                         {
                             Application.Current.Properties["definitive-done"] = 2;
                             await terminarFaseDef();
-                            //pasar a mostrar estadisticas
+                            var estadisticas = new EstadisticasGenerales();
+                            await Navigation.PushAsync(estadisticas);
+                            this.Navigation.RemovePage(this.Navigation.NavigationStack[this.Navigation.NavigationStack.Count - 2]);
                         }
                     }
                     else
@@ -92,14 +101,18 @@ namespace AppProdu
                         Application.Current.Properties["definitive-done"] = 2;
                         await DisplayAlert("Número de muestras alcanzada!", "Se procederá a mostrar las estadísticas finales!", "OK");
                         await terminarFaseDef();
-                        //pasar a mostrar estadisticas
+                        var estadisticas = new EstadisticasGenerales();
+                        await Navigation.PushAsync(estadisticas);
+                        this.Navigation.RemovePage(this.Navigation.NavigationStack[this.Navigation.NavigationStack.Count - 2]);
                     }
                 }
                 else if (definitive == 3)
                 {
                     //caso en el que N sea menor o igual a n
                 }
+                
             }
+            
         }
 
 
@@ -134,19 +147,20 @@ namespace AppProdu
                 var result = await response.Content.ReadAsStringAsync();
                 Console.WriteLine(result.ToString());
                 var jobject = JObject.Parse(result);
-
+                Console.WriteLine("AQUI3 "+ result);
 
                 try
                 {
 
-                    dates = JsonConvert.DeserializeObject<List<fechasPicker>>(jobject["fechas"].ToString());
+                    dates = JsonConvert.DeserializeObject<List<String>>(jobject["fechas"].ToString());
                     Console.WriteLine("AQUI5");
 
 
-                    pathDates = dates.ToDictionary(m => m.id, m => m.fecha);
+                    //pathDates = dates.ToDictionary(m => m.id, m => m.fecha);
 
+                    
 
-                    foreach (string type in pathDates.Values)
+                    foreach (string type in dates)
                     {
                         fechaPicker.Items.Add(type);
                     }
@@ -188,24 +202,17 @@ namespace AppProdu
                 token = Application.Current.Properties["currentToken"].ToString()
             };
             string jsonData = JsonConvert.SerializeObject(newFase);
-            Console.WriteLine("AQUI" + jsonData);
             var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
             HttpResponseMessage response = await client.PostAsync("/fases/getfasebyid.json", content);
-            Console.WriteLine(response.StatusCode.ToString());
             if (response.StatusCode == HttpStatusCode.OK)
             {
-                Console.WriteLine("AQUI2");
                 var result = await response.Content.ReadAsStringAsync();
-                Console.WriteLine(result.ToString());
                 var jobject = JObject.Parse(result);
-                Console.WriteLine("AQUI3" + jobject["fase"].ToString());
                 var data = JsonConvert.DeserializeObject<Fase>(jobject["fase"].ToString());
                 try
                 {
 
-                    Console.WriteLine("AQUI5");
-                    Console.WriteLine(data.id);
                     currentFase = data;
 
                 }
@@ -236,23 +243,16 @@ namespace AppProdu
                 token = Application.Current.Properties["currentToken"].ToString()
             };
             string jsonData = JsonConvert.SerializeObject(newSampling);
-            Console.WriteLine("AQUI" + jsonData);
             var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
             HttpResponseMessage response = await client.PostAsync("/samplings/getsampling.json", content);
-            Console.WriteLine(response.StatusCode.ToString());
             if (response.StatusCode == HttpStatusCode.OK)
             {
-                Console.WriteLine("AQUI2");
                 var result = await response.Content.ReadAsStringAsync();
-                Console.WriteLine(result.ToString());
                 var jobject = JObject.Parse(result);
                 var data = JsonConvert.DeserializeObject<Sampling>(jobject["muestreo"].ToString());
                 try
                 {
-
-                    Console.WriteLine("AQUI5");
-                    Console.WriteLine(data.id);
                     muestrasRestantesLabel.Text = "Muestras restantes: " + (data.cantMuestrasTotal - data.muestrasActual);
                     muestrasActualesLabel.Text = "Muestras actuales: " + data.muestrasActual;
 
@@ -284,11 +284,9 @@ namespace AppProdu
                 token = Application.Current.Properties["currentToken"].ToString()
             };
             string jsonData = JsonConvert.SerializeObject(newFase);
-            Console.WriteLine("AQUI" + jsonData);
             var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
             HttpResponseMessage response = await client.PostAsync("/fases/updateflag.json", content);
-            Console.WriteLine(response.StatusCode.ToString());
             if (response.StatusCode == HttpStatusCode.OK)
             {
                 Console.WriteLine("AQUI2");
@@ -467,9 +465,64 @@ namespace AppProdu
             }
         }
 
-        async void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
+        async public void getPaths()
         {
+            try
+            {
+                var client = new HttpClient
+                {
+                    BaseAddress = new Uri("https://app-produ.herokuapp.com")
+                };
+                var fechaSelected = new Path
+                {
+                    fecha = fechaPicker.SelectedItem.ToString(),
+                    token = Application.Current.Properties["currentToken"].ToString()
+                };
+                string jsonData = JsonConvert.SerializeObject(fechaSelected);
+                //Console.WriteLine("AQUI");
+                var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
+                HttpResponseMessage response = await client.PostAsync("/paths/datepaths.json", content);
+
+                response.EnsureSuccessStatusCode();
+                string responseBody = await response.Content.ReadAsStringAsync();
+                var jobject = JObject.Parse(responseBody);
+                Console.WriteLine("AQUI3" + jobject["recorrido"].ToString());
+                recorridos = JsonConvert.DeserializeObject<List<Path>>(jobject["recorrido"].ToString());
+
+                Items = new ObservableCollection<Path>();
+
+                for (int i = 0; i < recorridos.Count; i++)
+                {
+                    Path pro = recorridos[i];
+                    Items.Add(pro);
+                }
+
+
+                MyListView.ItemsSource = Items;
+
+            }
+            catch (HttpRequestException e)
+            {
+                Console.WriteLine("\nException Caught!");
+                Console.WriteLine("Message :{0} ", e.Message);
+            }
+        }
+
+        private void FechaPicker_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            getPaths();
+        }
+
+        private async Task MyListView_ItemTapped(object sender, ItemTappedEventArgs e)
+        {
+            if (e.Item == null)
+                return;
+
+
+            Path temp = (Path)e.Item;
+            var detallePage = new DetalleRecorrido(temp);
+            await Navigation.PushAsync(detallePage);
         }
     }
 }

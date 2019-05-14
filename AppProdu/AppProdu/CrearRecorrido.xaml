@@ -57,7 +57,7 @@
             <DatePicker 
                 MinimumDate="01/01/2018"
                 HeightRequest="65"
-                WidthRequest="150"
+                WidthRequest="250"
                 HorizontalOptions="Center"
                 FontSize="18"
                 x:Name="fechaPicker"

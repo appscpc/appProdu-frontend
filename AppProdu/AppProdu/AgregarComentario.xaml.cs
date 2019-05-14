@@ -19,7 +19,8 @@ namespace AppProdu
 		public AgregarComentario ()
 		{
 			InitializeComponent ();
-		}
+            NavigationPage.SetHasBackButton(this, false);
+        }
 
         private async Task agregarComentario_Clicked(object sender, EventArgs e)
         {
@@ -50,8 +51,8 @@ namespace AppProdu
                     Console.WriteLine("AQUI3" + jobject["recorrido"].ToString());
                     var data = JsonConvert.DeserializeObject<Path>(jobject["recorrido"].ToString());
                     Console.WriteLine("AQUI5");
-                    var recorridosPage = new Recorridos();
-                    await Navigation.PushAsync(recorridosPage);
+
+                    await Navigation.PopAsync();
 
                 }
                 catch (Exception)

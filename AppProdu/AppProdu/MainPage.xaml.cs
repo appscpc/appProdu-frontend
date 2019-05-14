@@ -25,7 +25,9 @@ namespace AppProdu
             registrarEvent.Tapped += async(s, e) =>
             {
                 var registrarPage = new RegistrarUsuario();
-                await Navigation.PushAsync(registrarPage);
+                await Navigation.PushAsync(registrarPage);/*
+                var Page = new PruebaComaPunto();
+                await Navigation.PushAsync(Page);*/
             };
             registrarLabel.GestureRecognizers.Add(registrarEvent);
             
@@ -34,11 +36,6 @@ namespace AppProdu
 
         async private void ingresarButton_Clicked(object sender, EventArgs e)
         {
-            /*
-            BackendRequest client = new BackendRequest();
-            var url = new Uri("https://app-produ.herokuapp.com");
-            string jsonData = @"{""correo"" : "+correo+", "+"password"+" : "+pass+"}";
-            Console.WriteLine(correo+" "+pass);*/
             Console.WriteLine(userLogged.correo + " " + userLogged.password);
 
             if (!String.IsNullOrEmpty(correoEntry.Text) && !String.IsNullOrEmpty(passEntry.Text))
@@ -55,39 +52,38 @@ namespace AppProdu
                 Console.WriteLine("AQUI " + jsonData);
                 var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
-                HttpResponseMessage response = await client.PostAsync("/users/login.json", content);
-                //Console.WriteLine(response.StatusCode.ToString());
-                if (response.StatusCode == HttpStatusCode.OK)
+                
+                try
                 {
-                    Console.WriteLine("AQUI2");
-                    var result = await response.Content.ReadAsStringAsync();
-                    Console.WriteLine(result.ToString());
-                    var jobject = JObject.Parse(result);
-                    Console.WriteLine("AQUI3" + jobject.ToString());
-                    var data = JsonConvert.DeserializeObject<List<User>>(jobject["usuario"].ToString());
-                    Console.WriteLine("AQUI4");
 
-                    try
+                    HttpResponseMessage response = await client.PostAsync("/users/login.json", content);
+                    //Console.WriteLine(response.StatusCode.ToString());
+                    if (response.StatusCode == HttpStatusCode.OK)
                     {
-                        //Console.WriteLine(data[0].id + " & " + data[0].nombre);
-
-                        //var result = await client.Get<User>(url.ToString(), jsonData);
-
+                        Console.WriteLine("AQUI2");
+                        var result = await response.Content.ReadAsStringAsync();
+                        Console.WriteLine(result.ToString());
+                        var jobject = JObject.Parse(result);
+                        Console.WriteLine("AQUI3" + jobject.ToString());
+                        var data = JsonConvert.DeserializeObject<List<User>>(jobject["usuario"].ToString());
+                        Console.WriteLine("AQUI4");
                         Application.Current.Properties["id"] = data[0].id;
                         Application.Current.Properties["currentToken"] = data[0].token;
                         var proyectosPage = new Proyectos();
                         await Navigation.PushAsync(proyectosPage);
 
+
                     }
-                    catch (Exception)
+                    else
                     {
                         Console.WriteLine("AQUI6\nError al iniciar sesión!");
+                        await DisplayAlert("Error!", "Usuario o contraseña inválidos!", "OK");
                     }
+
                 }
-                else
+                catch (Exception)
                 {
                     Console.WriteLine("AQUI6\nError al iniciar sesión!");
-                    await DisplayAlert("Error!", "Usuario o contraseña inválidos!", "OK");
                 }
 
             }
@@ -98,9 +94,22 @@ namespace AppProdu
             }
         }
 
-        protected override void OnAppearing()
+        protected override async void OnAppearing()
         {
             //Your code here
+            try
+            {
+                int idUserLogged = (int)Application.Current.Properties["id"];
+                if (idUserLogged != 0)
+                {
+                    var proyectosPage = new Proyectos();
+                    await Navigation.PushAsync(proyectosPage);
+                }
+            }
+            catch (Exception e)
+            {
+
+            }
         }
     }
 }

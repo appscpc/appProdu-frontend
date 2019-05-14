@@ -40,7 +40,9 @@ namespace AppProdu
 
         private async Task crearRec_Clicked(object sender, EventArgs e)
         {
-            var temp = System.Convert.ToDouble(temperaturaEntry.Text);
+            double temp;
+            double.TryParse(temperaturaEntry.Text, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.GetCultureInfo("en-US"), out temp);
+            Console.WriteLine("Temp = "+ temp);
             var humedadValue = humedadDict.FirstOrDefault(x => x.Value == humedadPicker.SelectedItem.ToString()).Key;
             if (!String.IsNullOrEmpty(cantOpEntry.Text) && !String.IsNullOrEmpty(temperaturaEntry.Text) && !String.IsNullOrEmpty(humedadPicker.SelectedItem.ToString()))
             {
@@ -53,7 +55,7 @@ namespace AppProdu
                     var newPath = new Path
                     {
                         cantOperarios = System.Convert.ToInt32(cantOpEntry.Text),
-                        temperatura = System.Convert.ToDouble(temperaturaEntry.Text),
+                        temperatura = temp,
                         humedad = humedadValue,
                         hora = horaEntry.Text,
                         fecha = fechaPicker.Date.ToString(),
@@ -85,6 +87,7 @@ namespace AppProdu
                             Application.Current.Properties["id-path"] = data.id;
                             var registrarActPage = new RegistrarActividades(newPath.cantOperarios);
                             await Navigation.PushAsync(registrarActPage);
+                            this.Navigation.RemovePage(this.Navigation.NavigationStack[this.Navigation.NavigationStack.Count - 2]);
 
 
                         }

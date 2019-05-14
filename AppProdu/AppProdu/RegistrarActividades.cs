@@ -22,6 +22,7 @@ namespace AppProdu
 
 		public RegistrarActividades (int cantOperarios)
 		{
+            NavigationPage.SetHasBackButton(this, false);
             totalOperarios = cantOperarios;
             Application.Current.Properties["index-activity"] = index;
             
@@ -69,11 +70,9 @@ namespace AppProdu
                     });
                 }
                 
-                Console.WriteLine("HHH " + i);
                 var Operarios1 = new Label { Text = "Operario " + i, HorizontalOptions = LayoutOptions.Center, FontSize = 12 };
                 var Actividad1 = new Label { Text = listaOperarios[i - 1].nombre_activity, HorizontalOptions = LayoutOptions.Center, FontSize = 12, TextColor = Color.Blue, FontAttributes = FontAttributes.Bold };
                 var Tipo1 = new Label { Text = listaOperarios[i - 1].nombre_activity_type, HorizontalOptions = LayoutOptions.Center, FontSize = 12 };
-                Console.WriteLine("MICHAEL MYERS");
                 var registrarEvent = new TapGestureRecognizer();
                 registrarEvent.Tapped += async (s, e) =>
                 {
@@ -94,7 +93,6 @@ namespace AppProdu
             Grid.SetColumnSpan(buttonAgregar, 3);
 
             Content = contentView;
-            Console.WriteLine("EDGE " + listaOperarios.Count);
         }
 
         public class OperatorRegister
@@ -107,57 +105,66 @@ namespace AppProdu
 
         private async Task agregarActividad_Clicked()
         {
-            pG = 0;
-            qG = 0;
-            var client = new HttpClient
+            if (index >= listaOperarios.Count)
             {
-                BaseAddress = new Uri("https://app-produ.herokuapp.com")
-            };
-            List<OperatorRegister> listaRegistros = new List<OperatorRegister>();
-            for (int i = 0; i<listaOperarios.Count; i++)
-            {
-                listaRegistros.Add(new OperatorRegister
+                pG = 0;
+                qG = 0;
+                var client = new HttpClient
                 {
-                    activity_id = listaOperarios[i].activity_id,
-                    path_id = (int)Application.Current.Properties["id-path"],
-                    token = Application.Current.Properties["currentToken"].ToString()
-                });
-                if(listaOperarios[i].activity_type_id == 1)
+                    BaseAddress = new Uri("https://app-produ.herokuapp.com")
+                };
+                List<OperatorRegister> listaRegistros = new List<OperatorRegister>();
+                for (int i = 0; i < listaOperarios.Count; i++)
                 {
-                    pG = pG + 1;
+                    listaRegistros.Add(new OperatorRegister
+                    {
+                        activity_id = listaOperarios[i].activity_id,
+                        path_id = (int)Application.Current.Properties["id-path"],
+                        token = Application.Current.Properties["currentToken"].ToString()
+                    });
+                    if (listaOperarios[i].activity_type_id == 1)
+                    {
+                        pG = pG + 1;
+                    }
+                    else
+                    {
+                        qG = qG + 1;
+                    }
+                }
+                var obj = new Dictionary<string, List<OperatorRegister>>();
+                obj.Add("registers", listaRegistros);
+                string jsonData = JsonConvert.SerializeObject(obj);
+                Console.WriteLine("AQUI" + jsonData);
+                Console.WriteLine("P: " + pG);
+                Console.WriteLine("Q: " + qG);
+                var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = await client.PostAsync("/operator_registers/newregister.json", content);
+                Console.WriteLine(response.StatusCode.ToString());
+                if (response.StatusCode == HttpStatusCode.Created)
+                {
+                    Console.WriteLine("AQUI2");
+                    var result = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine(result.ToString());
+                    await guardarProductividad();
+                    await guardarMuestras();
+
+                    var commentPage = new AgregarComentario();
+                    await Navigation.PushAsync(commentPage);
+                    this.Navigation.RemovePage(this.Navigation.NavigationStack[this.Navigation.NavigationStack.Count - 2]);
+
                 }
                 else
                 {
-                    qG = qG + 1;
+                    Console.WriteLine("AQUI6\nNo se pudo crear");
+                    //errorLabel.Text = "Error\nUsuario o contraseña inválido";
                 }
-            }
-            var obj = new Dictionary<string, List<OperatorRegister>>();
-            obj.Add("registers", listaRegistros);
-            string jsonData = JsonConvert.SerializeObject(obj);
-            Console.WriteLine("AQUI" + jsonData);
-            Console.WriteLine("P: " + pG);
-            Console.WriteLine("Q: " + qG);
-            var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-            
-            HttpResponseMessage response = await client.PostAsync("/operator_registers/newregister.json", content);
-            Console.WriteLine(response.StatusCode.ToString());
-            if (response.StatusCode == HttpStatusCode.Created)
-            {
-                Console.WriteLine("AQUI2");
-                var result = await response.Content.ReadAsStringAsync();
-                Console.WriteLine(result.ToString());
-                await guardarProductividad();
-                await guardarMuestras();
-
-                var commentPage = new AgregarComentario();
-                await Navigation.PushAsync(commentPage);
-
             }
             else
             {
-                Console.WriteLine("AQUI6\nNo se pudo crear");
-                //errorLabel.Text = "Error\nUsuario o contraseña inválido";
+                await DisplayAlert("Error!", "Faltan actividades por registrar!\nPor favor asigne todas las actividades solicitadas!", "OK");
             }
+            
         }
 
         public async Task guardarProductividad()
