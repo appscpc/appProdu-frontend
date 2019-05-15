@@ -479,13 +479,23 @@ namespace AppProdu
 
 
                 NpgsqlCommand command = connection.CreateCommand();
-                command.CommandText = "SELECT fecha, nombre, count FROM (SELECT fecha, nombre, count(nombre), ROW_NUMBER() OVER (PARTITION BY fecha  ORDER BY count(nombre) DESC) num  FROM  (operator_registers o INNER JOIN paths p ON p.id = o.path_id) b INNER JOIN activities a ON b.activity_id = a.id  WHERE sampling_id = " + sampling + " AND activity_type_id = 1 group by fecha, nombre) act WHERE num = 1;";
+                command.CommandText = "SELECT concat_ws( ' ' , x.fecha, y.fecha) as fecha, x.nombre, y.nombre FROM (SELECT path_id, fecha, nombre, count FROM (SELECT path_id, fecha, nombre, count(nombre), ROW_NUMBER() OVER (PARTITION BY fecha  ORDER BY count(nombre) DESC) num  FROM  (operator_registers o INNER JOIN paths p ON p.id = o.path_id) b INNER JOIN activities a ON b.activity_id = a.id  WHERE sampling_id = "+ sampling + " AND activity_type_id = 1 group by fecha, nombre, path_id) act WHERE num = 1 ORDER BY fecha asc) x LEFT JOIN(SELECT path_id, fecha, nombre, count FROM(SELECT path_id, fecha, nombre, count(nombre), ROW_NUMBER() OVER(PARTITION BY fecha  ORDER BY count(nombre) DESC) num  FROM(operator_registers o INNER JOIN paths p ON p.id = o.path_id) b INNER JOIN activities a ON b.activity_id = a.id  WHERE sampling_id = "+ sampling + " AND NOT activity_type_id = 1 group by fecha, nombre, path_id) act WHERE num = 1 ORDER BY fecha asc) y ON x.path_id = y.path_id";
+
 
                 NpgsqlDataReader reader = command.ExecuteReader();
 
                 while (reader.Read())
                 {
-                    bestDays.Add(reader[1].ToString());
+
+                    string a = reader[1].ToString();
+                    string b = reader[2].ToString();
+                    if (a == null || a == String.Empty)
+                        a = "N/A";
+                    if (b == null || b == String.Empty)
+                        b = "N/A";
+
+                    bestDays.Add(a);
+                    worstDays.Add(b);
 
                 }
 
@@ -498,33 +508,7 @@ namespace AppProdu
 
         }
 
-        async void fillWorst(string sampling)
-        {
-            try
-            {
-                NpgsqlConnection connection = new NpgsqlConnection(ConnectionString);
-                connection.Open();
-
-
-                NpgsqlCommand command = connection.CreateCommand();
-                command.CommandText = "SELECT fecha, nombre, count FROM (SELECT fecha, nombre, count(nombre), ROW_NUMBER() OVER (PARTITION BY fecha  ORDER BY count(nombre) DESC) num  FROM  (operator_registers o INNER JOIN paths p ON p.id = o.path_id) b INNER JOIN activities a ON b.activity_id = a.id  WHERE sampling_id = " + sampling + " AND NOT activity_type_id = 1 group by fecha, nombre) act WHERE num = 1 ORDER BY fecha asc;";
-
-                NpgsqlDataReader reader = command.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    worstDays.Add(reader[1].ToString());
-
-                }
-
-                connection.Close();
-            }
-            catch (Exception ex)
-            {
-                titulo.Text = "Error de conexión";
-            }
-
-        }
+      
 
         async void fillPathsxDays(string sampling)
         {
@@ -534,7 +518,6 @@ namespace AppProdu
                 connection.Open();
 
                 fillBest(sampling);
-                fillWorst(sampling);
                 string[] header = { "Fecha", "TP", "TI", "Observaciones", "TP Destacada", "TI Destacada" };
                 addDateTable(header, 0);
 
@@ -546,14 +529,13 @@ namespace AppProdu
                 int count = 0;
                 while (reader.Read())
                 {
-
-                    Entry temp = new Entry(Int32.Parse(reader[1].ToString()));
+                    int tc = Int32.Parse(reader[1].ToString());
+                    int ti = totalPaths[count] - tc;
+                    Entry temp = new Entry((tc * 100 / totalPaths[count]));
                     string lab = reader[0].ToString();
                     var indx = lab.IndexOf(" ");
                     temp.Label = lab.Substring(0, indx);
-                    temp.Color = SKColor.Parse("#1155c1");
-                    int tc = Int32.Parse(reader[1].ToString());
-                    int ti = totalPaths[count] - tc;
+                    temp.Color = SKColor.Parse("#1155c1");                    
                     temp.ValueLabel = Math.Round(((double)tc * 100.0 / (double)totalPaths[count]), 2).ToString() + "%";
                     string tiTot = Math.Round(((double)ti * 100.0 / (double)totalPaths[count]), 2).ToString() + "%";
                     dayList.Add(temp);
@@ -710,7 +692,7 @@ namespace AppProdu
                     double result;
                     result = Convert.ToDouble(value);
                     result = result / 100.00;
-                    value = result.ToString();
+                    value = Convert.ToDecimal(result, System.Threading.Thread.CurrentThread.CurrentCulture).ToString();
                     cell = new Cell() { CellReference = cellReference, CellValue = new CellValue(value), DataType = CellValues.Number };
                 }
                 else

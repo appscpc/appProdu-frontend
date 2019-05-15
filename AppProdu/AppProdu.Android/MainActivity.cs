@@ -34,11 +34,6 @@ namespace AppProdu.Droid
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             Xamarin.Forms.DependencyService.Register<SavePath, SavePathDroid>();
 
-
-           
-
-
-
             LoadApplication(new App());
 
             updateNonGrantedPermissions();
@@ -83,7 +78,6 @@ namespace AppProdu.Droid
 
             }
         }
-
 
     }
 
