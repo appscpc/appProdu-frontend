@@ -156,7 +156,7 @@ namespace AppProdu
                         {
                             int num = Int32.Parse(reader[1].ToString());
                             addTaskTable(reader[0].ToString(), reader[1].ToString(), Math.Round(((double)num * 100.0 / (double)totalTP), 2).ToString() + "%", "1", t1);
-                            t2++;
+                            t1++;
 
                         }
                         if (activity.Equals("2"))
