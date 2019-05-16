@@ -35,6 +35,7 @@ namespace AppProdu
         protected override async void OnAppearing()
         {
             dates = new List<String>();
+            //fechaPicker.Items.Clear();
             obtenerFechas();
             await obtenerSamplingAsync();
 
@@ -516,13 +517,13 @@ namespace AppProdu
 
         private async Task MyListView_ItemTapped(object sender, ItemTappedEventArgs e)
         {
-            if (e.Item == null)
+           /* if (e.Item == null)
                 return;
 
 
-            Path temp = (Path)e.Item;
-            var detallePage = new DetalleRecorrido(temp);
-            await Navigation.PushAsync(detallePage);
+            Path temp = (Path)e.Item;*/
+            //var detallePage = new DetalleRecorrido(temp);
+            //await Navigation.PushAsync(detallePage);
         }
     }
 }

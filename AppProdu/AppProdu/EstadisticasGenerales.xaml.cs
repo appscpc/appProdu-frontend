@@ -27,17 +27,20 @@ namespace AppProdu
 		{
 			InitializeComponent ();
 
-            zValues.Add("1,65", "0,9");
-            zValues.Add("1,96", "0,95");
-            zValues.Add("2,245", "0,975");
-            zValues.Add("2,575", "0,99");
+            zValues.Add("1.65", "0,9");
+            zValues.Add("1.96", "0,95");
+            zValues.Add("2.245", "0,975");
+            zValues.Add("2.575", "0,99");
 
         }
 
-        protected override void OnAppearing()
+        protected override async void OnAppearing()
         {
             base.OnAppearing();
             CrossDeviceOrientation.Current.LockOrientation(DeviceOrientations.Undefined);
+            await obtenerFaseAsync(1);
+            await obtenerFaseAsync(2);
+            await obtenerSamplingAsync();
 
         }
 
@@ -157,7 +160,7 @@ namespace AppProdu
                 token = Application.Current.Properties["currentToken"].ToString()
             };
             string jsonData = JsonConvert.SerializeObject(newFase);
-            Console.WriteLine("AQUI" + jsonData);
+            Console.WriteLine("AQUIguardarerror" + jsonData);
             var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
             HttpResponseMessage response = await client.PostAsync("/fases/updateerror.json", content);
@@ -192,9 +195,7 @@ namespace AppProdu
 
         private async Task cargarDatos_Clicked(object sender, EventArgs e)
         {
-            await obtenerFaseAsync(1);
-            await obtenerFaseAsync(2);
-            await obtenerSamplingAsync();
+            
 
             nP.Text = sampling.cantMuestras.ToString();
             pP.Text = (fasePrem.p/(fasePrem.p + fasePrem.q)).ToString();
@@ -209,11 +210,14 @@ namespace AppProdu
             Dictionary<string, string> reversedDict = zValues.ToDictionary(
             kvp => kvp.Value,
             kvp => kvp.Key);
-            double z = double.Parse(reversedDict[faseDef.z.ToString()]);
-            Console.WriteLine("HOLAAAAAAA " + z);
+            double z;
+            double.TryParse(faseDef.z.ToString(), System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.GetCultureInfo("en-US"), out z);
+            //double z = double.Parse(reversedDict[faseDef.z.ToString()]);
+            Console.WriteLine("HOLAAAAAAA " + z + " " + sampling.cantMuestrasTotal + " " + p + " " +q + " " + Math.Pow(z,2));
             double error = Math.Sqrt(Math.Pow(z, 2) * p * q / System.Convert.ToDouble(sampling.cantMuestrasTotal.ToString()));
             Console.WriteLine("El N= " + error);
             faseDef.error = float.Parse(error.ToString());
+            Console.WriteLine("Error DEF: "+ faseDef.error);
 
             nD.Text = sampling.cantMuestrasTotal.ToString();
             pD.Text = (faseDef.p / (faseDef.p + faseDef.q)).ToString();

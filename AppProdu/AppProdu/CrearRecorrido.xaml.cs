@@ -66,7 +66,7 @@ namespace AppProdu
                     string jsonData = JsonConvert.SerializeObject(newPath);
                     Console.WriteLine("AQUI" + jsonData);
                     var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-
+                    /*
                     HttpResponseMessage response = await client.PostAsync("/paths/newpath.json", content);
                     Console.WriteLine(response.StatusCode.ToString());
                     if (response.StatusCode == HttpStatusCode.Created)
@@ -101,7 +101,7 @@ namespace AppProdu
                     {
                         Console.WriteLine("AQUI6\nNo se pudo crear el proyecto");
                         //errorLabel.Text = "Error\nUsuario o contraseña inválido";
-                    }
+                    }*/
                 }
                 else
                 {

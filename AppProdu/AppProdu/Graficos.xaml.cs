@@ -16,6 +16,7 @@ using DocumentFormat.OpenXml.Spreadsheet;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml;
 using Xamarin.Essentials;
+using AppProdu.Droid;
 
 namespace AppProdu
 {
@@ -29,6 +30,7 @@ namespace AppProdu
         List<int> totalPaths = new List<int>();
         List<string> bestDays = new List<string>();
         List<string> worstDays = new List<string>();
+        string savedpath;
 
         List<Entry> tpList = new List<Entry>();
         List<Entry> tcList = new List<Entry>();
@@ -589,6 +591,9 @@ namespace AppProdu
                 nombreProyecto = reader[3].ToString();
                 desMuestreo = reader[4].ToString();
 
+                if (desMuestreo == null || desMuestreo == String.Empty)
+                    desMuestreo = "N/D";
+
                 connection.Close();
             }
             catch (Exception ex)
@@ -636,7 +641,7 @@ namespace AppProdu
 
 
 
-                message.Attachments.Add(new EmailAttachment(System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), idMuestreo + "_" + tipoActividad + ".xlsx")));
+                message.Attachments.Add(new EmailAttachment(System.IO.Path.Combine(savedpath, idMuestreo + "_" + tipoActividad + ".xlsx")));
 
                 await Email.ComposeAsync(message);
             }
@@ -750,7 +755,11 @@ namespace AppProdu
 
         async void OnButtonClicked(object sender, EventArgs args)
         {
-            using (SpreadsheetDocument spreadsheetDocument = SpreadsheetDocument.Create(System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), idMuestreo + "_" + tipoActividad + ".xlsx"), SpreadsheetDocumentType.Workbook))
+            // savedpath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+            savedpath = DependencyService.Get<SavePath>().getSavePath();
+
+
+            using (SpreadsheetDocument spreadsheetDocument = SpreadsheetDocument.Create(System.IO.Path.Combine(savedpath, idMuestreo + "_" + tipoActividad + ".xlsx"), SpreadsheetDocumentType.Workbook))
             {
                 // Add a WorkbookPart to the document.
                 WorkbookPart workbookpart = spreadsheetDocument.AddWorkbookPart();

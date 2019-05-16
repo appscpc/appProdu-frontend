@@ -21,6 +21,7 @@ namespace AppProdu.UWP
         {
             this.InitializeComponent();
 
+            Xamarin.Forms.DependencyService.Register<SavePath, SavePathUwp>();
             LoadApplication(new AppProdu.App());
         }
     }

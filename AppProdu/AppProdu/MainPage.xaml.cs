@@ -55,7 +55,6 @@ namespace AppProdu
                 
                 try
                 {
-
                     HttpResponseMessage response = await client.PostAsync("/users/login.json", content);
                     //Console.WriteLine(response.StatusCode.ToString());
                     if (response.StatusCode == HttpStatusCode.OK)
@@ -71,8 +70,6 @@ namespace AppProdu
                         Application.Current.Properties["currentToken"] = data[0].token;
                         var proyectosPage = new Proyectos();
                         await Navigation.PushAsync(proyectosPage);
-
-
                     }
                     else
                     {
