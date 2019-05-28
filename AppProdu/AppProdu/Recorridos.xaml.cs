@@ -18,10 +18,10 @@ namespace AppProdu
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class Recorridos : ContentPage
     {
-        Dictionary<int?, string> pathDates = new Dictionary<int?, string>();
-        List<String> dates;
+        List<string> dates;
         List<Path> recorridos;
         ObservableCollection<Path> Items = new ObservableCollection<Path> { };
+        ObservableCollection<string> ItemsDates = new ObservableCollection<string> { };
         Fase currentFase = new Fase();
 
         public Recorridos()
@@ -34,8 +34,7 @@ namespace AppProdu
 
         protected override async void OnAppearing()
         {
-            dates = new List<String>();
-            //fechaPicker.Items.Clear();
+            dates = new List<string>();
             obtenerFechas();
             await obtenerSamplingAsync();
 
@@ -110,6 +109,12 @@ namespace AppProdu
                 else if (definitive == 3)
                 {
                     //caso en el que N sea menor o igual a n
+                    Application.Current.Properties["definitive-done"] = 2;
+                    await DisplayAlert("Número de muestras alcanzada!", "Se procederá a mostrar las estadísticas finales!", "OK");
+                    await terminarFaseDef();
+                    var estadisticas = new EstadisticasGenerales();
+                    await Navigation.PushAsync(estadisticas);
+                    this.Navigation.RemovePage(this.Navigation.NavigationStack[this.Navigation.NavigationStack.Count - 2]);
                 }
                 
             }
@@ -144,7 +149,6 @@ namespace AppProdu
             Console.WriteLine(response.StatusCode.ToString());
             if (response.StatusCode == HttpStatusCode.OK)
             {
-                Console.WriteLine("AQUI2");
                 var result = await response.Content.ReadAsStringAsync();
                 Console.WriteLine(result.ToString());
                 var jobject = JObject.Parse(result);
@@ -156,15 +160,15 @@ namespace AppProdu
                     dates = JsonConvert.DeserializeObject<List<String>>(jobject["fechas"].ToString());
                     Console.WriteLine("AQUI5");
 
-
-                    //pathDates = dates.ToDictionary(m => m.id, m => m.fecha);
-
-                    
-
-                    foreach (string type in dates)
+                    fechaPicker.Items.Clear();
+                    for (int i = 0; i < dates.Count; i++)
                     {
-                        fechaPicker.Items.Add(type);
+                        string temp = dates[i];
+                        ItemsDates.Add(temp);
                     }
+
+
+                    fechaPicker.ItemsSource = ItemsDates;
                 }
                 catch (HttpRequestException e)
                 {
@@ -476,6 +480,7 @@ namespace AppProdu
                 };
                 var fechaSelected = new Path
                 {
+                    id = (int)Application.Current.Properties["id-sampling"], //Le paso el id del muestreo y no del path porque es el que necesito 
                     fecha = fechaPicker.SelectedItem.ToString(),
                     token = Application.Current.Properties["currentToken"].ToString()
                 };
@@ -496,6 +501,9 @@ namespace AppProdu
                 for (int i = 0; i < recorridos.Count; i++)
                 {
                     Path pro = recorridos[i];
+                    var dateTime = DateTimeOffset.Parse(pro.hora, null);
+                    string hora = dateTime.ToString("HH:mm:ss");
+                    pro.hora = hora;
                     Items.Add(pro);
                 }
 
@@ -517,13 +525,13 @@ namespace AppProdu
 
         private async Task MyListView_ItemTapped(object sender, ItemTappedEventArgs e)
         {
-           /* if (e.Item == null)
+            if (e.Item == null)
                 return;
 
 
-            Path temp = (Path)e.Item;*/
-            //var detallePage = new DetalleRecorrido(temp);
-            //await Navigation.PushAsync(detallePage);
+            Path temp = (Path)e.Item;
+            var detallePage = new DetalleRecorrido(temp);
+            await Navigation.PushAsync(detallePage);
         }
     }
 }

@@ -43,6 +43,7 @@ namespace AppProdu
             double temp;
             double.TryParse(temperaturaEntry.Text, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.GetCultureInfo("en-US"), out temp);
             Console.WriteLine("Temp = "+ temp);
+            string datePicked = String.Format("{0:d/M/yyyy}", fechaPicker.Date);
             var humedadValue = humedadDict.FirstOrDefault(x => x.Value == humedadPicker.SelectedItem.ToString()).Key;
             if (!String.IsNullOrEmpty(cantOpEntry.Text) && !String.IsNullOrEmpty(temperaturaEntry.Text) && !String.IsNullOrEmpty(humedadPicker.SelectedItem.ToString()))
             {
@@ -58,7 +59,7 @@ namespace AppProdu
                         temperatura = temp,
                         humedad = humedadValue,
                         hora = horaEntry.Text,
-                        fecha = fechaPicker.Date.ToString(),
+                        fecha = datePicked,
                         fase_id = (int)Application.Current.Properties["id-fase"],
                         sampling_id = (int)Application.Current.Properties["id-sampling"],
                         token = Application.Current.Properties["currentToken"].ToString()
@@ -66,7 +67,7 @@ namespace AppProdu
                     string jsonData = JsonConvert.SerializeObject(newPath);
                     Console.WriteLine("AQUI" + jsonData);
                     var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-                    /*
+                    
                     HttpResponseMessage response = await client.PostAsync("/paths/newpath.json", content);
                     Console.WriteLine(response.StatusCode.ToString());
                     if (response.StatusCode == HttpStatusCode.Created)
@@ -101,7 +102,7 @@ namespace AppProdu
                     {
                         Console.WriteLine("AQUI6\nNo se pudo crear el proyecto");
                         //errorLabel.Text = "Error\nUsuario o contraseña inválido";
-                    }*/
+                    }
                 }
                 else
                 {

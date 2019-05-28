@@ -33,7 +33,6 @@ namespace AppProdu
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            Items = new ObservableCollection<Project> ();
             getProjects();
         }
 
@@ -62,6 +61,8 @@ namespace AppProdu
                 Console.WriteLine("AQUI3" + jobject["projects"].ToString());
                 proyectos = JsonConvert.DeserializeObject<List<Project>>(jobject["projects"].ToString());
 
+
+                Items = new ObservableCollection<Project>();
                 for (int i = 0; i < proyectos.Count; i++)
                 {
                     Project pro = proyectos[i];

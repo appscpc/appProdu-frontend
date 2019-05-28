@@ -81,6 +81,7 @@ namespace AppProdu
                 catch (Exception)
                 {
                     Console.WriteLine("AQUI6\nError al iniciar sesión!");
+                    await DisplayAlert("Error!", "Usuario o contraseña inválidos!", "OK");
                 }
 
             }

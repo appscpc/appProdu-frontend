@@ -29,9 +29,16 @@ namespace AppProdu
 			InitializeComponent ();
             index = (int)Application.Current.Properties["index-activity"];
             Console.WriteLine("HELLO MOTO: ", index);
-            operarioActualLabel.Text = "Asignar actividad al Operario " + (index + 1);
             listaDeOperarios = listaOperarios;
-		}
+            if (index >= listaDeOperarios.Count)
+            {
+                operarioActualLabel.Text = "Actividades asignadas a todos los operarios!";
+            }
+            else
+            {
+                operarioActualLabel.Text = "Asignar actividad al Operario " + (index + 1);
+            }
+        }
 
         public class Cadena
         {
@@ -82,14 +89,10 @@ namespace AppProdu
                 {
                     Console.WriteLine("AQUI5");
                     Items = new ObservableCollection<Actividad> { };
-                    //string temp;
                     for (int i = 0; i < actividades.Count; i++)
                     {
                         Actividad pro = actividades[i];
-                        // temp = "";
-                        //temp += pro.nombre + "\n\n" + pro.descripcion;
                         Items.Add(pro);
-                        //Console.WriteLine(pro.nombre);
                     }
                     Console.WriteLine("HEY");
 

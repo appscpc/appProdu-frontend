@@ -18,16 +18,10 @@ namespace AppProdu
 	{
         int N, n;
         Fase faseData = new Fase();
-        Dictionary<string, string> zValues = new Dictionary<string, string>();
 
         public CalculosHechos (int pN, Fase pFaseData, int pn)
 		{
 			InitializeComponent ();
-
-            zValues.Add("1,65", "0,90");
-            zValues.Add("1,96", "0,95");
-            zValues.Add("2,245", "0,975");
-            zValues.Add("2,575", "0,99");
 
             N = pN;
             n = pn;
@@ -49,8 +43,9 @@ namespace AppProdu
             if(n >= N)
             {
                 Application.Current.Properties["definitive-done"] = 3;
-                var recorridosPage = new Recorridos();
-                await Navigation.PushAsync(recorridosPage);
+                await guardarErrorZ();
+                this.Navigation.RemovePage(this.Navigation.NavigationStack[this.Navigation.NavigationStack.Count - 2]);
+                await Navigation.PopAsync(); //Hace pop a esta página
                 //terminar
             }
             else

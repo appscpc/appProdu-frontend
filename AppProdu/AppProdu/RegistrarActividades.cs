@@ -134,9 +134,6 @@ namespace AppProdu
                 var obj = new Dictionary<string, List<OperatorRegister>>();
                 obj.Add("registers", listaRegistros);
                 string jsonData = JsonConvert.SerializeObject(obj);
-                Console.WriteLine("AQUI" + jsonData);
-                Console.WriteLine("P: " + pG);
-                Console.WriteLine("Q: " + qG);
                 var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
                 HttpResponseMessage response = await client.PostAsync("/operator_registers/newregister.json", content);
