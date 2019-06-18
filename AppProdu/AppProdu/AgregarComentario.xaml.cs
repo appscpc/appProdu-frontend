@@ -19,7 +19,7 @@ namespace AppProdu
 		public AgregarComentario ()
 		{
 			InitializeComponent ();
-            NavigationPage.SetHasBackButton(this, false);
+            NavigationPage.SetHasBackButton(this, false);   //Desaparece el botón de atrás de la app
         }
 
         private async Task agregarComentario_Clicked(object sender, EventArgs e)
@@ -35,37 +35,31 @@ namespace AppProdu
                 token = Application.Current.Properties["currentToken"].ToString()
             };
             string jsonData = JsonConvert.SerializeObject(newPath);
-            Console.WriteLine("AQUI" + jsonData);
             var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
-            HttpResponseMessage response = await client.PostAsync("/paths/newcomment.json", content);
-            Console.WriteLine(response.StatusCode.ToString());
-            if (response.StatusCode == HttpStatusCode.OK)
+            try
             {
-                Console.WriteLine("AQUI2");
-                var result = await response.Content.ReadAsStringAsync();
-                Console.WriteLine(result.ToString());
-                var jobject = JObject.Parse(result);
-                try
+                HttpResponseMessage response = await client.PostAsync("/paths/newcomment.json", content);
+                if (response.StatusCode == HttpStatusCode.OK)
                 {
-                    Console.WriteLine("AQUI3" + jobject["recorrido"].ToString());
+                    var result = await response.Content.ReadAsStringAsync();
+                    var jobject = JObject.Parse(result);
                     var data = JsonConvert.DeserializeObject<Path>(jobject["recorrido"].ToString());
-                    Console.WriteLine("AQUI5");
 
-                    await Navigation.PopAsync();
-
+                    await Navigation.PopAsync(); //Eliminar la esta página de la pila
                 }
-                catch (Exception)
+                else
                 {
-                    Console.WriteLine("AQUI6\nERROR");
-                    //errorLabel.Text = "Error\nUsuario o contraseña inválido";
+                    //La consulta devolvió un código de status distinto. Ocurrió un error en la consulta en el backend
                 }
+
             }
-            else
+            catch (Exception)
             {
-                Console.WriteLine("AQUI6\nNo se pudo crear el muestreo");
-                //errorLabel.Text = "Error\nUsuario o contraseña inválido";
+                //Error al realizar consulta al backend
             }
+
+
         }
     }
 }

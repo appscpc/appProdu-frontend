@@ -30,7 +30,6 @@ namespace AppProdu
 
         protected override void OnAppearing()
         {
-            //Your code here
             this.Title = "Registrar Actividades";
             index = (int)Application.Current.Properties["index-activity"];
             var contentView = new ContentView();
@@ -41,7 +40,6 @@ namespace AppProdu
             scrollView.Padding = new Thickness(10);
             scrollView.Content = grid;
 
-            //grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(50) });
             grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
             grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
             grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
@@ -55,6 +53,7 @@ namespace AppProdu
             grid.Children.Add(Operarios, 0, 0);
             grid.Children.Add(Actividad, 1, 0);
             grid.Children.Add(Tipo, 2, 0);
+            //for para generar las etiquetas de los operarios y actividades
             for (int i = 1; i <= totalOperarios; i++)
             {
                 if(listaOperarios.Count != totalOperarios)
@@ -114,6 +113,7 @@ namespace AppProdu
                     BaseAddress = new Uri("https://app-produ.herokuapp.com")
                 };
                 List<OperatorRegister> listaRegistros = new List<OperatorRegister>();
+                //for para pasar la lista de las actividades de los operarios a la de actividades que se guardan en el backend
                 for (int i = 0; i < listaOperarios.Count; i++)
                 {
                     listaRegistros.Add(new OperatorRegister
@@ -122,6 +122,7 @@ namespace AppProdu
                         path_id = (int)Application.Current.Properties["id-path"],
                         token = Application.Current.Properties["currentToken"].ToString()
                     });
+                    //Se lleva la cuenta de las actividades productivas y las no productivas
                     if (listaOperarios[i].activity_type_id == 1)
                     {
                         pG = pG + 1;
@@ -132,17 +133,15 @@ namespace AppProdu
                     }
                 }
                 var obj = new Dictionary<string, List<OperatorRegister>>();
+                //Se crea un diccionario para convertirlo a json y poder acceder a la lista de registros en el backend
                 obj.Add("registers", listaRegistros);
                 string jsonData = JsonConvert.SerializeObject(obj);
                 var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
                 HttpResponseMessage response = await client.PostAsync("/operator_registers/newregister.json", content);
-                Console.WriteLine(response.StatusCode.ToString());
                 if (response.StatusCode == HttpStatusCode.Created)
                 {
-                    Console.WriteLine("AQUI2");
                     var result = await response.Content.ReadAsStringAsync();
-                    Console.WriteLine(result.ToString());
                     await guardarProductividad();
                     await guardarMuestras();
 
@@ -150,11 +149,6 @@ namespace AppProdu
                     await Navigation.PushAsync(commentPage);
                     this.Navigation.RemovePage(this.Navigation.NavigationStack[this.Navigation.NavigationStack.Count - 2]);
 
-                }
-                else
-                {
-                    Console.WriteLine("AQUI6\nNo se pudo crear");
-                    //errorLabel.Text = "Error\nUsuario o contraseña inválido";
                 }
             }
             else
@@ -164,6 +158,7 @@ namespace AppProdu
             
         }
 
+        //Método que guarda la productividad (P) y la improductividad (Q) en el backend
         public async Task guardarProductividad()
         {
             var client = new HttpClient
@@ -183,27 +178,23 @@ namespace AppProdu
                 token = Application.Current.Properties["currentToken"].ToString()
             };
             string jsonData = JsonConvert.SerializeObject(newFase);
-            Console.WriteLine("AQUI" + jsonData);
-            Console.WriteLine("P: " + pG);
-            Console.WriteLine("Q: " + qG);
             var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
-            HttpResponseMessage response = await client.PostAsync("/fases/addpq.json", content);
-            Console.WriteLine(response.StatusCode.ToString());
-            if (response.StatusCode == HttpStatusCode.OK)
+            try
             {
-                Console.WriteLine("AQUI2");
-                var result = await response.Content.ReadAsStringAsync();
-                Console.WriteLine(result.ToString());
-
+                HttpResponseMessage response = await client.PostAsync("/fases/addpq.json", content);
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    var result = await response.Content.ReadAsStringAsync();
+                }
             }
-            else
+            catch (Exception)
             {
-                Console.WriteLine("AQUI6\nNo se pudo crear");
-                //errorLabel.Text = "Error\nUsuario o contraseña inválido";
+                //Error al realizar consulta al backend
             }
         }
-
+        
+        //Método que guarda la cantidad de muestras hechas 
         public async Task guardarMuestras()
         {
             var client = new HttpClient
@@ -217,24 +208,22 @@ namespace AppProdu
                 token = Application.Current.Properties["currentToken"].ToString()
             };
             string jsonData = JsonConvert.SerializeObject(newSampling);
-            Console.WriteLine("AQUI" + jsonData);
-            Console.WriteLine("N: " + (pG + qG));
             var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
             HttpResponseMessage response = await client.PostAsync("/samplings/addsamplings.json", content);
-            Console.WriteLine(response.StatusCode.ToString());
             if (response.StatusCode == HttpStatusCode.OK)
             {
-                Console.WriteLine("AQUI2");
                 var result = await response.Content.ReadAsStringAsync();
-                Console.WriteLine(result.ToString());
                 var samplingResult = JsonConvert.DeserializeObject<Sampling>(result);
 
+
+                //if para saber en cuál fase está
                 if(samplingResult.fase == 1)
                 {
+                    //if para saber si se llegó a la cantidad o si se sobrepasó. Si se sobrepasa se debe actualizar la cantidad en la base de datos
                     if(samplingResult.muestrasActual == samplingResult.cantMuestras)
                     {
-                        Application.Current.Properties["preliminar-done"] = 1;
+                        Application.Current.Properties["preliminar-done"] = 1;  //Valor para saber si se finalizó la etapa preliminar
                     }
                     else if (samplingResult.muestrasActual > samplingResult.cantMuestras)
                     {
@@ -246,29 +235,22 @@ namespace AppProdu
                             token = Application.Current.Properties["currentToken"].ToString()
                         };
                         jsonData = JsonConvert.SerializeObject(newSampling);
-                        Console.WriteLine("AQUI" + jsonData);
                         content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
                         response = await client.PostAsync("/samplings/addmoresamplings.json", content);
-                        Console.WriteLine(response.StatusCode.ToString());
                         if (response.StatusCode == HttpStatusCode.OK)
                         {
-                            Console.WriteLine("AQUI2");
                             result = await response.Content.ReadAsStringAsync();
-                            Console.WriteLine(result.ToString());
-                            
+
                             try
                             {
                                 var jobject = JObject.Parse(result);
-                                Console.WriteLine("AQUI3" + jobject["muestreo"].ToString());
                                 var data = JsonConvert.DeserializeObject<Sampling>(jobject["muestreo"].ToString());
                                 Application.Current.Properties["preliminar-done"] = 1;
 
                             }
                             catch (Exception)
                             {
-                                Console.WriteLine("AQUI6\nNo se pudo crear el muestreo");
-                                //errorLabel.Text = "Error\nUsuario o contraseña inválido";
                             }
                         }
                     }
@@ -276,10 +258,12 @@ namespace AppProdu
                 }
                 else
                 {
-                    if(samplingResult.muestrasActual == samplingResult.cantMuestrasTotal)
+                    //if para saber si se llegó a la cantidad o si se sobrepasó. Si se sobrepasa se debe actualizar la cantidad en la base de datos
+                    if (samplingResult.muestrasActual == samplingResult.cantMuestrasTotal)
                     {
-                        Application.Current.Properties["definitive-done"] = 1;
-                    }else if (samplingResult.muestrasActual > samplingResult.cantMuestrasTotal)
+                        Application.Current.Properties["definitive-done"] = 1;  //Valor para saber si se finalizó la etapa preliminar
+                    }
+                    else if (samplingResult.muestrasActual > samplingResult.cantMuestrasTotal)
                     {
                         newSampling = new Sampling
                         {
@@ -289,38 +273,26 @@ namespace AppProdu
                             token = Application.Current.Properties["currentToken"].ToString()
                         };
                         jsonData = JsonConvert.SerializeObject(newSampling);
-                        Console.WriteLine("AQUI" + jsonData);
                         content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
                         response = await client.PostAsync("/samplings/addmoresamplings.json", content);
-                        Console.WriteLine(response.StatusCode.ToString());
                         if (response.StatusCode == HttpStatusCode.OK)
                         {
-                            Console.WriteLine("AQUI2");
                             result = await response.Content.ReadAsStringAsync();
-                            Console.WriteLine(result.ToString());
 
                             try
                             {
                                 var jobject = JObject.Parse(result);
-                                Console.WriteLine("AQUI3" + jobject["muestreo"].ToString());
                                 var data = JsonConvert.DeserializeObject<Sampling>(jobject["muestreo"].ToString());
                                 Application.Current.Properties["definitive-done"] = 1;
 
                             }
                             catch (Exception)
                             {
-                                Console.WriteLine("AQUI6\nNo se pudo crear el muestreo");
-                                //errorLabel.Text = "Error\nUsuario o contraseña inválido";
                             }
                         }
                     }
                 }
-            }
-            else
-            {
-                Console.WriteLine("AQUI6\nNo se pudo crear");
-                //errorLabel.Text = "Error\nUsuario o contraseña inválido";
             }
         }
     }

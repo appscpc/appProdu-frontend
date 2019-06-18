@@ -46,7 +46,6 @@ namespace AppProdu
 
         public async Task obtenerFaseAsync(int faseActual)
         {
-
             var client = new HttpClient
             {
                 BaseAddress = new Uri("https://app-produ.herokuapp.com")
@@ -58,24 +57,17 @@ namespace AppProdu
                 token = Application.Current.Properties["currentToken"].ToString()
             };
             string jsonData = JsonConvert.SerializeObject(newFase);
-            Console.WriteLine("AQUI" + jsonData);
             var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
-            HttpResponseMessage response = await client.PostAsync("/fases/getfase.json", content);
-            Console.WriteLine(response.StatusCode.ToString());
-            if (response.StatusCode == HttpStatusCode.OK)
+            try
             {
-                Console.WriteLine("AQUI2");
-                var result = await response.Content.ReadAsStringAsync();
-                Console.WriteLine(result.ToString());
-                var jobject = JObject.Parse(result);
-                Console.WriteLine("AQUI3" + jobject["fase"].ToString());
-                var data = JsonConvert.DeserializeObject<List<Fase>>(jobject["fase"].ToString());
-                try
+                HttpResponseMessage response = await client.PostAsync("/fases/getfase.json", content);
+                if (response.StatusCode == HttpStatusCode.OK)
                 {
+                    var result = await response.Content.ReadAsStringAsync();
+                    var jobject = JObject.Parse(result);
+                    var data = JsonConvert.DeserializeObject<List<Fase>>(jobject["fase"].ToString());
 
-                    Console.WriteLine("AQUI5");
-                    Console.WriteLine(data[0].id);
                     if (faseActual == 1)
                     {
                         fasePrem = data[0];
@@ -84,19 +76,12 @@ namespace AppProdu
                     {
                         faseDef = data[0];
                     }
-
-                }
-                catch (Exception)
-                {
-                    Console.WriteLine("AQUI6\nNo se pudo acceder a datos recuperados");
-                    //errorLabel.Text = "Error\nUsuario o contraseña inválido";
                 }
             }
-            else
+            catch (Exception)
             {
-                Console.WriteLine("AQUI7\nNo se pudo obtener fases");
-                //errorLabel.Text = "Error\nUsuario o contraseña inválido";
-            }
+                //Error al realizar consulta al backend
+            }     
         }
 
 
@@ -113,37 +98,24 @@ namespace AppProdu
                 token = Application.Current.Properties["currentToken"].ToString()
             };
             string jsonData = JsonConvert.SerializeObject(newSampling);
-            Console.WriteLine("AQUI" + jsonData);
             var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
-            HttpResponseMessage response = await client.PostAsync("/samplings/getsampling.json", content);
-            Console.WriteLine(response.StatusCode.ToString());
-            if (response.StatusCode == HttpStatusCode.OK)
+            try
             {
-                Console.WriteLine("AQUI2");
-                var result = await response.Content.ReadAsStringAsync();
-                Console.WriteLine(result.ToString());
-                var jobject = JObject.Parse(result);
-                Console.WriteLine("AQUI3" + jobject["muestreo"].ToString());
-                var data = JsonConvert.DeserializeObject<Sampling>(jobject["muestreo"].ToString());
-                try
+                HttpResponseMessage response = await client.PostAsync("/samplings/getsampling.json", content);
+                Console.WriteLine(response.StatusCode.ToString());
+                if (response.StatusCode == HttpStatusCode.OK)
                 {
-
-                    Console.WriteLine("AQUI5");
+                    var result = await response.Content.ReadAsStringAsync();
+                    var jobject = JObject.Parse(result);
+                    var data = JsonConvert.DeserializeObject<Sampling>(jobject["muestreo"].ToString());
 
                     sampling = data;
-
-                }
-                catch (Exception)
-                {
-                    Console.WriteLine("AQUI6\nNo se pudo acceder a datos recuperados");
-                    //errorLabel.Text = "Error\nUsuario o contraseña inválido";
                 }
             }
-            else
+            catch (Exception)
             {
-                Console.WriteLine("AQUI7\nNo se pudo obtener fases");
-                //errorLabel.Text = "Error\nUsuario o contraseña inválido";
+                //Error al realizar consulta al backend
             }
         }
 
@@ -160,37 +132,24 @@ namespace AppProdu
                 token = Application.Current.Properties["currentToken"].ToString()
             };
             string jsonData = JsonConvert.SerializeObject(newFase);
-            Console.WriteLine("AQUIguardarerror" + jsonData);
             var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
-            HttpResponseMessage response = await client.PostAsync("/fases/updateerror.json", content);
-            Console.WriteLine(response.StatusCode.ToString());
-            if (response.StatusCode == HttpStatusCode.OK)
+            try
             {
-                Console.WriteLine("AQUI2");
-                var result = await response.Content.ReadAsStringAsync();
-                Console.WriteLine(result.ToString());
-                var jobject = JObject.Parse(result);
-                Console.WriteLine("AQUI3" + jobject["fase"].ToString());
-                var data = JsonConvert.DeserializeObject<Fase>(jobject["fase"].ToString());
-                try
+                HttpResponseMessage response = await client.PostAsync("/fases/updateerror.json", content);
+                if (response.StatusCode == HttpStatusCode.OK)
                 {
-
-                    Console.WriteLine("AQUI5");
-                    
+                    var result = await response.Content.ReadAsStringAsync();
+                    var jobject = JObject.Parse(result);
+                    var data = JsonConvert.DeserializeObject<Fase>(jobject["fase"].ToString());
 
                 }
-                catch (Exception)
-                {
-                    Console.WriteLine("AQUI6\nNo se pudo acceder a datos recuperados");
-                    //errorLabel.Text = "Error\nUsuario o contraseña inválido";
-                }
             }
-            else
+            catch (Exception)
             {
-                Console.WriteLine("AQUI7\nNo se pudo obtener fases");
-                //errorLabel.Text = "Error\nUsuario o contraseña inválido";
+                //Error al realizar consulta al backend
             }
+
         }
 
         private async Task cargarDatos_Clicked(object sender, EventArgs e)
@@ -202,22 +161,18 @@ namespace AppProdu
             qP.Text = (fasePrem.q / (fasePrem.p + fasePrem.q)).ToString();
             eP.Text = fasePrem.error.ToString();
             zP.Text = fasePrem.z.ToString();
-            Console.WriteLine("Este es 1");
+
             double p = (faseDef.p / (faseDef.p + faseDef.q));
-            Console.WriteLine("Este es 2");
             double q = (faseDef.q / (faseDef.p + faseDef.q));
-            Console.WriteLine("Este es 3");
+
             Dictionary<string, string> reversedDict = zValues.ToDictionary(
             kvp => kvp.Value,
             kvp => kvp.Key);
             double z;
+            //El método TryParse trata de hacer la conversión a double utilizando el formato de US, el cual utiliza el punto como dividor de decimales
             double.TryParse(faseDef.z.ToString(), System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.GetCultureInfo("en-US"), out z);
-            //double z = double.Parse(reversedDict[faseDef.z.ToString()]);
-            Console.WriteLine("HOLAAAAAAA " + z + " " + sampling.cantMuestrasTotal + " " + p + " " +q + " " + Math.Pow(z,2));
             double error = Math.Sqrt(Math.Pow(z, 2) * p * q / System.Convert.ToDouble(sampling.cantMuestrasTotal.ToString()));
-            Console.WriteLine("El N= " + error);
             faseDef.error = float.Parse(error.ToString());
-            Console.WriteLine("Error DEF: "+ faseDef.error);
 
             nD.Text = sampling.cantMuestrasTotal.ToString();
             pD.Text = (faseDef.p / (faseDef.p + faseDef.q)).ToString();

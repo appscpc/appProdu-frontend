@@ -47,7 +47,7 @@ namespace AppProdu
                     BaseAddress = new Uri("https://app-produ.herokuapp.com")
                 };
                 var idType = userTypes.FirstOrDefault(x => x.Value == tipo.SelectedItem.ToString()).Key;
-                Console.WriteLine("HOLAAAAAAA " + idType);
+
                 var newUser = new User
                 {
                     nombre = nombreEntry.Text,
@@ -59,26 +59,17 @@ namespace AppProdu
                 };
 
                 string jsonData = JsonConvert.SerializeObject(newUser);
-                Console.WriteLine("AQUI");
                 var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
                 HttpResponseMessage response = await client.PostAsync("/users/signup.json", content);
-                Console.WriteLine(response.StatusCode.ToString());
+
                 if (response.StatusCode == HttpStatusCode.Created)
                 {
-                    Console.WriteLine("AQUI2");
                     var result = await response.Content.ReadAsStringAsync();
-                    Console.WriteLine(result.ToString());
                     var jobject = JObject.Parse(result);
-                    Console.WriteLine("AQUI3" + jobject["usuario"].ToString());
                     var data = JsonConvert.DeserializeObject<User>(jobject["usuario"].ToString());
 
                     try
                     {
-                        Console.WriteLine("AQUI5");
-                        Console.WriteLine(data.id + " & " + data.nombre);
-
-                        //var result = await client.Get<User>(url.ToString(), jsonData);
-
                         Application.Current.Properties["id"] = data.id;
                         Application.Current.Properties["currentToken"] = data.token;
                         await DisplayAlert("El usuario ha sido creado con éxito!", "Se desplegará a la pantalla de proyectos del usuario!", "OK");
@@ -88,19 +79,16 @@ namespace AppProdu
                     }
                     catch (Exception)
                     {
-                        Console.WriteLine("AQUI6\nError al registrar usuario!");
                         
                     }
                 }
                 else
                 {
-                    Console.WriteLine("AQUI6\nError al registrar usuario!");
                     await DisplayAlert("Error!", "Correo ya está registrado!\nPor favor utilice otro!", "OK");
                 }
             }
             else
             {
-                Console.WriteLine("AQUI6\nEspacios vacíos");
                 await DisplayAlert("Error!", "Espacios vacíos!\nPor favor rellenar todos los espacios!", "OK");
             }
         }
@@ -113,13 +101,8 @@ namespace AppProdu
                 HttpResponseMessage response = await client.GetAsync("https://app-produ.herokuapp.com/positions.json");
                 response.EnsureSuccessStatusCode();
                 string responseBody = await response.Content.ReadAsStringAsync();
-                // Above three lines can be replaced with new helper method below
-                // string responseBody = await client.GetStringAsync(uri);
 
-                Console.WriteLine(responseBody);
                 types = JsonConvert.DeserializeObject<List<UserType>>(responseBody);
-                Console.WriteLine(types[0].nombre);
-
                 userTypes = types.ToDictionary(m => m.id, m => m.nombre);
 
                 
@@ -130,8 +113,6 @@ namespace AppProdu
             }
             catch (HttpRequestException e)
             {
-                Console.WriteLine("\nException Caught!");
-                Console.WriteLine("Message :{0} ", e.Message);
             }
         }
     }

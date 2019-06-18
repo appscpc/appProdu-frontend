@@ -25,9 +25,7 @@ namespace AppProdu
             registrarEvent.Tapped += async(s, e) =>
             {
                 var registrarPage = new RegistrarUsuario();
-                await Navigation.PushAsync(registrarPage);/*
-                var Page = new PruebaComaPunto();
-                await Navigation.PushAsync(Page);*/
+                await Navigation.PushAsync(registrarPage);
             };
             registrarLabel.GestureRecognizers.Add(registrarEvent);
             
@@ -36,7 +34,6 @@ namespace AppProdu
 
         async private void ingresarButton_Clicked(object sender, EventArgs e)
         {
-            Console.WriteLine(userLogged.correo + " " + userLogged.password);
 
             if (!String.IsNullOrEmpty(correoEntry.Text) && !String.IsNullOrEmpty(passEntry.Text))
             {
@@ -49,23 +46,17 @@ namespace AppProdu
                 };
                 
                 string jsonData = JsonConvert.SerializeObject(userLogged);
-                Console.WriteLine("AQUI " + jsonData);
                 var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
                 
                 try
                 {
                     HttpResponseMessage response = await client.PostAsync("/users/login.json", content);
-                    //Console.WriteLine(response.StatusCode.ToString());
                     if (response.StatusCode == HttpStatusCode.OK)
                     {
-                        Console.WriteLine("AQUI2");
                         var result = await response.Content.ReadAsStringAsync();
-                        Console.WriteLine(result.ToString());
                         var jobject = JObject.Parse(result);
-                        Console.WriteLine("AQUI3" + jobject.ToString());
                         var data = JsonConvert.DeserializeObject<List<User>>(jobject["usuario"].ToString());
-                        Console.WriteLine("AQUI4");
                         Application.Current.Properties["id"] = data[0].id;
                         Application.Current.Properties["currentToken"] = data[0].token;
                         var proyectosPage = new Proyectos();
@@ -73,28 +64,24 @@ namespace AppProdu
                     }
                     else
                     {
-                        Console.WriteLine("AQUI6\nError al iniciar sesión!");
                         await DisplayAlert("Error!", "Usuario o contraseña inválidos!", "OK");
                     }
 
                 }
                 catch (Exception)
                 {
-                    Console.WriteLine("AQUI6\nError al iniciar sesión!");
                     await DisplayAlert("Error!", "Usuario o contraseña inválidos!", "OK");
                 }
 
             }
             else
             {
-                Console.WriteLine("AQUI6\nEspacios vacíos!");
                 await DisplayAlert("Error!", "Espacios vacíos!\nPor favor rellenar todos los espacios!", "OK");
             }
         }
 
         protected override async void OnAppearing()
         {
-            //Your code here
             try
             {
                 int idUserLogged = (int)Application.Current.Properties["id"];

@@ -36,7 +36,6 @@ namespace AppProdu
                     BaseAddress = new Uri("https://app-produ.herokuapp.com")
                 };
                 var idType = samplingTypes.FirstOrDefault(x => x.Value == tipo.SelectedItem.ToString()).Key;
-                Console.WriteLine("HOLAAAAAAA " + idType);
                 var newSampling = new Sampling
                 {
                     nombre = nombreMuestreoEntry.Text,
@@ -50,29 +49,20 @@ namespace AppProdu
                     token = Application.Current.Properties["currentToken"].ToString()
                 };
                 string jsonData = JsonConvert.SerializeObject(newSampling);
-                Console.WriteLine("AQUI" + jsonData);
                 var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
                 HttpResponseMessage response = await client.PostAsync("/samplings/newsampling.json", content);
-                Console.WriteLine(response.StatusCode.ToString());
                 if (response.StatusCode == HttpStatusCode.Created)
                 {
-                    Console.WriteLine("AQUI2");
                     var result = await response.Content.ReadAsStringAsync();
-                    Console.WriteLine(result.ToString());
                     var jobject = JObject.Parse(result);
-                    Console.WriteLine("AQUI3" + jobject["muestreo"].ToString());
                     var data = JsonConvert.DeserializeObject<Sampling>(jobject["muestreo"].ToString());
 
 
                     try
                     {
-                        Console.WriteLine("AQUI5");
-                        Console.WriteLine(data.id + " & " + data.nombre);
-
                         Application.Current.Properties["id-sampling"] = data.id;
                         Application.Current.Properties["fase"] = data.fase;
-                        Console.WriteLine("YEAH BABY: " + data.sampling_type_id);
                         Application.Current.Properties["sampling-type-id"] = data.sampling_type_id;
                         await crearFaseAsync();
                         var etapasPage = new Etapas();
@@ -82,14 +72,7 @@ namespace AppProdu
                     }
                     catch (Exception)
                     {
-                        Console.WriteLine("AQUI6\nNo se pudo crear el muestreo");
-                        //errorLabel.Text = "Error\nUsuario o contraseña inválido";
                     }
-                }
-                else
-                {
-                    Console.WriteLine("AQUI6\nNo se pudo crear el muestreo");
-                    //errorLabel.Text = "Error\nUsuario o contraseña inválido";
                 }
             }
             else
@@ -107,12 +90,8 @@ namespace AppProdu
                 HttpResponseMessage response = await client.GetAsync("https://app-produ.herokuapp.com/sampling_types.json");
                 response.EnsureSuccessStatusCode();
                 string responseBody = await response.Content.ReadAsStringAsync();
-                // Above three lines can be replaced with new helper method below
-                // string responseBody = await client.GetStringAsync(uri);
 
-                Console.WriteLine(responseBody);
                 types = JsonConvert.DeserializeObject<List<UserType>>(responseBody);
-                Console.WriteLine(types[0].nombre);
 
                 samplingTypes = types.ToDictionary(m => m.id, m => m.nombre);
 
@@ -124,8 +103,6 @@ namespace AppProdu
             }
             catch (HttpRequestException e)
             {
-                Console.WriteLine("\nException Caught!");
-                Console.WriteLine("Message :{0} ", e.Message);
             }
         }
 
@@ -144,26 +121,18 @@ namespace AppProdu
                 token = Application.Current.Properties["currentToken"].ToString()
             };
             string jsonData = JsonConvert.SerializeObject(newFase);
-            Console.WriteLine("AQUI" + jsonData);
             var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
             HttpResponseMessage response = await client.PostAsync("/fases/newfase.json", content);
-            Console.WriteLine(response.StatusCode.ToString());
             if (response.StatusCode == HttpStatusCode.Created)
             {
-                Console.WriteLine("AQUI2");
                 var result = await response.Content.ReadAsStringAsync();
-                Console.WriteLine(result.ToString());
                 var jobject = JObject.Parse(result);
-                Console.WriteLine("AQUI3" + jobject["fase"].ToString());
                 var data = JsonConvert.DeserializeObject<Sampling>(jobject["fase"].ToString());
 
 
                 try
                 {
-                    Console.WriteLine("AQUI5");
-                    Console.WriteLine(data.id);
-
                     Application.Current.Properties["id-fase"] = data.id;
                     Application.Current.Properties["preliminar-done"] = 0;
                     Application.Current.Properties["definitive-done"] = 0;
@@ -171,21 +140,13 @@ namespace AppProdu
                 }
                 catch (Exception)
                 {
-                    Console.WriteLine("AQUI6\nNo se pudo crear el muestreo");
-                    //errorLabel.Text = "Error\nUsuario o contraseña inválido";
                 }
-            }
-            else
-            {
-                Console.WriteLine("AQUI6\nNo se pudo crear el muestreo");
-                //errorLabel.Text = "Error\nUsuario o contraseña inválido";
             }
         }
 
         private void Tipo_SelectedIndexChanged(object sender, EventArgs e)
         {
             var idType = samplingTypes.FirstOrDefault(x => x.Value == tipo.SelectedItem.ToString()).Key;
-            Console.WriteLine("ACA ES LO MEJOR: " + idType);
         }
     }
 }

@@ -17,19 +17,21 @@ namespace AppProdu
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class AgregarActividad : ContentPage
 	{
-        ObservableCollection<Actividad> Items;
-        List<Actividad> actividades;
-        Actividad newAct = new Actividad();
-        List<RegistroUsuario> listaDeOperarios;
+        ObservableCollection<Actividad> Items;  //Lista que guarda los elementos del listView
+        List<Actividad> actividades;    //Lista que guarda las actividades recibidades del backend
+        Actividad newAct = new Actividad(); //Actividad seleccionada para ser ingresada en la lista de operarios
+        List<RegistroUsuario> listaDeOperarios; //Lista de operarios que sirve para poder ingresar las actividades y que se guarden en la página anterior
         int index;
 
-
+        //Constructor que recibe un parámetro que es la lista de operarios. La recibe para guardar los cambios de las actividades
+        //seleccionadas en la página anterior
         public AgregarActividad ( List<RegistroUsuario> listaOperarios)
 		{
 			InitializeComponent ();
-            index = (int)Application.Current.Properties["index-activity"];
-            Console.WriteLine("HELLO MOTO: ", index);
-            listaDeOperarios = listaOperarios;
+            index = (int)Application.Current.Properties["index-activity"];  //Se obtiene el índice guardado en la memoria local de la app
+            listaDeOperarios = listaOperarios;  //Se hace esta asignación para poder ingresar las actividades.
+
+            //If para mostrar el mensajito de cuántos faltan o si ya se ingresaron todas las actividades.
             if (index >= listaDeOperarios.Count)
             {
                 operarioActualLabel.Text = "Actividades asignadas a todos los operarios!";
@@ -40,6 +42,7 @@ namespace AppProdu
             }
         }
 
+        //Clase que sirve para enviar el string del search bar y hacer la consulta
         public class Cadena
         {
             public string cadena { get; set; }
@@ -47,7 +50,8 @@ namespace AppProdu
             public string token { get; set; }
         }
 
-        public class Actividad
+        //Clase que contiene los atributos de una actividad para ser recibida del backend
+        public class Actividad 
         {
             public int id { get; set; }
             public string nombre { get; set; }
@@ -69,63 +73,55 @@ namespace AppProdu
                 sampling_type_id = (int)Application.Current.Properties["sampling-type-id"],
                 token = Application.Current.Properties["currentToken"].ToString()
             };
-            Console.WriteLine("ID SAMPLING: " + newCadena.sampling_type_id);
             string jsonData = JsonConvert.SerializeObject(newCadena);
-            Console.WriteLine("AQUI" + jsonData);
             var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
-            HttpResponseMessage response = await client.PostAsync("/activities/findactivity.json", content);
-            Console.WriteLine(response.StatusCode.ToString());
-            if (response.StatusCode == HttpStatusCode.OK)
+            try
             {
-                Console.WriteLine("AQUI2");
-                var result = await response.Content.ReadAsStringAsync();
-                Console.WriteLine(result.ToString());
-                var jobject = JObject.Parse(result);
-                Console.WriteLine("AQUI3" + jobject["actividad"].ToString());
-                actividades = JsonConvert.DeserializeObject<List<Actividad>>(jobject["actividad"].ToString());
-
-                try
+                HttpResponseMessage response = await client.PostAsync("/activities/findactivity.json", content);
+                if (response.StatusCode == HttpStatusCode.OK)
                 {
-                    Console.WriteLine("AQUI5");
+                    var result = await response.Content.ReadAsStringAsync();
+                    var jobject = JObject.Parse(result);
+                    actividades = JsonConvert.DeserializeObject<List<Actividad>>(jobject["actividad"].ToString());
+
                     Items = new ObservableCollection<Actividad> { };
                     for (int i = 0; i < actividades.Count; i++)
                     {
                         Actividad pro = actividades[i];
                         Items.Add(pro);
                     }
-                    Console.WriteLine("HEY");
 
                     list.ItemsSource = Items;
 
-
                 }
-                catch (Exception)
+                else
                 {
-                    Console.WriteLine("AQUI6\nERROR");
-                    //errorLabel.Text = "Error\nUsuario o contraseña inválido";
+                    //La consulta devolvió un código de status distinto. Ocurrió un error en la consulta en el backend
                 }
+
+
             }
-            else
+            catch (Exception)
             {
-                Console.WriteLine("AQUI6\nNo se pudo crear el proyecto");
-                //errorLabel.Text = "Error\nUsuario o contraseña inválido";
+                //Error al realizar consulta al backend
             }
+            
         }
 
+        //Método que se ejecuta al seleccionar algún elemento de la lista que contiene las actividades devueltas al buscarlas 
+        //en el search bar
         async void Handle_ItemTapped(object sender, ItemTappedEventArgs e)
         {
             if (e.Item == null)
                 return;
 
 
-            newAct = (Actividad)e.Item;
-            Console.WriteLine("YESSSSS " + newAct.nombre);
+            newAct = (Actividad)e.Item; //e.Item es el objeto seleccionado de la lista. (La lista tiene objetos de tipo Actividad)
             bool answer = await DisplayAlert("Desea agregar esta actividad al recorrido?", "La actividad será registrada en el recorrido actual", "Sí", "No");
-            Console.WriteLine("Answer: " + answer);
             if (answer)
             {
-                Console.WriteLine("CANT: " + listaDeOperarios.Count + " & " + index);
+                //Este if es para saber si se tiene que agregar más actividades a la lista de operarios del recorrido
                 if (index >= listaDeOperarios.Count)
                 {
                     await DisplayAlert("Error!", "Ya se agregaron todas las actividades!", "OK");
@@ -147,8 +143,8 @@ namespace AppProdu
                     {
                         listaDeOperarios[index].nombre_activity_type = "Trabajo no productivo";
                     }
-                    index = index + 1;
-                    Application.Current.Properties["index-activity"] = index;
+                    index = index + 1; 
+                    Application.Current.Properties["index-activity"] = index;   //Se guarda el índice en la memoria local de la app
                     if (index >= listaDeOperarios.Count)
                     {
                         operarioActualLabel.Text = "Actividades asignadas a todos los operarios!";
@@ -160,19 +156,10 @@ namespace AppProdu
                     }
                 }
             }
-            else
-            {
-                Console.WriteLine("NADA");
-            }
 
             //Deselect Item
             ((ListView)sender).SelectedItem = null;
         }
 
-        private async Task agregarActividad_Clicked(object sender, EventArgs e)
-        {
-            var recorridosPage = new Recorridos();
-            await Navigation.PushAsync(recorridosPage);
-        }
     }
 }

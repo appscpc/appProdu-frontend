@@ -49,7 +49,6 @@ namespace AppProdu
                     token = Application.Current.Properties["currentToken"].ToString()
                 };
                 string jsonData = JsonConvert.SerializeObject(userLogged);
-                Console.WriteLine("AQUI " + jsonData);
                 var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
                 HttpResponseMessage response = await client.PostAsync("/samplings/projectsamplings.json", content);
@@ -57,42 +56,22 @@ namespace AppProdu
                 response.EnsureSuccessStatusCode();
                 string responseBody = await response.Content.ReadAsStringAsync();
                 var jobject = JObject.Parse(responseBody);
-                Console.WriteLine("AQUI3" + jobject["samplings"].ToString());
                 muestreos = JsonConvert.DeserializeObject<List<Sampling>>(jobject["samplings"].ToString());
 
-                Console.WriteLine(responseBody);
-                //muestreos = JsonConvert.DeserializeObject<List<Sampling>>(responseBody);
-                //Console.WriteLine(proyectos[0].nombre);
-                Console.WriteLine("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-
-
                 Items = new ObservableCollection<Sampling> { };
-                //string temp;
                 for (int i = 0; i < muestreos.Count; i++)
                 {
                     Sampling pro = muestreos[i];
-                    // temp = "";
-                    //temp += pro.nombre + "\n\n" + pro.descripcion;
                     Items.Add(pro);
                     Console.WriteLine(pro.nombre);
                 }
-
-
-                Console.WriteLine("ASSSSS");
-
+                
 
                 MyListView.ItemsSource = Items;
-                Console.WriteLine("asdasdasdasd");
-
-
-
-
 
             }
             catch (HttpRequestException e)
             {
-                Console.WriteLine("\nException Caught!");
-                Console.WriteLine("Message :{0} ", e.Message);
             }
         }
 
@@ -101,11 +80,10 @@ namespace AppProdu
             if (e.Item == null)
                 return;
 
-            //await DisplayAlert("Item Tapped", "An item was tapped.", "OK");
             var samplingSelected = (Sampling)e.Item;
             Application.Current.Properties["fase"] = samplingSelected.fase;
             Application.Current.Properties["id-sampling"] = samplingSelected.id;
-            Console.WriteLine("DAMN BRO: " + samplingSelected.sampling_type_id + " & " + samplingSelected.nombre);
+
             Application.Current.Properties["sampling-type-id"] = samplingSelected.sampling_type_id;
             if(samplingSelected.fase == 1)
             {

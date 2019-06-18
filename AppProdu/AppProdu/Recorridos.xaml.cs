@@ -18,7 +18,7 @@ namespace AppProdu
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class Recorridos : ContentPage
     {
-        List<string> dates;
+        List<string> dates = new List<string>();
         List<Path> recorridos;
         ObservableCollection<Path> Items = new ObservableCollection<Path> { };
         ObservableCollection<string> ItemsDates = new ObservableCollection<string> { };
@@ -36,26 +36,31 @@ namespace AppProdu
         {
             dates = new List<string>();
             obtenerFechas();
+            
             await obtenerSamplingAsync();
 
             await obtenerFaseAsync((int)Application.Current.Properties["id-fase"]);
+
             int preliminar = (int)Application.Current.Properties["preliminar-done"];
+
+            //if para saber por cual fase se encuentra
             if (preliminar == 1)
             {
+                //if para saber si ya se hizo la pregunta de si desea más muestras una vez llegada a la cantidad guardada
                 if (currentFase.extraFlag == 0)
                 {
                     bool answer = await DisplayAlert("Número de muestras alcanzada!", "Desea agregar más muestras a la fase preliminar?", "Sí", "No");
                     if (answer)
                     {
-                        await PopupNavigation.Instance.PushAsync(new PopupMore(1)); 
-                        Application.Current.Properties["preliminar-done"] = 0;
-                        muestrasRestantesLabel.Text = "Muestras restantes: " + Application.Current.Properties["muestras-mas"];
-                        await ActualizarFlag(1);
+                        await PopupNavigation.Instance.PushAsync(new PopupMore(1)); //Se muestra popup de más muestras
+                        Application.Current.Properties["preliminar-done"] = 0;  //Se cambia de nuevo el valor para que no esté finalizado
+                        muestrasRestantesLabel.Text = "Muestras restantes: " + Application.Current.Properties["muestras-mas"];  //Se actualiza etiqueta
+                        await ActualizarFlag(1);   //Método para actualizar que se hizo la pregunta
                     }
                     else
                     {
-                        Application.Current.Properties["preliminar-done"] = 2;
-                        await cambiarFase();
+                        Application.Current.Properties["preliminar-done"] = 2;  //Se cambia valor para indicar que se finaliza por completo la etapa
+                        await cambiarFase();    //Método para cambiar de fase actual
                         var calcularPage = new Estadisticas(currentFase);
                         await Navigation.PushAsync(calcularPage);
                         this.Navigation.RemovePage(this.Navigation.NavigationStack[this.Navigation.NavigationStack.Count - 2]);
@@ -63,9 +68,9 @@ namespace AppProdu
                 }
                 else
                 {
-                    Application.Current.Properties["preliminar-done"] = 2;
+                    Application.Current.Properties["preliminar-done"] = 2;  //Se cambia valor para indicar que se finaliza por completo la etapa
                     await DisplayAlert("Número de muestras alcanzada!", "Se procederá a calcular la cantidad de muestras para la etapa definitiva!", "OK");
-                    await cambiarFase();
+                    await cambiarFase();    //Método para cambiar de fase actual
                     var calcularPage = new Estadisticas(currentFase);
                     await Navigation.PushAsync(calcularPage);
                     this.Navigation.RemovePage(this.Navigation.NavigationStack[this.Navigation.NavigationStack.Count - 2]);
@@ -75,22 +80,25 @@ namespace AppProdu
             else if (preliminar == 2)
             {
                 var definitive = (int)Application.Current.Properties["definitive-done"];
+
+                //if para saber si la etapa definitiva finalizó en la preliminar
                 if (definitive == 1)
                 {
+                    //if para saber si ya se hizo la pregunta de si desea más muestras una vez llegada a la cantidad guardada
                     if (currentFase.extraFlag == 0)
                     {
                         bool answer = await DisplayAlert("Número de muestras alcanzada!", "Desea agregar más muestras a la fase definitiva?", "Sí", "No");
                         if (answer)
                         {
-                            await PopupNavigation.Instance.PushAsync(new PopupMore(2)); 
-                            Application.Current.Properties["definitive-done"] = 0;
-                            muestrasRestantesLabel.Text = "Muestras restantes: " + Application.Current.Properties["muestras-mas"];
-                            await ActualizarFlag(1);
+                            await PopupNavigation.Instance.PushAsync(new PopupMore(2));  //Se muestra popup de más muestras   
+                            Application.Current.Properties["definitive-done"] = 0;  //Se cambia de nuevo el valor para que no esté finalizado
+                            muestrasRestantesLabel.Text = "Muestras restantes: " + Application.Current.Properties["muestras-mas"];  //Se actualiza etiqueta
+                            await ActualizarFlag(1);    //Método para actualizar que se hizo la pregunta
                         }
                         else
                         {
-                            Application.Current.Properties["definitive-done"] = 2;
-                            await terminarFaseDef();
+                            Application.Current.Properties["definitive-done"] = 2;  //Se cambia valor para indicar que se finaliza por completo la etapa
+                            await terminarFaseDef();    //Termina la fase definitiva
                             var estadisticas = new EstadisticasGenerales();
                             await Navigation.PushAsync(estadisticas);
                             this.Navigation.RemovePage(this.Navigation.NavigationStack[this.Navigation.NavigationStack.Count - 2]);
@@ -98,9 +106,9 @@ namespace AppProdu
                     }
                     else
                     {
-                        Application.Current.Properties["definitive-done"] = 2;
+                        Application.Current.Properties["definitive-done"] = 2;  //Se cambia valor para indicar que se finaliza por completo la etapa
                         await DisplayAlert("Número de muestras alcanzada!", "Se procederá a mostrar las estadísticas finales!", "OK");
-                        await terminarFaseDef();
+                        await terminarFaseDef();    //Termina la fase definitiva
                         var estadisticas = new EstadisticasGenerales();
                         await Navigation.PushAsync(estadisticas);
                         this.Navigation.RemovePage(this.Navigation.NavigationStack[this.Navigation.NavigationStack.Count - 2]);
@@ -109,9 +117,9 @@ namespace AppProdu
                 else if (definitive == 3)
                 {
                     //caso en el que N sea menor o igual a n
-                    Application.Current.Properties["definitive-done"] = 2;
+                    Application.Current.Properties["definitive-done"] = 2;  //Se cambia valor para indicar que se finaliza por completo la etapa
                     await DisplayAlert("Número de muestras alcanzada!", "Se procederá a mostrar las estadísticas finales!", "OK");
-                    await terminarFaseDef();
+                    await terminarFaseDef();    //Termina la fase definitiva
                     var estadisticas = new EstadisticasGenerales();
                     await Navigation.PushAsync(estadisticas);
                     this.Navigation.RemovePage(this.Navigation.NavigationStack[this.Navigation.NavigationStack.Count - 2]);
@@ -129,7 +137,7 @@ namespace AppProdu
             public string token { get; set; }
         }
 
-
+        //Método para obtener las fechas en los que se realizó al menos un recorrido
         async public void obtenerFechas()
         {
             var client = new HttpClient
@@ -142,25 +150,22 @@ namespace AppProdu
                 token = Application.Current.Properties["currentToken"].ToString()
             };
             string jsonData = JsonConvert.SerializeObject(newPath);
-            Console.WriteLine("AQUI" + jsonData);
             var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
             HttpResponseMessage response = await client.PostAsync("/paths/dates.json", content);
-            Console.WriteLine(response.StatusCode.ToString());
             if (response.StatusCode == HttpStatusCode.OK)
             {
                 var result = await response.Content.ReadAsStringAsync();
-                Console.WriteLine(result.ToString());
                 var jobject = JObject.Parse(result);
-                Console.WriteLine("AQUI3 "+ result);
 
                 try
                 {
-
                     dates = JsonConvert.DeserializeObject<List<String>>(jobject["fechas"].ToString());
-                    Console.WriteLine("AQUI5");
+                    getPaths();
+                    
+                    //fechaPicker.Items.Clear();
+                    ItemsDates = new ObservableCollection<string> { };
 
-                    fechaPicker.Items.Clear();
                     for (int i = 0; i < dates.Count; i++)
                     {
                         string temp = dates[i];
@@ -194,9 +199,9 @@ namespace AppProdu
             await Navigation.PushAsync(crearRecoPage);
         }
 
+        //Método para obtener en la fase en la que se encuentra el muestreo
         public async Task obtenerFaseAsync(int faseActual)
         {
-
             var client = new HttpClient
             {
                 BaseAddress = new Uri("https://app-produ.herokuapp.com")
@@ -209,35 +214,28 @@ namespace AppProdu
             string jsonData = JsonConvert.SerializeObject(newFase);
             var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
-            HttpResponseMessage response = await client.PostAsync("/fases/getfasebyid.json", content);
-            if (response.StatusCode == HttpStatusCode.OK)
+            try
             {
-                var result = await response.Content.ReadAsStringAsync();
-                var jobject = JObject.Parse(result);
-                var data = JsonConvert.DeserializeObject<Fase>(jobject["fase"].ToString());
-                try
+                HttpResponseMessage response = await client.PostAsync("/fases/getfasebyid.json", content);
+                if (response.StatusCode == HttpStatusCode.OK)
                 {
+                    var result = await response.Content.ReadAsStringAsync();
+                    var jobject = JObject.Parse(result);
+                    var data = JsonConvert.DeserializeObject<Fase>(jobject["fase"].ToString());
 
                     currentFase = data;
+                }
 
-                }
-                catch (Exception)
-                {
-                    Console.WriteLine("AQUI6\nNo se pudo acceder a datos recuperados");
-                    //errorLabel.Text = "Error\nUsuario o contraseña inválido";
-                }
             }
-            else
+            catch (Exception)
             {
-                Console.WriteLine("AQUI7\nNo se pudo obtener fases");
-                //errorLabel.Text = "Error\nUsuario o contraseña inválido";
+                //Error al realizar consulta al backend
             }
         }
 
-
+        //Método para obtener el muestreo actual
         public async Task obtenerSamplingAsync()
         {
-
             var client = new HttpClient
             {
                 BaseAddress = new Uri("https://app-produ.herokuapp.com")
@@ -250,31 +248,26 @@ namespace AppProdu
             string jsonData = JsonConvert.SerializeObject(newSampling);
             var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
-            HttpResponseMessage response = await client.PostAsync("/samplings/getsampling.json", content);
-            if (response.StatusCode == HttpStatusCode.OK)
+            try
             {
-                var result = await response.Content.ReadAsStringAsync();
-                var jobject = JObject.Parse(result);
-                var data = JsonConvert.DeserializeObject<Sampling>(jobject["muestreo"].ToString());
-                try
+                HttpResponseMessage response = await client.PostAsync("/samplings/getsampling.json", content);
+                if (response.StatusCode == HttpStatusCode.OK)
                 {
+                    var result = await response.Content.ReadAsStringAsync();
+                    var jobject = JObject.Parse(result);
+                    var data = JsonConvert.DeserializeObject<Sampling>(jobject["muestreo"].ToString());
+
                     muestrasRestantesLabel.Text = "Muestras restantes: " + (data.cantMuestrasTotal - data.muestrasActual);
                     muestrasActualesLabel.Text = "Muestras actuales: " + data.muestrasActual;
-
-                }
-                catch (Exception)
-                {
-                    Console.WriteLine("AQUI6\nNo se pudo acceder a datos recuperados");
-                    //errorLabel.Text = "Error\nUsuario o contraseña inválido";
                 }
             }
-            else
+            catch (Exception)
             {
-                Console.WriteLine("AQUI7\nNo se pudo obtener fases");
-                //errorLabel.Text = "Error\nUsuario o contraseña inválido";
+                //Error al realizar consulta al backend
             }
         }
 
+        //Método para actualizar la flag de si se realizó la pregunta
         public async Task ActualizarFlag(int newvalue)
         {
 
@@ -291,36 +284,24 @@ namespace AppProdu
             string jsonData = JsonConvert.SerializeObject(newFase);
             var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
-            HttpResponseMessage response = await client.PostAsync("/fases/updateflag.json", content);
-            if (response.StatusCode == HttpStatusCode.OK)
+            try
             {
-                Console.WriteLine("AQUI2");
-                var result = await response.Content.ReadAsStringAsync();
-                Console.WriteLine(result.ToString());
-                var jobject = JObject.Parse(result);
-                Console.WriteLine("AQUI3" + jobject["fase"].ToString());
-                var data = JsonConvert.DeserializeObject<Fase>(jobject["fase"].ToString());
-                try
+                HttpResponseMessage response = await client.PostAsync("/fases/updateflag.json", content);
+                if (response.StatusCode == HttpStatusCode.OK)
                 {
-
-                    Console.WriteLine("AQUI5");
-                    Console.WriteLine(data.id);
+                    var result = await response.Content.ReadAsStringAsync();
+                    var jobject = JObject.Parse(result);
+                    var data = JsonConvert.DeserializeObject<Fase>(jobject["fase"].ToString());
                     currentFase = data;
-
-                }
-                catch (Exception)
-                {
-                    Console.WriteLine("AQUI6\nNo se pudo acceder a datos recuperados");
-                    //errorLabel.Text = "Error\nUsuario o contraseña inválido";
                 }
             }
-            else
+            catch (Exception)
             {
-                Console.WriteLine("AQUI7\nNo se pudo obtener fases");
-                //errorLabel.Text = "Error\nUsuario o contraseña inválido";
+                //Error al realizar consulta al backend
             }
         }
 
+        //Método para cambiar la fase en la tabla de muestreo(Sampling)
         public async Task cambiarFase()
         {
 
@@ -335,43 +316,29 @@ namespace AppProdu
                 token = Application.Current.Properties["currentToken"].ToString()
             };
             string jsonData = JsonConvert.SerializeObject(newFase);
-            Console.WriteLine("AQUI" + jsonData);
             var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
-            HttpResponseMessage response = await client.PostAsync("/samplings/changefase.json", content);
-            Console.WriteLine(response.StatusCode.ToString());
-            if (response.StatusCode == HttpStatusCode.OK)
+            try
             {
-                Console.WriteLine("AQUI2");
-                var result = await response.Content.ReadAsStringAsync();
-                Console.WriteLine(result.ToString());
-                var jobject = JObject.Parse(result);
-                Console.WriteLine("AQUI3" + jobject["muestreo"].ToString());
-                var data = JsonConvert.DeserializeObject<Sampling>(jobject["muestreo"].ToString());
-                try
+                HttpResponseMessage response = await client.PostAsync("/samplings/changefase.json", content);
+                if (response.StatusCode == HttpStatusCode.OK)
                 {
-
-                    Console.WriteLine("AQUI5");
-                    Console.WriteLine(data.id);
+                    var result = await response.Content.ReadAsStringAsync();
+                    var jobject = JObject.Parse(result);
+                    var data = JsonConvert.DeserializeObject<Sampling>(jobject["muestreo"].ToString());
                     Application.Current.Properties["fase"] = 2;
                     await crearFaseDef();
                 }
-                catch (Exception)
-                {
-                    Console.WriteLine("AQUI6\nNo se pudo acceder a datos recuperados");
-                    //errorLabel.Text = "Error\nUsuario o contraseña inválido";
-                }
             }
-            else
+            catch (Exception)
             {
-                Console.WriteLine("AQUI7\nNo se pudo obtener fases");
-                //errorLabel.Text = "Error\nUsuario o contraseña inválido";
+                //Error al realizar consulta al backend
             }
         }
 
+        //Método para crear la fase definitiva cuando se finalice la preliminar
         public async Task crearFaseDef()
         {
-
             var client = new HttpClient
             {
                 BaseAddress = new Uri("https://app-produ.herokuapp.com")
@@ -389,43 +356,29 @@ namespace AppProdu
                 token = Application.Current.Properties["currentToken"].ToString()
             };
             string jsonData = JsonConvert.SerializeObject(newFase);
-            Console.WriteLine("AQUI" + jsonData);
             var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
-            HttpResponseMessage response = await client.PostAsync("/fases/changefase.json", content);
-            Console.WriteLine(response.StatusCode.ToString());
-            if (response.StatusCode == HttpStatusCode.Created)
+            try
             {
-                Console.WriteLine("AQUI2");
-                var result = await response.Content.ReadAsStringAsync();
-                Console.WriteLine(result.ToString());
-                var jobject = JObject.Parse(result);
-                Console.WriteLine("AQUI61516516516516516516516516516516516" + jobject["fase"].ToString());
-                var data = JsonConvert.DeserializeObject<Fase>(jobject["fase"].ToString());
-                try
+                HttpResponseMessage response = await client.PostAsync("/fases/changefase.json", content);
+                if (response.StatusCode == HttpStatusCode.Created)
                 {
-
-                    Console.WriteLine("AQUI599999999999999999999999999999999999999999999999999999999999");
-                    Console.WriteLine(data.id);
+                    var result = await response.Content.ReadAsStringAsync();
+                    var jobject = JObject.Parse(result);
+                    var data = JsonConvert.DeserializeObject<Fase>(jobject["fase"].ToString());
                     Application.Current.Properties["id-fase"] = data.id;
 
                 }
-                catch (Exception)
-                {
-                    Console.WriteLine("AQUI6\nNo se pudo acceder a datos recuperados");
-                    //errorLabel.Text = "Error\nUsuario o contraseña inválido";
-                }
             }
-            else
+            catch (Exception)
             {
-                Console.WriteLine("AQUI7\nNo se pudo obtener fases");
-                //errorLabel.Text = "Error\nUsuario o contraseña inválido";
+                //Error al realizar consulta al backend
             }
         }
 
+        //Método para cambiar la fase definitiva de la tabla de muestreo(Sampling)
         public async Task terminarFaseDef()
         {
-
             var client = new HttpClient
             {
                 BaseAddress = new Uri("https://app-produ.herokuapp.com")
@@ -437,39 +390,27 @@ namespace AppProdu
                 token = Application.Current.Properties["currentToken"].ToString()
             };
             string jsonData = JsonConvert.SerializeObject(newFase);
-            Console.WriteLine("AQUI" + jsonData);
             var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
-            HttpResponseMessage response = await client.PostAsync("/samplings/changefase.json", content);
-            Console.WriteLine(response.StatusCode.ToString());
-            if (response.StatusCode == HttpStatusCode.OK)
+            try
             {
-                Console.WriteLine("AQUI2");
-                var result = await response.Content.ReadAsStringAsync();
-                Console.WriteLine(result.ToString());
-                var jobject = JObject.Parse(result);
-                Console.WriteLine("AQUI3" + jobject["muestreo"].ToString());
-                var data = JsonConvert.DeserializeObject<Sampling>(jobject["muestreo"].ToString());
-                try
+                HttpResponseMessage response = await client.PostAsync("/samplings/changefase.json", content);
+                if (response.StatusCode == HttpStatusCode.OK)
                 {
-
-                    Console.WriteLine("AQUI5");
-                    Console.WriteLine(data.id);
+                    var result = await response.Content.ReadAsStringAsync();
+                    var jobject = JObject.Parse(result);
+                    var data = JsonConvert.DeserializeObject<Sampling>(jobject["muestreo"].ToString());
                     Application.Current.Properties["fase"] = 3;
-                }
-                catch (Exception)
-                {
-                    Console.WriteLine("AQUI6\nNo se pudo acceder a datos recuperados");
-                    //errorLabel.Text = "Error\nUsuario o contraseña inválido";
+
                 }
             }
-            else
+            catch (Exception)
             {
-                Console.WriteLine("AQUI7\nNo se pudo obtener fases");
-                //errorLabel.Text = "Error\nUsuario o contraseña inválido";
+                //Error al realizar consulta al backend
             }
         }
 
+        //Método para obtener los recorridos de la fecha específica seleccionada del picker
         async public void getPaths()
         {
             try
@@ -515,6 +456,10 @@ namespace AppProdu
             {
                 Console.WriteLine("\nException Caught!");
                 Console.WriteLine("Message :{0} ", e.Message);
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("\nException Caught!");
             }
         }
 

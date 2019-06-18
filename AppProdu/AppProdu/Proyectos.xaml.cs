@@ -50,7 +50,6 @@ namespace AppProdu
                     token = Application.Current.Properties["currentToken"].ToString()
                 };
                 string jsonData = JsonConvert.SerializeObject(userLogged);
-                //Console.WriteLine("AQUI");
                 var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
                 HttpResponseMessage response = await client.PostAsync("/projects/userprojects.json", content);
@@ -58,7 +57,6 @@ namespace AppProdu
                 response.EnsureSuccessStatusCode();
                 string responseBody = await response.Content.ReadAsStringAsync();
                 var jobject = JObject.Parse(responseBody);
-                Console.WriteLine("AQUI3" + jobject["projects"].ToString());
                 proyectos = JsonConvert.DeserializeObject<List<Project>>(jobject["projects"].ToString());
 
 
@@ -75,8 +73,6 @@ namespace AppProdu
             }
             catch (HttpRequestException e)
             {
-                Console.WriteLine("\nException Caught!");
-                Console.WriteLine("Message :{0} ", e.Message);
             }
         }
 
@@ -86,7 +82,6 @@ namespace AppProdu
                 return;
 
             var temp = (Project)e.Item;
-            //await DisplayAlert("Item Tapped", "An item was tapped. " + temp.nombre, "OK");
             var idType = MyListView;
             Application.Current.Properties["id-project"] = temp.id;
             var muestreoPage = new Muestreos();
@@ -116,7 +111,6 @@ namespace AppProdu
 
         protected override bool OnBackButtonPressed()
         {
-            //await Navigation.PopAsync(true);
             base.OnBackButtonPressed();
             
             Device.BeginInvokeOnMainThread(async () =>

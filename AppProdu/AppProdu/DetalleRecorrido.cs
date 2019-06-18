@@ -41,7 +41,6 @@ namespace AppProdu
             scrollView.Padding = new Thickness(10);
             scrollView.Content = grid;
 
-            //grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(50) });
             grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
             grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
             grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
@@ -68,8 +67,6 @@ namespace AppProdu
             var Operarios = new Label { Text = "Operarios", HorizontalOptions = LayoutOptions.Center, FontSize = 16, FontAttributes = FontAttributes.Bold };
             var Actividad = new Label { Text = "Actividad", HorizontalOptions = LayoutOptions.Center, FontSize = 16, FontAttributes = FontAttributes.Bold };
             var Tipo = new Label { Text = "Tipo", HorizontalOptions = LayoutOptions.Center, FontSize = 16, FontAttributes = FontAttributes.Bold };
-
-            Console.WriteLine("SERA AQUI" + listaOperarios.Count + " " + listaOperariosID.Count + " " + listaActividades.Count);
 
             grid.Children.Add(Operarios, 0, 1);
             grid.Children.Add(Actividad, 1, 1);
@@ -120,20 +117,15 @@ namespace AppProdu
                 string jsonData = JsonConvert.SerializeObject(fechaSelected);
                 
                 var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-                Console.WriteLine("JSON DATA: " + jsonData);
                 HttpResponseMessage response = await client.PostAsync("/operator_registers/pathoperatorregister.json", content);
 
                 response.EnsureSuccessStatusCode();
                 string responseBody = await response.Content.ReadAsStringAsync();
                 var jobject = JObject.Parse(responseBody);
-                Console.WriteLine("AQUI3" + jobject["registro"].ToString());
+
                 listaOperarios = JsonConvert.DeserializeObject<List<OperatorRegister>>(jobject["registro"].ToString());
-                Console.WriteLine("RESPONSE: "+ responseBody);
-                Console.WriteLine("TRANSFORM: " + jobject["registro"].ToString());
+
                 listaOperariosID = JsonConvert.DeserializeObject<List<OperatorRegisterID>>(jobject["registro"].ToString());
-
-                Console.WriteLine("HELLO BABY: " + listaOperariosID[0].activity_id);
-
 
             }
             catch (HttpRequestException e)
@@ -143,7 +135,6 @@ namespace AppProdu
             }
             catch (Exception)
             {
-                Console.WriteLine("ERROR getRegisters");
             }
         }
 
@@ -161,15 +152,15 @@ namespace AppProdu
                 obj.Add("registers", listaOperariosID);
                 string jsonData = JsonConvert.SerializeObject(obj);
                 var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-                Console.WriteLine("JSON DATA: " + jsonData);
+
                 HttpResponseMessage response = await client.PostAsync("/activities/getactivities.json", content);
 
                 response.EnsureSuccessStatusCode();
                 string responseBody = await response.Content.ReadAsStringAsync();
                 var jobject = JObject.Parse(responseBody);
-                Console.WriteLine("AQUI3" + jobject["actividad"].ToString());
+
                 listaActividades = JsonConvert.DeserializeObject<List<Actividad>>(jobject["actividad"].ToString());
-                Console.WriteLine("RESPONSE: " + responseBody);
+
                 dictAct = listaActividades.ToDictionary(x => x.id, x => x);
 
             }
@@ -180,7 +171,6 @@ namespace AppProdu
             }
             catch (Exception)
             {
-                Console.WriteLine("ERROR getActivities");
             }
         }
 

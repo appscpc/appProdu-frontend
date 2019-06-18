@@ -43,34 +43,31 @@ namespace AppProdu
             if (!String.IsNullOrEmpty(errorEntry.Text) && !String.IsNullOrEmpty(zPicker.SelectedItem.ToString()))
             {
                 double error;
+                //El método TryParse trata de hacer la conversión a double utilizando el formato de US, el cual utiliza el punto como dividor de decimales
                 double.TryParse(errorEntry.Text, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.GetCultureInfo("en-US"), out error);
-                Console.WriteLine("ERROR= " + error + " " + errorEntry.Text);
+
                 if(error <= 0.1 && error >= 0.01)
                 {
                     double p = (faseData.p / (faseData.p + faseData.q));
                     double q = (faseData.q / (faseData.p + faseData.q)); 
                     double z;
+                    //El método TryParse trata de hacer la conversión a double utilizando el formato de US, el cual utiliza el punto como dividor de decimales
                     double.TryParse(zValues.FirstOrDefault(x => x.Value == zPicker.SelectedItem.ToString()).Key, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.GetCultureInfo("en-US"), out z);
-                    Console.WriteLine("HOLAAAAAAA " + z);
                     double n = Math.Pow(z, 2) * p * q / Math.Pow(error, 2);
-                    Console.WriteLine("El N= " + n);
 
                     faseData.error = (float)error;
-                    Console.WriteLine("KEVIN"+faseData.error);
                     faseData.z = (float)z;
                     var calculosPage = new CalculosHechos(System.Convert.ToInt32(Math.Round(n)), faseData, System.Convert.ToInt32(faseData.p + faseData.q));
                     await Navigation.PushAsync(calculosPage);
                 }
                 else
                 {
-                    Console.WriteLine("AQUI7\nError no entra en rango");
                     await DisplayAlert("Error!", "El error debe ser un número entre 0,01 y 0,1!", "OK");
                 }
                 
             }
             else
             {
-                Console.WriteLine("AQUI6\nEspacios vacíos");
                 await DisplayAlert("Error!", "Espacios vacíos!\nPor favor inserte el error y seleccione el Za/2!", "OK");
             }
         }
