@@ -5,52 +5,88 @@
              x:Class="AppProdu.MainPage"
              Title="Iniciar Sesión">
 
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="70" />
+            <RowDefinition Height="60" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
+        <Image x:Name="imgMain"
+                HeightRequest="40"
+               WidthRequest="40"
+                Source="herramientas.jpg">
+        </Image>
+        
         <StackLayout Grid.Row="1" Grid.Column="0">
-            <!-- Place new controls here -->
-            <Entry Placeholder="Correo" x:Name="correoEntry"
+
+            <Label x:Name="appName"                   
+                Text=" AppName "
+                FontSize="Large"                          
+                HorizontalTextAlignment="Center"
+                VerticalTextAlignment="Center"
+                Margin="35"/>
+            
+            <BoxView x:Name="underlineBoxView" 
+                HeightRequest="1" 
+                BackgroundColor="#803130" 
+                IsVisible="false"/>
+
+            <Label x:Name="lblCorreo"   
+                TranslationX="80"
+                Text="Correo: "
+                FontSize="18"
+                TextColor="Black"/>
+
+            <Entry Placeholder="ejemplo@gmail.com" x:Name="correoEntry"
                WidthRequest="250"
-               HeightRequest="75"
+               HeightRequest="47"
                HorizontalOptions="Center"
                Text=""
                FontSize="18"/>
-            <Entry Placeholder="Contraseña" x:Name="passEntry"
+
+            <Label x:Name="lblPassword"   
+                TranslationX="80"
+                Text="Contraseña:"
+                FontSize="18"
+                TextColor="Black"
+                TranslationY="20"/>
+
+            <Entry Placeholder="********" x:Name="passEntry"
                HorizontalOptions="Center"
                WidthRequest="250"
-               HeightRequest="75"
+               HeightRequest="47"
                IsPassword="True" 
                Text=""
-                FontSize="18"/>
+               FontSize="18"
+               TranslationY="20"/>
+            
             <Button x:Name="ingresarButton"
                 Text="Ingresar" 
                 TextColor="White"
                 WidthRequest="125"
                 HeightRequest="45"
                 BorderRadius="10"
-                BackgroundColor="#439dbb"
+                BackgroundColor="#D2674A"
                 HorizontalOptions="Center"
                 Margin="40"
-                Clicked="ingresarButton_Clicked"/>
+                Clicked="ingresarButton_Clicked"
+                TranslationY="20"/>
+            
             <Label Text="¿No tienes cuenta?"
                    x:Name="registrar"
                    TextColor="#439dbb"
                    HorizontalOptions="Center"
                    />
-            <Label Text="" 
+                <Label Text="" 
                    TextColor="Red"
                    x:Name="errorLabel"
-                   HorizontalOptions="Center"/>
+                   HorizontalOptions="Center"
+                   TranslationY="20"/>
         </StackLayout>
 
     </Grid>
     
-    
-
 </ContentPage>
