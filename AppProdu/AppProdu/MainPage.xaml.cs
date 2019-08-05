@@ -18,7 +18,7 @@ namespace AppProdu
         public MainPage()
         {
             InitializeComponent();
-            imgMain.Source = ImageSource.FromResource("AppProdu.herramientas.jpg");
+            //imgMain.Source = ImageSource.FromResource("AppProdu.herramientas.jpg");
 
             var registrarLabel = this.FindByName<Label>("registrar");
 

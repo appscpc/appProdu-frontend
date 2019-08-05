@@ -3,8 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:AppProdu"
              x:Class="AppProdu.MainPage"
-             Title="Iniciar Sesión">
-
+             Title="Iniciar Sesión"
+             BackgroundColor="#16796F">
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -14,73 +14,72 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Image x:Name="imgMain"
-                HeightRequest="40"
-               WidthRequest="40"
-                Source="herramientas.jpg">
-        </Image>
-        
+
         <StackLayout Grid.Row="1" Grid.Column="0">
 
             <Label x:Name="appName"                   
                 Text=" AppName "
+                TextColor="White"
                 FontSize="Large"                          
                 HorizontalTextAlignment="Center"
                 VerticalTextAlignment="Center"
                 Margin="35"/>
-            
+
             <BoxView x:Name="underlineBoxView" 
                 HeightRequest="1" 
                 BackgroundColor="#803130" 
                 IsVisible="false"/>
 
             <Label x:Name="lblCorreo"   
-                TranslationX="80"
+                TranslationX="77"
                 Text="Correo: "
-                FontSize="18"
-                TextColor="Black"/>
+                FontSize="23"
+                TextColor="White"/>
 
             <Entry Placeholder="ejemplo@gmail.com" x:Name="correoEntry"
-               WidthRequest="250"
-               HeightRequest="47"
+               WidthRequest="270"
+               HeightRequest="55"
                HorizontalOptions="Center"
                Text=""
-               FontSize="18"/>
+               FontSize="18"
+               BackgroundColor="White"/>
 
             <Label x:Name="lblPassword"   
-                TranslationX="80"
+                TranslationX="77"
                 Text="Contraseña:"
-                FontSize="18"
-                TextColor="Black"
+                FontSize="23"
+                TextColor="White"
                 TranslationY="20"/>
 
             <Entry Placeholder="********" x:Name="passEntry"
                HorizontalOptions="Center"
-               WidthRequest="250"
-               HeightRequest="47"
+               WidthRequest="270"
+               HeightRequest="55"
                IsPassword="True" 
                Text=""
-               FontSize="18"
-               TranslationY="20"/>
-            
+               FontSize="20"
+               TranslationY="20"
+               BackgroundColor="White"
+               TextColor="Black"/>
+
             <Button x:Name="ingresarButton"
                 Text="Ingresar" 
                 TextColor="White"
                 WidthRequest="125"
                 HeightRequest="45"
                 BorderRadius="10"
-                BackgroundColor="#D2674A"
+                BackgroundColor="#6CB0A8"
                 HorizontalOptions="Center"
                 Margin="40"
                 Clicked="ingresarButton_Clicked"
                 TranslationY="20"/>
-            
+
             <Label Text="¿No tienes cuenta?"
                    x:Name="registrar"
-                   TextColor="#439dbb"
+                   TextColor="White"
                    HorizontalOptions="Center"
                    />
-                <Label Text="" 
+            <Label Text="" 
                    TextColor="Red"
                    x:Name="errorLabel"
                    HorizontalOptions="Center"
