@@ -11,59 +11,104 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50" />
+            <RowDefinition Height="20" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <StackLayout Grid.Row="1" Grid.Column="0">
             <!-- Place new controls here -->
-            <Entry Placeholder="Nombre" x:Name="nombreEntry"
+            
+            <Label x:Name="lblNombre"   
+                TranslationX="80"
+                Text="Nombre: "
+                FontSize="20"
+                TextColor="Black"/>
+            
+            <Entry Placeholder="Maria" x:Name="nombreEntry"
                 WidthRequest="250"
-                HeightRequest="65"
+                HeightRequest="45"
                 HorizontalOptions="Center"
                 FontSize="18"/>
-            <Entry Placeholder="Primer Apellido" x:Name="apellido1Entry"
+
+            <Label x:Name="lblPrimerApellido"   
+                TranslationX="80"
+                Text="Primer Apellido: "
+                FontSize="20"
+                TextColor="Black"/>
+
+            <Entry Placeholder="Perez" x:Name="apellido1Entry"
                 HorizontalOptions="Center"
                 WidthRequest="250"
-                HeightRequest="65"
+                HeightRequest="45"
                 FontSize="18"/>
-            <Entry Placeholder="Segundo Apellido" x:Name="apellido2Entry"
+            
+             <Label x:Name="lblSegundoApellido"   
+                TranslationX="80"
+                Text="Segundo Apellido: "
+                FontSize="20"
+                TextColor="Black"/>
+            
+            <Entry Placeholder="Arias" x:Name="apellido2Entry"
                 HorizontalOptions="Center"
                 WidthRequest="250"
-                HeightRequest="65"
+                HeightRequest="45"
                 FontSize="18"/>
-            <Entry Placeholder="Correo" x:Name="correoEntry"
+            
+          <Label x:Name="lblCorreo"   
+                TranslationX="80"
+                Text="Correo: "
+                FontSize="20"
+                TextColor="Black"/>   
+            
+            <Entry Placeholder="ejemplo@gmail.com" x:Name="correoEntry"
                 WidthRequest="250"
-                HeightRequest="65"
+                HeightRequest="45"
                 HorizontalOptions="Center"
                 FontSize="18"/>
-            <Entry Placeholder="Contraseña" x:Name="passEntry"
+            
+             <Label x:Name="lblConstrasena"   
+                TranslationX="80"
+                Text="Contraseña: "
+                FontSize="20"
+                TextColor="Black"/>
+            
+            <Entry Placeholder="********" x:Name="passEntry"
                 HorizontalOptions="Center"
                 WidthRequest="250"
-                HeightRequest="65"
+                HeightRequest="45"
                 IsPassword="True" 
                 FontSize="18"/>
-            <Picker Title="Tipo Usuario" 
+            
+             <Label x:Name="lblTipoUsuario"   
+                TranslationX="80"
+                Text="Tipo Usuario: "
+                FontSize="20"
+                TextColor="Black"/>
+            
+            <Picker Title="Seleccione" 
                     HorizontalOptions="Center"
                     x:Name="tipo"
                     WidthRequest="250"
-                    HeightRequest="65"
+                    HeightRequest="45"
                     FontSize="18"/>
+            
             <Button x:Name="registrarButton"
                 Text="Registrar" 
                 TextColor="White"
+                FontSize="18"
                 WidthRequest="125"
-                HeightRequest="45"
+                HeightRequest="55"
                 BorderRadius="10"
-                BackgroundColor="#439dbb"
+                BackgroundColor="#10564F"
                 HorizontalOptions="Center"
-                Margin="40"
+                Margin="25"
                 Clicked="registrarButton_Clicked" />
+            
             <Label Text="¿Ya tienes cuenta?"
                    x:Name="iniciar"
-                   TextColor="#439dbb"
-                   HorizontalOptions="Center"
-                   />
+                   TextColor="#10564F"
+                   HorizontalOptions="Center"/>
+            
             <Label Text="" 
                    TextColor="Red"
                    x:Name="errorLabel"

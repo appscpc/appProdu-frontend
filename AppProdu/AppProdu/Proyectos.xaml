@@ -5,20 +5,21 @@
              Title="Proyectos">
   
     <StackLayout>
+        <!--
         <ListView x:Name="MyListView"
             ItemsSource="{Binding Items}"
             ItemTapped="Handle_ItemTapped"
             CachingStrategy="RecycleElement">
 
-            <!--Built in Cells-->
+            Built in Cells
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <TextCell Text="{Binding nombre}" />
                 </DataTemplate>
             </ListView.ItemTemplate>
+        -->
 
-
-            <!--Custom View Cells-->
+        <!--Custom View Cells-->
             <!--
         <ListView.ItemTemplate>
           <DataTemplate>
@@ -32,15 +33,37 @@
             </ViewCell>
           </DataTemplate>
         </ListView.ItemTemplate>
-        -->
         </ListView>
+        -->
+
+        <ListView x:Name="MyListView"
+            ItemsSource="{Binding Items}"
+            ItemTapped="Handle_ItemTapped"
+            CachingStrategy="RecycleElement">
+
+            <!--Built in Cells-->
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="Fill">
+                            <Image Source="herramientas.jpg" />
+                            <StackLayout Orientation="Vertical">
+                                <Label Text="{Binding nombre}" FontSize="25"/>
+                            </StackLayout>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
         <Button x:Name="crearProButton"
             Text="Crear Nuevo Proyecto" 
             TextColor="White"
-            WidthRequest="225"
-            HeightRequest="45"
+            FontSize="18"
+            WidthRequest="275"
+            HeightRequest="55"
             BorderRadius="10"
-            BackgroundColor="#439dbb"
+            BackgroundColor="#10564F"
             HorizontalOptions="Center"
             Margin="40"
             Clicked="crearProButton_Clicked"/>

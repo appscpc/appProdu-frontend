@@ -10,27 +10,33 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="60" />
+            <RowDefinition Height="20" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
 
         <StackLayout Grid.Row="1" Grid.Column="0">
 
-            <Label x:Name="appName"                   
-                Text=" AppName "
-                TextColor="White"
-                FontSize="Large"                          
-                HorizontalTextAlignment="Center"
-                VerticalTextAlignment="Center"
-                Margin="35"/>
+
+            <Grid>
+                <Grid TranslationX="50">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="300"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Image Source="logo.jpg" AnchorX="40" Opacity="100"/>
+                </Grid>
+            </Grid>
 
             <BoxView x:Name="underlineBoxView" 
                 HeightRequest="1" 
                 BackgroundColor="#803130" 
                 IsVisible="false"/>
 
-            <Label x:Name="lblCorreo"   
+                <Label x:Name="lblCorreo"   
                 TranslationX="77"
                 Text="Correo: "
                 FontSize="23"
@@ -65,8 +71,9 @@
             <Button x:Name="ingresarButton"
                 Text="Ingresar" 
                 TextColor="White"
-                WidthRequest="125"
-                HeightRequest="45"
+                FontSize="20"
+                WidthRequest="130"
+                HeightRequest="60"
                 BorderRadius="10"
                 BackgroundColor="#6CB0A8"
                 HorizontalOptions="Center"
