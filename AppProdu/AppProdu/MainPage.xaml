@@ -4,7 +4,7 @@
              xmlns:local="clr-namespace:AppProdu"
              x:Class="AppProdu.MainPage"
              Title="Iniciar Sesión"
-             BackgroundColor="#16796F">
+             BackgroundColor="#ADA7A7">
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -39,6 +39,7 @@
                 <Label x:Name="lblCorreo"   
                 TranslationX="77"
                 Text="Correo: "
+                Font="Bold"
                 FontSize="23"
                 TextColor="White"/>
 
@@ -53,6 +54,7 @@
             <Label x:Name="lblPassword"   
                 TranslationX="77"
                 Text="Contraseña:"
+                Font="Bold"
                 FontSize="23"
                 TextColor="White"
                 TranslationY="20"/>
@@ -75,16 +77,19 @@
                 WidthRequest="130"
                 HeightRequest="60"
                 BorderRadius="10"
-                BackgroundColor="#6CB0A8"
+                BackgroundColor="#D37506"
                 HorizontalOptions="Center"
                 Margin="40"
                 Clicked="ingresarButton_Clicked"
-                TranslationY="20"/>
+                TranslationY="40"/>
 
             <Label Text="¿No tienes cuenta?"
                    x:Name="registrar"
                    TextColor="White"
                    HorizontalOptions="Center"
+                   FontSize="17"
+                   Font="Bold"
+                   TranslationY="30"
                    />
             <Label Text="" 
                    TextColor="Red"

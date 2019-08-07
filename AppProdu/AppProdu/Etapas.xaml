@@ -5,6 +5,8 @@
              Title="Etapas">
     
     <ListView x:Name="MyListView"
+                Margin="100"
+                HorizontalOptions="Center"
                 ItemsSource="{Binding Items}"
                 ItemTapped="Handle_ItemTapped"
                 CachingStrategy="RecycleElement">
@@ -12,7 +14,7 @@
         <!--Built in Cells-->
         <ListView.ItemTemplate>
             <DataTemplate>
-                <TextCell Text="{Binding .}" />
+                <TextCell Text="{Binding .}" DetailColor="#D6BC80"/>
             </DataTemplate>
         </ListView.ItemTemplate>
 

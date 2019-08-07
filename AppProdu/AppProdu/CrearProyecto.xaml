@@ -16,19 +16,37 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <StackLayout Grid.Row="1">
-            
-            <Entry Placeholder="Nombre Proyecto" 
+
+            <Label x:Name="lblNombre"   
+                TranslationX="70"
+                Text="Nombre del Proyecto:"
+                FontSize="23"
+                TextColor="Black"
+                TranslationY="120"/>
+
+            <Entry Placeholder="Proyecto #1" 
                    x:Name="nombreProyectoEntry"
-                   WidthRequest="250"
+                   WidthRequest="270"
                    HorizontalOptions="Center"
-                   FontSize="18"/>
-            <Controls:PlaceholderEditor 
-                Placeholder="Descripción"
+                   FontSize="20"
+                   TranslationY="120"/>
+
+            <Label x:Name="lblDescripcion"   
+                TranslationX="70"
+                Text="Descripción:"
+                FontSize="23"
+                TextColor="Black"
+                TranslationY="140"/>
+            
+           <!-- <Controls:PlaceholderEditor -->
+            <Entry
+                Placeholder="Construcción"
                 x:Name="descripcionProyectoEditor"
-                WidthRequest="250"
+                WidthRequest="270"
                 HorizontalOptions="Center"
-                HeightRequest="100"
-                FontSize="18"/>
+                HeightRequest="50"
+                FontSize="20"
+                TranslationY="150"/>
 
         </StackLayout>
 
@@ -79,12 +97,14 @@
          <!--   </ListView>-->
             <Button Text="Crear" 
                     TextColor="White"
-                    WidthRequest="200"
-                    HeightRequest="45"
+                    FontSize="20"
+                    WidthRequest="180"
+                    HeightRequest="50"
                     BorderRadius="10"
-                    BackgroundColor="#439dbb"
+                    BackgroundColor="#D37506"
                     HorizontalOptions="Center"
                     Margin="10"
+                    TranslationY="220"
                     Clicked="crearPro_Clicked"/>
         </StackLayout>
     </Grid>

@@ -10,37 +10,28 @@
             ItemTapped="Handle_ItemTapped"
             CachingStrategy="RecycleElement">
 
-            <!--Built in Cells-->
+
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <TextCell Text="{Binding nombre}" />
+                    <ViewCell>
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="Fill">
+                            <StackLayout Orientation="Vertical">
+                                <Label Text="{Binding nombre}" FontSize="25"/>
+                            </StackLayout>
+                        </StackLayout>
+                    </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
-
-
-            <!--Custom View Cells-->
-            <!--
-        <ListView.ItemTemplate>
-          <DataTemplate>
-            <ViewCell>
-              <StackLayout>
-                <Label Text="{Binding Text}" 
-                       Style="{DynamicResource ListItemTextStyle}" />
-                <Label Text="{Binding Detail}" 
-                       Style="{DynamicResource ListItemDetailTextStyle}"/>
-              </StackLayout>
-            </ViewCell>
-          </DataTemplate>
-        </ListView.ItemTemplate>
-        -->
         </ListView>
+
         <Button x:Name="crearMuesButton"
             Text="Crear Nuevo Muestreo" 
             TextColor="White"
-            WidthRequest="225"
-            HeightRequest="45"
+            FontSize="18"
+            WidthRequest="275"
+            HeightRequest="55"
             BorderRadius="10"
-            BackgroundColor="#439dbb"
+            BackgroundColor="#D37506"
             HorizontalOptions="Center"
             Margin="40"
             Clicked="crearMuesButton_Clicked"/>
