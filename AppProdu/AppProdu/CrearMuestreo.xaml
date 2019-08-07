@@ -24,20 +24,20 @@
                     TextColor="Black"
                     TranslationY="20"/>
                 
-                <Entry x:Name="nombreMuestreoEntry" Placeholder="Nombre Muestreo" 
+                <Entry x:Name="nombreMuestreoEntry" Placeholder="Muestreo #1" 
                        WidthRequest="270"
                        HorizontalOptions="Center"
                        FontSize="18"
                        TranslationY="30"/>
 
                 <Label x:Name="lblCantMuestras"   
-                    TranslationX="50"
+                    TranslationX="70"
                     Text="Cantidad Muestras Preliminares:"
                     FontSize="17"
                     TextColor="Black"
                     TranslationY="40"/>
 
-                <Entry x:Name="cantMuestrasEntry" Placeholder="Cantidad Muestras Preliminares" 
+                <Entry x:Name="cantMuestrasEntry" Placeholder="10" 
                        WidthRequest="270"
                        HorizontalOptions="Center"
                        FontSize="18"
@@ -57,7 +57,7 @@
                         HeightRequest="65"
                         FontSize="18"
                         SelectedIndexChanged="Tipo_SelectedIndexChanged"
-                        TranslationY="70"/>
+                        TranslationY="60"/>
 
                 <Label x:Name="lblDescripcion"   
                     TranslationX="70"
@@ -66,10 +66,10 @@
                     TextColor="Black"
                     TranslationY="80"/>
 
-                <Controls:PlaceholderEditor x:Name="descripcionMuestreoEditor" Placeholder="Descripción"
+                <Controls:PlaceholderEditor x:Name="descripcionMuestreoEditor" Placeholder="Nota"
                                         WidthRequest="270"
                                         HorizontalOptions="Center"
-                                        HeightRequest="100"
+                                        HeightRequest="50"
                                         FontSize="18"
                                         TranslationY="90"/>
                 
@@ -82,7 +82,7 @@
                         HorizontalOptions="Center"
                         Margin="90"
                         Clicked="crearMue_Clicked"
-                        TranslationY="100"/>
+                        TranslationY="50"/>
             </StackLayout>
 
         </Grid>

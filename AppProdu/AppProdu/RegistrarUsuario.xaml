@@ -99,14 +99,14 @@
                 WidthRequest="125"
                 HeightRequest="55"
                 BorderRadius="10"
-                BackgroundColor="#10564F"
+                BackgroundColor="#D37506"
                 HorizontalOptions="Center"
                 Margin="25"
                 Clicked="registrarButton_Clicked" />
             
             <Label Text="¿Ya tienes cuenta?"
                    x:Name="iniciar"
-                   TextColor="#10564F"
+                   TextColor="#D37506"
                    HorizontalOptions="Center"/>
             
             <Label Text="" 
