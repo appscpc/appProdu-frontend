@@ -17,35 +17,66 @@
         </Grid.RowDefinitions>
         <StackLayout Grid.Row="1">
 
-            <Entry Placeholder="Cantidad Operarios" 
-                    WidthRequest="250"
-                    HeightRequest="65"
+            <Label x:Name="lblCantidadOperarios"   
+                    TranslationX="70"
+                    Text="Cantidad de Operarios:"
+                    FontSize="20"
+                    TextColor="Black"
+                    TranslationY="10"/>
+            
+            <Entry Placeholder="8" 
+                    WidthRequest="270"
                     HorizontalOptions="Center"
                     FontSize="18"
                     Keyboard="Numeric"
+                   TranslationY="3"
                    x:Name="cantOpEntry"/>
-            <Entry Placeholder="Temperatura" 
-                    WidthRequest="250"
-                    HeightRequest="65"
+
+            <Label x:Name="lblTemperatura"   
+                    TranslationX="70"
+                    Text="Temperatura:"
+                    FontSize="20"
+                    TextColor="Black"
+                    TranslationY="20"/>
+
+            <Entry Placeholder="25" 
+                    WidthRequest="270"
                     HorizontalOptions="Center"
                     FontSize="18"
                     Keyboard="Numeric"
+                    TranslationY="3"
                    x:Name="temperaturaEntry">
                 <Entry.Behaviors>
                     <behavior:MaskedBehavior Mask="XX.XX" />
                 </Entry.Behaviors>
             </Entry>
-            <Picker Title="Porcentaje de Humedad" 
-                    WidthRequest="250"
-                    HeightRequest="65"
+
+            <Label x:Name="lblPorcentajeHumedad"   
+                    TranslationX="70"
+                    Text="Porcentaje de Humedad:"
+                    FontSize="20"
+                    TextColor="Black"
+                    TranslationY="20"/>
+
+            <Picker Title="Seleccione" 
+                    WidthRequest="270"
                     HorizontalOptions="Center"
                     FontSize="18"
+                    TranslationY="3"
                    x:Name="humedadPicker"/>
+
+            <Label x:Name="lblHora"   
+                    TranslationX="70"
+                    Text="Hora:"
+                    FontSize="20"
+                    TextColor="Black"
+                    TranslationY="20"/>
+
             <Entry Placeholder="Hora" 
-                    WidthRequest="250"
-                    HeightRequest="65"
+                    WidthRequest="270"
                     HorizontalOptions="Center"
                     FontSize="18"
+                    TranslationY="3"
                     Keyboard="Numeric"
                    x:Name="horaEntry"
                    IsEnabled="True"
@@ -54,24 +85,33 @@
                     <behavior:MaskedBehavior Mask="XX:XX:XX" />
                 </Entry.Behaviors>
             </Entry>
+
+            <Label x:Name="lblFecha"   
+                    TranslationX="70"
+                    Text="Fecha:"
+                    FontSize="20"
+                    TextColor="Black"
+                    TranslationY="20"/>
+
             <DatePicker 
                 MinimumDate="01/01/2018"
-                HeightRequest="65"
-                WidthRequest="250"
+                WidthRequest="270"
                 HorizontalOptions="Center"
                 FontSize="18"
                 x:Name="fechaPicker"
+                TranslationY="3"
                 Date="{x:Static system:DateTime.Today}"
                 IsEnabled="True"/>
                 
         </StackLayout>
         <StackLayout Grid.Row="2">
             <Button Text="Crear" 
+                    FontSize="18"
                     TextColor="White"
                     WidthRequest="200"
-                    HeightRequest="45"
+                    HeightRequest="55"
                     BorderRadius="10"
-                    BackgroundColor="#439dbb"
+                    BackgroundColor="#D37506"
                     HorizontalOptions="Center"
                     Margin="25"
                     Clicked="crearRec_Clicked"/>

@@ -45,9 +45,9 @@ namespace AppProdu
             grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
             grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
 
-            var Operarios = new Label { Text = "Operarios", HorizontalOptions = LayoutOptions.Center, FontSize = 16, FontAttributes = FontAttributes.Bold };
-            var Actividad = new Label { Text = "Actividad", HorizontalOptions = LayoutOptions.Center, FontSize = 16, FontAttributes = FontAttributes.Bold };
-            var Tipo = new Label { Text = "Tipo", HorizontalOptions = LayoutOptions.Center, FontSize = 16, FontAttributes = FontAttributes.Bold };
+            var Operarios = new Label { Text = "Operarios", HorizontalOptions = LayoutOptions.Center, FontSize = 20, FontAttributes = FontAttributes.Bold, TextColor= Color.FromHex("#D37506") };
+            var Actividad = new Label { Text = "Actividad", HorizontalOptions = LayoutOptions.Center, FontSize = 20, FontAttributes = FontAttributes.Bold, TextColor = Color.FromHex("#D37506") };
+            var Tipo = new Label { Text = "Tipo", HorizontalOptions = LayoutOptions.Center, FontSize = 20, FontAttributes = FontAttributes.Bold, TextColor = Color.FromHex("#D37506") };
 
 
             grid.Children.Add(Operarios, 0, 0);
@@ -69,9 +69,9 @@ namespace AppProdu
                     });
                 }
                 
-                var Operarios1 = new Label { Text = "Operario " + i, HorizontalOptions = LayoutOptions.Center, FontSize = 12 };
-                var Actividad1 = new Label { Text = listaOperarios[i - 1].nombre_activity, HorizontalOptions = LayoutOptions.Center, FontSize = 12, TextColor = Color.Blue, FontAttributes = FontAttributes.Bold };
-                var Tipo1 = new Label { Text = listaOperarios[i - 1].nombre_activity_type, HorizontalOptions = LayoutOptions.Center, FontSize = 12 };
+                var Operarios1 = new Label { Text = "Operario " + i, HorizontalOptions = LayoutOptions.Center, FontSize = 16 };
+                var Actividad1 = new Label { Text = listaOperarios[i - 1].nombre_activity, HorizontalOptions = LayoutOptions.Center, FontSize = 16, TextColor = Color.FromHex("#9F2B00"), FontAttributes = FontAttributes.Bold };
+                var Tipo1 = new Label { Text = listaOperarios[i - 1].nombre_activity_type, HorizontalOptions = LayoutOptions.Center, FontSize = 16 };
                 var registrarEvent = new TapGestureRecognizer();
                 registrarEvent.Tapped += async (s, e) =>
                 {
@@ -85,7 +85,7 @@ namespace AppProdu
                 grid.Children.Add(Tipo1, 2, i);
                 grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(50) });
             }
-            var buttonAgregar = new Button { Text = "Agregar Actividades", HorizontalOptions = LayoutOptions.Center, FontSize = 16, CornerRadius = 10, BackgroundColor = Color.FromHex("#439dbb"), TextColor = Color.White, HeightRequest = 45, WidthRequest = 200 };
+            var buttonAgregar = new Button { Text = "Agregar Actividades", HorizontalOptions = LayoutOptions.Center, FontSize = 18, CornerRadius = 10, BackgroundColor = Color.FromHex("#D37506"), TextColor = Color.White, HeightRequest = 45, WidthRequest = 200 };
             buttonAgregar.Clicked += async (sender, args) => await agregarActividad_Clicked();
             grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(50) });
             grid.Children.Add(buttonAgregar, 0, totalOperarios+1);

@@ -27,7 +27,7 @@
                 WidthRequest="200"
                 x:Name="masMuestrasEntry"/>
         </StackLayout>
-        <Button BackgroundColor="#439dbb"
+        <Button BackgroundColor="#D37506"
             FontSize="16"
             Text="Añadir"
             CornerRadius="10"

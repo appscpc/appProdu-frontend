@@ -16,49 +16,51 @@
             <StackLayout Grid.Row="1">
 
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                    <Label Text="N =" FontSize="18" FontAttributes="Bold"/>
+                    <Label Text="N =" FontSize="20" FontAttributes="Bold"/>
                     <Entry Placeholder="" 
                          WidthRequest="250"
                          Keyboard="Numeric"
                          IsEnabled="False"
-                           FontSize="18"
+                           FontSize="20"
                          x:Name="NEntry"/>
                 </StackLayout>
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                    <Label Text="n =" FontSize="18" FontAttributes="Bold"/>
+                    <Label Text="n =" FontSize="20" FontAttributes="Bold"/>
                     <Entry Placeholder="" 
                            WidthRequest="250"
                            Keyboard="Numeric"
                            IsEnabled="False"
-                           FontSize="18"
+                           FontSize="20"
                            x:Name="nEntry"/>
                 </StackLayout>
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                    <Label Text="n Def. =" FontSize="18" FontAttributes="Bold"/>
+                    <Label Text="n Def. =" FontSize="20" FontAttributes="Bold"/>
                     <Entry Placeholder="" 
                            WidthRequest="250"
                            HorizontalOptions="Center"
                            Keyboard="Numeric"
                            IsEnabled="False"
-                           FontSize="18"
+                           FontSize="20"
                            x:Name="nDefEntry"/>
                 </StackLayout>
             </StackLayout>
-            <StackLayout Grid.Row="2">
+            <StackLayout Grid.Row="1">
                 <Button Text="Aceptar" 
                     TextColor="White"
+                    FontSize="20"
                     WidthRequest="200"
-                    HeightRequest="45"
+                    HeightRequest="55"
                     BorderRadius="10"
-                    BackgroundColor="#439dbb"
+                    BackgroundColor="#D37506"
                     HorizontalOptions="Center"
                     Clicked="aceptar_Clicked"/>
                 <Button Text="Calcular de nuevo" 
                     TextColor="White"
+                    FontSize="20"
                     WidthRequest="200"
-                    HeightRequest="45"
+                    HeightRequest="55"
                     BorderRadius="10"
-                    BackgroundColor="#439dbb"
+                    BackgroundColor="#D37506"
                     HorizontalOptions="Center"
                     Clicked="back_Clicked"/>
             </StackLayout>

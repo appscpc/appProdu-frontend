@@ -5,33 +5,33 @@
              Title="Etapas">
     
     <ListView x:Name="MyListView"
-                Margin="100"
                 HorizontalOptions="Center"
                 ItemsSource="{Binding Items}"
                 ItemTapped="Handle_ItemTapped"
-                CachingStrategy="RecycleElement">
+                CachingStrategy="RecycleElement"
+                
+                 TranslationY="250">
 
-        <!--Built in Cells-->
-        <ListView.ItemTemplate>
+        <ListView.ItemTemplate >
             <DataTemplate>
-                <TextCell Text="{Binding .}" DetailColor="#D6BC80"/>
+                <ViewCell>
+                    <Frame Padding="1" Margin="0,5,0,5" HeightRequest="300">
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="Fill">
+                        <StackLayout Orientation="Vertical">
+                            <Label Grid.Row="0" Grid.Column="0" Text="{Binding .}" 
+                                   HorizontalTextAlignment="Center"
+                                   VerticalTextAlignment="Center"
+                                   HorizontalOptions="Center"
+                                   FontSize="20" 
+                                   TextColor="White" 
+                                   BackgroundColor="#D37506" 
+                                   WidthRequest="500"/>
+                        </StackLayout>
+                    </StackLayout>
+                    </Frame>
+                </ViewCell>
             </DataTemplate>
         </ListView.ItemTemplate>
-
-        <!--Custom View Cells-->
-        <!--
-        <ListView.ItemTemplate>
-          <DataTemplate>
-            <ViewCell>
-              <StackLayout>
-                <Label Text="{Binding Text}" 
-                       Style="{DynamicResource ListItemTextStyle}" />
-                <Label Text="{Binding Detail}" 
-                       Style="{DynamicResource ListItemDetailTextStyle}"/>
-              </StackLayout>
-            </ViewCell>
-          </DataTemplate>
-        </ListView.ItemTemplate>
-        -->
     </ListView>
+    
 </ContentPage>

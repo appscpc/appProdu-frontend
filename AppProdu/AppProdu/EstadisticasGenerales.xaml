@@ -22,80 +22,82 @@
             </Grid.RowDefinitions>
           
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Grid.Row="0" Grid.Column="0">
-                    <Label Text="Datos" FontSize="16" FontAttributes="Bold" Margin="10"/>
+                    <Label Text="Datos" FontSize="20" FontAttributes="Bold" Margin="10" TextColor="#D37506"/>
                 </StackLayout>
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Grid.Row="0" Grid.Column="1">
-                    <Label Text="Preliminar" FontSize="16" FontAttributes="Bold" Margin="10"/>
+                    <Label Text="Preliminar" FontSize="19" FontAttributes="Bold" Margin="10" TextColor="#D37506"/>
                 </StackLayout>
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Grid.Row="0" Grid.Column="2">
-                    <Label Text="Definitivo" FontSize="16" FontAttributes="Bold" Margin="10"/>
+                    <Label Text="Definitivo" FontSize="20" FontAttributes="Bold" Margin="10" TextColor="#D37506"/>
                 </StackLayout>
 
 
             <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Grid.Row="1" Grid.Column="0">
-                    <Label Text="N" FontSize="12" FontAttributes="Bold"/>
+                    <Label Text="N" FontSize="20" FontAttributes="Bold"/>
                 </StackLayout>
             <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Grid.Row="1" Grid.Column="1">
-                <Label Text="" FontSize="12" FontAttributes="Bold" x:Name="nP"/>
+                <Label Text="" FontSize="20" FontAttributes="Bold" x:Name="nP"/>
                 </StackLayout>
             <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Grid.Row="1" Grid.Column="2">
-                <Label Text="" FontSize="12" FontAttributes="Bold" x:Name="nD"/>
+                <Label Text="" FontSize="20" FontAttributes="Bold" x:Name="nD"/>
                 </StackLayout>
 
 
             <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Grid.Row="2" Grid.Column="0">
-                    <Label Text="p" FontSize="12" FontAttributes="Bold"/>
+                    <Label Text="p" FontSize="20" FontAttributes="Bold"/>
                 </StackLayout>
             <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Grid.Row="2" Grid.Column="1">
-                <Label Text="" FontSize="12" FontAttributes="Bold" x:Name="pP"/>
+                <Label Text="" FontSize="20" FontAttributes="Bold" x:Name="pP"/>
                 </StackLayout>
             <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Grid.Row="2" Grid.Column="2">
-                <Label Text="" FontSize="12" FontAttributes="Bold" x:Name="pD"/>
+                <Label Text="" FontSize="20" FontAttributes="Bold" x:Name="pD"/>
                 </StackLayout>
 
             
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Grid.Row="3" Grid.Column="0">
-                    <Label Text="q" FontSize="12" FontAttributes="Bold"/>
+                    <Label Text="q" FontSize="20" FontAttributes="Bold"/>
                 </StackLayout>
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Grid.Row="3" Grid.Column="1">
-                <Label Text="" FontSize="12" FontAttributes="Bold" x:Name="qP"/>
+                <Label Text="" FontSize="20" FontAttributes="Bold" x:Name="qP"/>
                 </StackLayout>
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Grid.Row="3" Grid.Column="2">
-                <Label Text="" FontSize="12" FontAttributes="Bold" x:Name="qD"/>
+                <Label Text="" FontSize="20" FontAttributes="Bold" x:Name="qD"/>
                 </StackLayout>
 
             <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Grid.Row="4" Grid.Column="0">
-                    <Label Text="Error" FontSize="12" FontAttributes="Bold"/>
+                    <Label Text="Error" FontSize="20" FontAttributes="Bold"/>
                 </StackLayout>
             <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Grid.Row="4" Grid.Column="1">
-                <Label Text="" FontSize="12" FontAttributes="Bold" x:Name="eP"/>
+                <Label Text="" FontSize="20" FontAttributes="Bold" x:Name="eP"/>
                 </StackLayout>
             <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Grid.Row="4" Grid.Column="2">
-                <Label Text="" FontSize="12" FontAttributes="Bold" x:Name="eD"/>
+                <Label Text="" FontSize="20" FontAttributes="Bold" x:Name="eD"/>
                 </StackLayout>
 
             <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Grid.Row="5" Grid.Column="0">
-                    <Label Text="Za/2" FontSize="12" FontAttributes="Bold"/>
+                    <Label Text="Za/2" FontSize="20" FontAttributes="Bold"/>
                 </StackLayout>
             <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Grid.Row="5" Grid.Column="1">
-                <Label Text="" FontSize="12" FontAttributes="Bold" x:Name="zP"/>
+                <Label Text="" FontSize="20" FontAttributes="Bold" x:Name="zP"/>
                 </StackLayout>
             <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Grid.Row="5" Grid.Column="2">
-                    <Label Text="" FontSize="12" FontAttributes="Bold" x:Name="zD"/>
+                    <Label Text="" FontSize="20" FontAttributes="Bold" x:Name="zD"/>
                 </StackLayout>
             <StackLayout HorizontalOptions="Center" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3">
                 <Button Text="Cargar Datos" TextColor="White"
                     WidthRequest="200"
-                    HeightRequest="45"
+                    HeightRequest="55"
                     BorderRadius="10"
-                    BackgroundColor="#439dbb"
+                    FontSize="20"
+                    BackgroundColor="#D37506"
                     HorizontalOptions="Center"
                         Clicked="cargarDatos_Clicked"/>
                 <Button Text="Gráficos" TextColor="White"
                     WidthRequest="200"
-                    HeightRequest="45"
+                    HeightRequest="55"
                     BorderRadius="10"
-                    BackgroundColor="#439dbb"
+                    BackgroundColor="#D37506"
+                    FontSize="20"
                     HorizontalOptions="Center"
                         Clicked="cargarGraficos_Clicked"/>
             </StackLayout>

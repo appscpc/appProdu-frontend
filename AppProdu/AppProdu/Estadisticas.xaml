@@ -17,12 +17,16 @@
             <StackLayout Grid.Row="1">
 
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                    <Label Text="p =" FontSize="18" FontAttributes="Bold"/>
+                    <Label Text="p =" 
+                           FontSize="20"
+                           FontAttributes="Bold"/>
+                    
                     <Entry Placeholder="" 
                          WidthRequest="250"
                          Keyboard="Numeric"
                          IsEnabled="False"
-                         x:Name="pEntry"/>
+                         x:Name="pEntry"
+                         FontSize="20"/>
                 </StackLayout>
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
                     <Label Text="q =" FontSize="18" FontAttributes="Bold"/>
@@ -60,11 +64,12 @@
             </StackLayout>
             <StackLayout Grid.Row="2">
                 <Button Text="Calcular" 
+                    FontSize="20"
                     TextColor="White"
                     WidthRequest="200"
-                    HeightRequest="45"
+                    HeightRequest="55"
                     BorderRadius="10"
-                    BackgroundColor="#439dbb"
+                    BackgroundColor="#D37506"
                     HorizontalOptions="Center"
                     Clicked="calcular_Clicked"/>
             </StackLayout>

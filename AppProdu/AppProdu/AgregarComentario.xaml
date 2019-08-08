@@ -16,19 +16,26 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 
+                <Label x:Name="lblComentario"   
+                    TranslationX="70"
+                    Text="Comentario:"
+                    FontSize="20"/>
+                
                 <Controls:PlaceholderEditor Grid.Row="1"
-                    Placeholder="Comentario"
+                    x:Name="comentarioEditor"
+                    Placeholder="Escriba aquí"
                     WidthRequest="250"
                     HorizontalOptions="Center"
-                    HeightRequest="250"
-                    x:Name="comentarioEditor"
-                    FontSize="18"/>
+                    HeightRequest="50"
+                    FontSize="20"/>
+                
                 <Button Text="Guardar" Grid.Row="2"
                     TextColor="White"
                     WidthRequest="200"
-                    HeightRequest="45"
+                    HeightRequest="55"
                     BorderRadius="10"
-                    BackgroundColor="#439dbb"
+                    FontSize="20"
+                    BackgroundColor="#D37506"
                     VerticalOptions="Center"
                     HorizontalOptions="Center"
                     Clicked="agregarComentario_Clicked"/>
