@@ -46,24 +46,45 @@ namespace AppProdu
                 await obtenerFaseAsync(faseActual);
                 var recorridosPage = new Recorridos();
                 await Navigation.PushAsync(recorridosPage);
-                
-
             }
+            else if(faseSelected.Equals("Preliminar") && faseActual == 2)
+            {
+                await DisplayAlert("Error!", "Etapa Bloqueada, porque se encuentra en la etapa Definitiva.", "OK");
+            }
+            else if (faseSelected.Equals("Preliminar") && faseActual == 3)
+            {
+                await DisplayAlert("Error!", "Etapa Bloqueada, porque se encuentra en la etapa Estadísticas Finales.", "OK");
+            }
+
+
             else if (faseActual == 2 && faseSelected.Equals("Definitivo"))
             {
                 await obtenerFaseAsync(faseActual);
                 var recorridosPage = new Recorridos();
-                await Navigation.PushAsync(recorridosPage);
-                
+                await Navigation.PushAsync(recorridosPage);  
             }
+            else if (faseSelected.Equals("Definitivo") && faseActual == 1)
+            {
+                await DisplayAlert("Error!", "Etapa Bloqueada, porque se encuentra en la etapa Preliminar.", "OK");
+            }
+            else if (faseSelected.Equals("Definitivo") && faseActual == 3)
+            {
+                await DisplayAlert("Error!", "Etapa Bloqueada, porque se encuentra en la etapa Estadísticas Finales.", "OK");
+            }
+
+
             else if(faseActual == 3 && e.Item.Equals("Estadísticas Finales"))
             {
                 var estadisticasGenPage = new EstadisticasGenerales();
                 await Navigation.PushAsync(estadisticasGenPage);
             }
-            else
+            else if (faseSelected.Equals("Estadísticas Finales") && faseActual == 1)
             {
-                await DisplayAlert("Error!", "Etapa Bloqueada.", "OK");
+                await DisplayAlert("Error!", "Etapa Bloqueada, porque se encuentra en la etapa Preliminar.", "OK");
+            }
+            else if (faseSelected.Equals("Estadísticas Finales") && faseActual == 2)
+            {
+                await DisplayAlert("Error!", "Etapa Bloqueada, porque se encuentra en la etapa Definitiva.", "OK");
             }
 
             //Deselect Item

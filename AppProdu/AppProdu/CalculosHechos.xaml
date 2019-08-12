@@ -47,6 +47,7 @@
             <StackLayout Grid.Row="1">
                 <Button Text="Aceptar" 
                     TextColor="White"
+                        TranslationY="250"
                     FontSize="20"
                     WidthRequest="200"
                     HeightRequest="55"
@@ -55,6 +56,7 @@
                     HorizontalOptions="Center"
                     Clicked="aceptar_Clicked"/>
                 <Button Text="Calcular de nuevo" 
+                        TranslationY="250"
                     TextColor="White"
                     FontSize="20"
                     WidthRequest="200"
