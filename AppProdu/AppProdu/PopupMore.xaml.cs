@@ -66,7 +66,7 @@ namespace AppProdu
 
                             Application.Current.Properties["muestras-mas"] = System.Convert.ToInt32(masMuestrasEntry.Text);
 
-                            PopupNavigation.Instance.PopAsync(true);
+                            await PopupNavigation.Instance.PopAsync(true);
                         }
                         catch (Exception)
                         {
@@ -122,9 +122,8 @@ namespace AppProdu
                             Console.WriteLine(data.id + " & " + data.nombre);
 
                             Application.Current.Properties["muestras-mas"] = System.Convert.ToInt32(masMuestrasEntry.Text);
-
-                            PopupNavigation.Instance.PopAsync(true);
-
+                            
+                            await PopupNavigation.Instance.PopAsync(true);
                         }
                         catch (Exception)
                         {

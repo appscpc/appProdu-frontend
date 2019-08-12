@@ -24,7 +24,7 @@
                     TextColor="Black"
                     TranslationY="10"/>
             
-            <Entry Placeholder="8" 
+            <Entry Placeholder="ej: 8" 
                     WidthRequest="270"
                     HorizontalOptions="Center"
                     FontSize="18"
@@ -39,7 +39,7 @@
                     TextColor="Black"
                     TranslationY="20"/>
 
-            <Entry Placeholder="25" 
+            <Entry Placeholder="ej: 25" 
                     WidthRequest="270"
                     HorizontalOptions="Center"
                     FontSize="18"
@@ -94,7 +94,7 @@
                     TranslationY="20"/>
 
             <DatePicker 
-                MinimumDate="01/01/2018"
+                MaximumDate="{x:Static system:DateTime.Today}"
                 WidthRequest="270"
                 HorizontalOptions="Center"
                 FontSize="18"

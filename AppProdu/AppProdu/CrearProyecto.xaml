@@ -24,7 +24,7 @@
                 TextColor="Black"
                 TranslationY="120"/>
 
-            <Entry Placeholder="Proyecto #1" 
+            <Entry Placeholder="ej: Proyecto #1" 
                    x:Name="nombreProyectoEntry"
                    WidthRequest="270"
                    HorizontalOptions="Center"
@@ -40,7 +40,7 @@
             
            <!-- <Controls:PlaceholderEditor -->
             <Entry
-                Placeholder="Construcción"
+                Placeholder="Opcional"
                 x:Name="descripcionProyectoEditor"
                 WidthRequest="270"
                 HorizontalOptions="Center"

@@ -118,7 +118,7 @@ namespace AppProdu
 
 
             newAct = (Actividad)e.Item; //e.Item es el objeto seleccionado de la lista. (La lista tiene objetos de tipo Actividad)
-            bool answer = await DisplayAlert("Desea agregar esta actividad al recorrido?", "La actividad será registrada en el recorrido actual", "Sí", "No");
+            bool answer = await DisplayAlert("Desea agregar esta actividad al recorrido?", "A continuación va a asignar la siguiente actividad al siguiente operario.", "Sí", "No");
             if (answer)
             {
                 //Este if es para saber si se tiene que agregar más actividades a la lista de operarios del recorrido

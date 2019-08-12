@@ -59,7 +59,7 @@
                 TextColor="White"
                 TranslationY="20"/>
 
-            <Entry Placeholder="********" x:Name="passEntry"
+            <Entry Placeholder="ej: ********" x:Name="passEntry"
                HorizontalOptions="Center"
                WidthRequest="270"
                HeightRequest="55"

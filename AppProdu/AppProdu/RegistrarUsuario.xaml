@@ -24,7 +24,7 @@
                 FontSize="20"
                 TextColor="Black"/>
             
-            <Entry Placeholder="Maria" x:Name="nombreEntry"
+            <Entry Placeholder="ej: Maria" x:Name="nombreEntry"
                 WidthRequest="250"
                 HeightRequest="45"
                 HorizontalOptions="Center"
@@ -36,7 +36,7 @@
                 FontSize="20"
                 TextColor="Black"/>
 
-            <Entry Placeholder="Perez" x:Name="apellido1Entry"
+            <Entry Placeholder="ej: Perez" x:Name="apellido1Entry"
                 HorizontalOptions="Center"
                 WidthRequest="250"
                 HeightRequest="45"
@@ -48,7 +48,7 @@
                 FontSize="20"
                 TextColor="Black"/>
             
-            <Entry Placeholder="Arias" x:Name="apellido2Entry"
+            <Entry Placeholder="ej: Arias" x:Name="apellido2Entry"
                 HorizontalOptions="Center"
                 WidthRequest="250"
                 HeightRequest="45"
@@ -60,7 +60,7 @@
                 FontSize="20"
                 TextColor="Black"/>   
             
-            <Entry Placeholder="ejemplo@gmail.com" x:Name="correoEntry"
+            <Entry Placeholder="ej: ejemplo@gmail.com" x:Name="correoEntry"
                 WidthRequest="250"
                 HeightRequest="45"
                 HorizontalOptions="Center"
@@ -72,7 +72,7 @@
                 FontSize="20"
                 TextColor="Black"/>
             
-            <Entry Placeholder="********" x:Name="passEntry"
+            <Entry Placeholder="ej: ********" x:Name="passEntry"
                 HorizontalOptions="Center"
                 WidthRequest="250"
                 HeightRequest="45"

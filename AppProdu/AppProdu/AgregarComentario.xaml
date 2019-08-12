@@ -23,7 +23,7 @@
                 
                 <Controls:PlaceholderEditor Grid.Row="1"
                     x:Name="comentarioEditor"
-                    Placeholder="Escriba aquí"
+                    Placeholder="Opcional"
                     WidthRequest="250"
                     HorizontalOptions="Center"
                     HeightRequest="50"

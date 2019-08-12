@@ -52,7 +52,7 @@ namespace AppProdu
                     bool answer = await DisplayAlert("Número de muestras alcanzada!", "Desea agregar más muestras a la fase preliminar?", "Sí", "No");
                     if (answer)
                     {
-                        await PopupNavigation.Instance.PushAsync(new PopupMore(1)); //Se muestra popup de más muestras
+                        await PopupNavigation.Instance.PushAsync(new PopupMore(1)); //Se muestra popup de más muestras     
                         Application.Current.Properties["preliminar-done"] = 0;  //Se cambia de nuevo el valor para que no esté finalizado
                         muestrasRestantesLabel.Text = "Muestras restantes: " + Application.Current.Properties["muestras-mas"];  //Se actualiza etiqueta
                         await ActualizarFlag(1);   //Método para actualizar que se hizo la pregunta
