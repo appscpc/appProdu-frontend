@@ -93,7 +93,7 @@ namespace AppProdu
                             await PopupNavigation.Instance.PushAsync(new PopupMore(2));  //Se muestra popup de más muestras   
                             Application.Current.Properties["definitive-done"] = 0;  //Se cambia de nuevo el valor para que no esté finalizado
                             muestrasRestantesLabel.Text = "Muestras restantes: " + Application.Current.Properties["muestras-mas"];  //Se actualiza etiqueta
-                            await ActualizarFlag(1);    //Método para actualizar que se hizo la pregunta
+                            //await ActualizarFlag(1);    //Método para actualizar que se hizo la pregunta
                         }
                         else
                         {
@@ -123,10 +123,8 @@ namespace AppProdu
                     var estadisticas = new EstadisticasGenerales();
                     await Navigation.PushAsync(estadisticas);
                     this.Navigation.RemovePage(this.Navigation.NavigationStack[this.Navigation.NavigationStack.Count - 2]);
-                }
-                
+                }    
             }
-            
         }
 
 
@@ -136,6 +134,68 @@ namespace AppProdu
             public string fecha { get; set; }
             public string token { get; set; }
         }
+
+
+        async public void obtenerFechasPrueba()
+        {
+            var client = new HttpClient
+            {
+                BaseAddress = new Uri("https://app-produ.herokuapp.com")
+            };
+            var newPath = new Path
+            {
+                sampling_id = (int)Application.Current.Properties["id-sampling"],
+                token = Application.Current.Properties["currentToken"].ToString()
+            };
+            string jsonData = JsonConvert.SerializeObject(newPath);
+            var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+
+            HttpResponseMessage response = await client.PostAsync("/paths/datepaths.json", content);
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                var result = await response.Content.ReadAsStringAsync();
+                var jobject = JObject.Parse(result);
+
+                try
+                {
+                    //dates = JsonConvert.DeserializeObject<List<String>>(jobject["fechas"].ToString());
+                    //getPaths();
+
+                    var data = JsonConvert.DeserializeObject<Path>(jobject["fechas"].ToString());
+                    Console.WriteLine("\n Fecha!!!!!!!!!!!!!!!!:", data.fecha);
+
+                    //fechaPicker.Items.Clear();
+                    //ItemsDates = new ObservableCollection<string> { };
+
+                   /* for (int i = 0; i < dates.Count; i++)
+                    {
+                        string temp = dates[i];
+                        Console.WriteLine("\n Temp:", temp);
+                        ItemsDates.Add(temp);
+                    } 
+
+
+                    fechaPicker.ItemsSource = ItemsDates; */
+                }
+                catch (HttpRequestException e)
+                {
+                    Console.WriteLine("\nException Caught, OH NOOOOOOOOO!");
+                    Console.WriteLine("Message :{0} ", e.Message);
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("\nERROR!  OH NOOOOOOOOO");
+                }
+            }
+            else
+            {
+                Console.WriteLine("AQUI6\nNo se pudo crear el muestreo");
+                //errorLabel.Text = "Error\nUsuario o contraseña inválido";
+            }
+
+        }
+
+
 
         //Método para obtener las fechas en los que se realizó al menos un recorrido
         async public void obtenerFechas()
@@ -169,6 +229,7 @@ namespace AppProdu
                     for (int i = 0; i < dates.Count; i++)
                     {
                         string temp = dates[i];
+                        Console.WriteLine("\n Temp:",temp);
                         ItemsDates.Add(temp);
                     }
 

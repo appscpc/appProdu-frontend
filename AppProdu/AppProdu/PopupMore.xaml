@@ -24,7 +24,7 @@
             <Entry FontSize="18"
                 Placeholder="Cantidad de Muestras" 
                 Keyboard="Numeric"
-                WidthRequest="200"
+                WidthRequest="300"
                 x:Name="masMuestrasEntry"/>
         </StackLayout>
         <Button BackgroundColor="#D37506"
