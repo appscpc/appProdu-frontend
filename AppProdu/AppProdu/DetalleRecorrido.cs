@@ -46,27 +46,27 @@ namespace AppProdu
             grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
             grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
 
-            var cantLabel = new Label { Text = "Cantidad de Operarios: "+ pathSelected.cantOperarios, HorizontalOptions = LayoutOptions.Center, FontSize = 16 };
+            var cantLabel = new Label { Text = "Cantidad de Operarios: "+ pathSelected.cantOperarios, HorizontalOptions = LayoutOptions.Center, FontSize = 18 };
             stack.Children.Add(cantLabel);
-            var tempLabel = new Label { Text = "Temperatura: " + pathSelected.temperatura, HorizontalOptions = LayoutOptions.Center, FontSize = 16 };
+            var tempLabel = new Label { Text = "Temperatura: " + pathSelected.temperatura, HorizontalOptions = LayoutOptions.Center, FontSize = 18 };
             stack.Children.Add(tempLabel);
-            var humLabel = new Label { Text = "Humedad: " + pathSelected.humedad, HorizontalOptions = LayoutOptions.Center, FontSize = 16 };
+            var humLabel = new Label { Text = "Humedad: " + pathSelected.humedad, HorizontalOptions = LayoutOptions.Center, FontSize = 18 };
             stack.Children.Add(humLabel);
-            var fechaLabel = new Label { Text = "Fecha: " + pathSelected.fecha, HorizontalOptions = LayoutOptions.Center, FontSize = 16 };
+            var fechaLabel = new Label { Text = "Fecha: " + pathSelected.fecha, HorizontalOptions = LayoutOptions.Center, FontSize = 18 };
             stack.Children.Add(fechaLabel);
             var dateTime = DateTimeOffset.Parse(pathSelected.hora, null);
             string hora = dateTime.ToString("HH:mm:ss");
-            var horaLabel = new Label { Text = "Hora: " + hora, HorizontalOptions = LayoutOptions.Center, FontSize = 16 };
+            var horaLabel = new Label { Text = "Hora: " + hora, HorizontalOptions = LayoutOptions.Center, FontSize = 18 };
             stack.Children.Add(horaLabel);
-            var comLabel = new Label { Text = "Comentario:\n" + pathSelected.comentario, HorizontalOptions = LayoutOptions.Center, FontSize = 16, Margin = new Thickness(10) };
+            var comLabel = new Label { Text = "Comentario:\n" + pathSelected.comentario, HorizontalOptions = LayoutOptions.Center, FontSize = 18, Margin = new Thickness(10) };
             stack.Children.Add(comLabel);
 
             grid.Children.Add(stack, 0, 0);
             Grid.SetColumnSpan(stack, 3);
 
-            var Operarios = new Label { Text = "Operarios", HorizontalOptions = LayoutOptions.Center, FontSize = 16, FontAttributes = FontAttributes.Bold };
-            var Actividad = new Label { Text = "Actividad", HorizontalOptions = LayoutOptions.Center, FontSize = 16, FontAttributes = FontAttributes.Bold };
-            var Tipo = new Label { Text = "Tipo", HorizontalOptions = LayoutOptions.Center, FontSize = 16, FontAttributes = FontAttributes.Bold };
+            var Operarios = new Label { Text = "Operarios", HorizontalOptions = LayoutOptions.Center, FontSize = 20, FontAttributes = FontAttributes.Bold, TextColor = Color.FromHex("#D37506") };
+            var Actividad = new Label { Text = "Actividad", HorizontalOptions = LayoutOptions.Center, FontSize = 20, FontAttributes = FontAttributes.Bold, TextColor = Color.FromHex("#D37506") };
+            var Tipo = new Label { Text = "Tipo", HorizontalOptions = LayoutOptions.Center, FontSize = 20, FontAttributes = FontAttributes.Bold, TextColor = Color.FromHex("#D37506") };
 
             grid.Children.Add(Operarios, 0, 1);
             grid.Children.Add(Actividad, 1, 1);
@@ -74,21 +74,21 @@ namespace AppProdu
             for (int i = 1; i <= listaOperarios.Count; i++)
             {
                 
-                var Operarios1 = new Label { Text = "Operario " + i, HorizontalOptions = LayoutOptions.Center, FontSize = 12 };
-                var Actividad1 = new Label { Text = dictAct[listaOperarios[i-1].activity_id].nombre, HorizontalOptions = LayoutOptions.Center, FontSize = 12, TextColor = Color.Blue, FontAttributes = FontAttributes.Bold };
+                var Operarios1 = new Label { Text = "Operario " + i, HorizontalOptions = LayoutOptions.Center, FontSize = 16 };
+                var Actividad1 = new Label { Text = dictAct[listaOperarios[i-1].activity_id].nombre, HorizontalOptions = LayoutOptions.Center, FontSize = 16, TextColor = Color.FromHex("#9F2B00"), FontAttributes = FontAttributes.Bold };
                 if(dictAct[listaOperarios[i - 1].activity_id].activity_type_id == 1)
                 {
-                    var Tipo1 = new Label { Text = "Productiva", HorizontalOptions = LayoutOptions.Center, FontSize = 12 };
+                    var Tipo1 = new Label { Text = "Productiva", HorizontalOptions = LayoutOptions.Center, FontSize = 16, TextColor = Color.FromHex("#D37506") };
                     grid.Children.Add(Tipo1, 2, i + 1);
                 }
                 else if (dictAct[listaOperarios[i - 1].activity_id].activity_type_id == 2)
                 {
-                    var Tipo1 = new Label { Text = "Colaborativa", HorizontalOptions = LayoutOptions.Center, FontSize = 12 };
+                    var Tipo1 = new Label { Text = "Colaborativa", HorizontalOptions = LayoutOptions.Center, FontSize = 16, TextColor = Color.FromHex("#D37506") };
                     grid.Children.Add(Tipo1, 2, i + 1);
                 }
                 else
                 {
-                    var Tipo1 = new Label { Text = "No productiva", HorizontalOptions = LayoutOptions.Center, FontSize = 12 };
+                    var Tipo1 = new Label { Text = "No productiva", HorizontalOptions = LayoutOptions.Center, FontSize = 16, TextColor = Color.FromHex("#D37506") };
                     grid.Children.Add(Tipo1, 2, i + 1);
                 }
 

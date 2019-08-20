@@ -9,7 +9,6 @@
                 ItemsSource="{Binding Items}"
                 ItemTapped="Handle_ItemTapped"
                 CachingStrategy="RecycleElement"
-                
                  TranslationY="250">
 
         <ListView.ItemTemplate >

@@ -71,7 +71,7 @@ namespace AppProdu
                 
                 var Operarios1 = new Label { Text = "Operario " + i, HorizontalOptions = LayoutOptions.Center, FontSize = 16 };
                 var Actividad1 = new Label { Text = listaOperarios[i - 1].nombre_activity, HorizontalOptions = LayoutOptions.Center, FontSize = 16, TextColor = Color.FromHex("#9F2B00"), FontAttributes = FontAttributes.Bold };
-                var Tipo1 = new Label { Text = listaOperarios[i - 1].nombre_activity_type, HorizontalOptions = LayoutOptions.Center, FontSize = 16 };
+                var Tipo1 = new Label { Text = listaOperarios[i - 1].nombre_activity_type, HorizontalOptions = LayoutOptions.Center, FontSize = 16, TextColor = Color.FromHex("#D37506") };
                 var registrarEvent = new TapGestureRecognizer();
                 registrarEvent.Tapped += async (s, e) =>
                 {

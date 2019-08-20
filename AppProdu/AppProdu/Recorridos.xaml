@@ -15,72 +15,99 @@
                     <RowDefinition Height="300" />
                     <RowDefinition Height="60" />
                 </Grid.RowDefinitions>
-                <StackLayout Grid.Row="0">
+
+                <StackLayout Grid.Row="0" TranslationY="10">
                     <Label Text="" 
                        x:Name="muestrasRestantesLabel"
                        FontSize="20"
                        HorizontalOptions="Center"
-                       HeightRequest="70"
-                       WidthRequest="290"
-                       TranslationY="200"/>
+                       HeightRequest="50"
+                       WidthRequest="260"
+                        TextColor="Black"/>
                     <Label Text="" 
                        x:Name="muestrasActualesLabel"
                        FontSize="20"
                        HorizontalOptions="Center"
-                       HeightRequest="70"
-                       WidthRequest="290"
-                       TranslationY="210"/>
+                       HeightRequest="50"
+                       WidthRequest="260"
+                       TextColor="Black"/>
                 </StackLayout>
+
+                <Button Text="Crear" 
+                        TextColor="White"
+                        FontSize="20"
+                        WidthRequest="140"
+                        HeightRequest="20"
+                        BorderRadius="10"
+                        BackgroundColor="#D37506"
+                        HorizontalOptions="Center"
+                        Margin="12"
+                        Clicked="crearRecorrido_Clicked"
+                        TranslationY="100"/>
                 
-                <Picker Title="Fecha"  Grid.Row="1"
+                <Label Text="Seleccione para ver detalles:" 
+                       x:Name="lblFecha"
+                       FontSize="18"
+                       HorizontalOptions="Center"
+                       HeightRequest="50"
+                       WidthRequest="300"
+                       TranslationY="210"/>
+
+
+                <Picker Title="Seleccione fecha"  Grid.Row="1"
                     HorizontalOptions="Center"
                     x:Name="fechaPicker"
-                    WidthRequest="260"
-                    HeightRequest="70"
-                    FontSize="20"
+                    WidthRequest="250"
+                    HeightRequest="50"
+                    FontSize="18"
                     ItemsSource="{Binding ItemsDates}"
-                    SelectedIndexChanged="FechaPicker_SelectedIndexChanged"
-                    TranslationY="220"
-                    />
+                    SelectedIndexChanged="FechaPicker_SelectedIndexChanged" 
+                     TranslationY="160"/>
+
+                <Label Text="Seleccione la hora:" 
+                       x:Name="lblHora"
+                       FontSize="18"
+                       HorizontalOptions="Center"
+                       HeightRequest="50"
+                       WidthRequest="250"
+                       TranslationY="320"
+                       IsVisible="False"/>
+
                 <ListView x:Name="MyListView" Grid.Row="2"
+                    HorizontalOptions="Center"
                     ItemsSource="{Binding Items}"
                     ItemTapped="MyListView_ItemTapped"
-                    CachingStrategy="RecycleElement">
+                    CachingStrategy="RecycleElement"
+                   TranslationY="210" >
 
-                            <!--Built in Cells-->
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <TextCell Text="{Binding hora}" />
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-
-
-                            <!--Custom View Cells-->
-                            <!--
-                <ListView.ItemTemplate>
-                  <DataTemplate>
-                    <ViewCell>
-                      <StackLayout>
-                        <Label Text="{Binding Text}" 
-                               Style="{DynamicResource ListItemTextStyle}" />
-                        <Label Text="{Binding Detail}" 
-                               Style="{DynamicResource ListItemDetailTextStyle}"/>
-                      </StackLayout>
-                    </ViewCell>
-                  </DataTemplate>
-                </ListView.ItemTemplate>
-                -->
+                    <!--Built in Cells-->
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout Orientation="Horizontal" HorizontalOptions="Fill">
+                                    <StackLayout Orientation="Vertical">
+                                        <Label  Grid.Column="0" Text="{Binding hora}" FontSize="22" TextColor="#9F2B00"
+                                                HorizontalTextAlignment="Center"
+                                                VerticalTextAlignment="Center"
+                                               HorizontalOptions="Center"/>
+                                    </StackLayout>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
                 </ListView>
-                <Button Grid.Row="3" Text="Crear" 
+                
+              <!-- <Button Grid.Row="3" Text="Crear" 
                         TextColor="White"
+                        FontSize="20"
                         WidthRequest="200"
-                        HeightRequest="45"
+                        HeightRequest="50"
                         BorderRadius="10"
                         BackgroundColor="#D37506"
                         HorizontalOptions="Center"
                         Margin="5"
-                        FontSize="20"
-                        Clicked="crearRecorrido_Clicked"/>
+                        Clicked="crearRecorrido_Clicked"
+                        TranslationY="110"/> -->
             </Grid>
         </ScrollView>
     </ContentPage.Content>

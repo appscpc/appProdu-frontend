@@ -34,9 +34,9 @@ namespace AppProdu
 
         protected override async void OnAppearing()
         {
-            dates = new List<string>();
+            //dates = new List<string>();
             obtenerFechas();
-            
+
             await obtenerSamplingAsync();
 
             await obtenerFaseAsync((int)Application.Current.Properties["id-fase"]);
@@ -136,67 +136,6 @@ namespace AppProdu
         }
 
 
-        async public void obtenerFechasPrueba()
-        {
-            var client = new HttpClient
-            {
-                BaseAddress = new Uri("https://app-produ.herokuapp.com")
-            };
-            var newPath = new Path
-            {
-                sampling_id = (int)Application.Current.Properties["id-sampling"],
-                token = Application.Current.Properties["currentToken"].ToString()
-            };
-            string jsonData = JsonConvert.SerializeObject(newPath);
-            var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-
-            HttpResponseMessage response = await client.PostAsync("/paths/datepaths.json", content);
-            if (response.StatusCode == HttpStatusCode.OK)
-            {
-                var result = await response.Content.ReadAsStringAsync();
-                var jobject = JObject.Parse(result);
-
-                try
-                {
-                    //dates = JsonConvert.DeserializeObject<List<String>>(jobject["fechas"].ToString());
-                    //getPaths();
-
-                    var data = JsonConvert.DeserializeObject<Path>(jobject["fechas"].ToString());
-                    Console.WriteLine("\n Fecha!!!!!!!!!!!!!!!!:", data.fecha);
-
-                    //fechaPicker.Items.Clear();
-                    //ItemsDates = new ObservableCollection<string> { };
-
-                   /* for (int i = 0; i < dates.Count; i++)
-                    {
-                        string temp = dates[i];
-                        Console.WriteLine("\n Temp:", temp);
-                        ItemsDates.Add(temp);
-                    } 
-
-
-                    fechaPicker.ItemsSource = ItemsDates; */
-                }
-                catch (HttpRequestException e)
-                {
-                    Console.WriteLine("\nException Caught, OH NOOOOOOOOO!");
-                    Console.WriteLine("Message :{0} ", e.Message);
-                }
-                catch (Exception)
-                {
-                    Console.WriteLine("\nERROR!  OH NOOOOOOOOO");
-                }
-            }
-            else
-            {
-                Console.WriteLine("AQUI6\nNo se pudo crear el muestreo");
-                //errorLabel.Text = "Error\nUsuario o contraseña inválido";
-            }
-
-        }
-
-
-
         //Método para obtener las fechas en los que se realizó al menos un recorrido
         async public void obtenerFechas()
         {
@@ -222,14 +161,13 @@ namespace AppProdu
                 {
                     dates = JsonConvert.DeserializeObject<List<String>>(jobject["fechas"].ToString());
                     getPaths();
-                    
+
                     //fechaPicker.Items.Clear();
                     ItemsDates = new ObservableCollection<string> { };
 
                     for (int i = 0; i < dates.Count; i++)
                     {
                         string temp = dates[i];
-                        Console.WriteLine("\n Temp:",temp);
                         ItemsDates.Add(temp);
                     }
 
@@ -411,7 +349,7 @@ namespace AppProdu
                 q = currentFase.q,
                 error = currentFase.error,
                 z = currentFase.z,
-                sampling_id = currentFase.sampling_id, 
+                sampling_id = currentFase.sampling_id,
                 fase_type_id = 2,
                 extraFlag = 0,
                 token = Application.Current.Properties["currentToken"].ToString()
@@ -511,6 +449,7 @@ namespace AppProdu
 
 
                 MyListView.ItemsSource = Items;
+                lblHora.IsVisible = true;
 
             }
             catch (HttpRequestException e)
