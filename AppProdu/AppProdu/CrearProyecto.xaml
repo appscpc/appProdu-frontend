@@ -44,9 +44,8 @@
                 x:Name="descripcionProyectoEditor"
                 WidthRequest="270"
                 HorizontalOptions="Center"
-                HeightRequest="50"
                 FontSize="20"
-                TranslationY="150"/>
+                TranslationY="170"/>
 
         </StackLayout>
 
