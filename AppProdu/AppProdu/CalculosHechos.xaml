@@ -16,31 +16,44 @@
             <StackLayout Grid.Row="1">
 
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                    <Label Text="N =" FontSize="20" FontAttributes="Bold"/>
+                    <Label Text="Muestras totales =" 
+                           FontSize="20" 
+                           FontAttributes="Bold"
+                           />
+                    
                     <Entry Placeholder="" 
-                         WidthRequest="250"
+                         WidthRequest="70"
                          Keyboard="Numeric"
                          IsEnabled="False"
                            FontSize="20"
+                           TextColor="Black"
                          x:Name="NEntry"/>
                 </StackLayout>
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                    <Label Text="n =" FontSize="20" FontAttributes="Bold"/>
+                    <Label Text="Muestras realizadas =" 
+                           FontSize="20" 
+                           FontAttributes="Bold"/>
+                    
                     <Entry Placeholder="" 
-                           WidthRequest="250"
+                           WidthRequest="60"
                            Keyboard="Numeric"
                            IsEnabled="False"
                            FontSize="20"
+                           TextColor="Black"
                            x:Name="nEntry"/>
                 </StackLayout>
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                    <Label Text="n Def. =" FontSize="20" FontAttributes="Bold"/>
+                    <Label Text="Muestras faltantes =" 
+                           FontSize="20" 
+                           FontAttributes="Bold"/>
+                    
                     <Entry Placeholder="" 
-                           WidthRequest="250"
+                           WidthRequest="70"
                            HorizontalOptions="Center"
                            Keyboard="Numeric"
                            IsEnabled="False"
                            FontSize="20"
+                           TextColor="Black"
                            x:Name="nDefEntry"/>
                 </StackLayout>
             </StackLayout>
@@ -55,11 +68,12 @@
                     BackgroundColor="#D37506"
                     HorizontalOptions="Center"
                     Clicked="aceptar_Clicked"/>
+                
                 <Button Text="Calcular de nuevo" 
                         TranslationY="250"
                     TextColor="White"
-                    FontSize="20"
-                    WidthRequest="200"
+                    FontSize="18"
+                    WidthRequest="230"
                     HeightRequest="55"
                     BorderRadius="10"
                     BackgroundColor="#D37506"

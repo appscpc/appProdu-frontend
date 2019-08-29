@@ -16,7 +16,7 @@
             <forms:ChartView x:Name="Chart2"  
                              HeightRequest="200"/>
             <Grid x:Name="gridTP"></Grid>
-            <Label FontSize="15" Text=" &#10;  &#10; Porcentaje para tareas colaborativas" />
+            <Label FontSize="15" Text=" &#10;  &#10; Porcentaje para tareas contributivas" />
             <forms:ChartView x:Name="Chart3"  
                              HeightRequest="200"/>
             <Grid x:Name="gridTC"></Grid>

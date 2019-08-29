@@ -118,41 +118,86 @@ namespace AppProdu
 
 
             newAct = (Actividad)e.Item; //e.Item es el objeto seleccionado de la lista. (La lista tiene objetos de tipo Actividad)
-            bool answer = await DisplayAlert("Desea agregar esta actividad al recorrido?", "A continuación va a asignar la siguiente actividad al siguiente operario.", "Sí", "No");
-            if (answer)
+            
+            if (index == listaDeOperarios.Count - 1)
             {
-                //Este if es para saber si se tiene que agregar más actividades a la lista de operarios del recorrido
-                if (index >= listaDeOperarios.Count)
+                bool answer = await DisplayAlert("Desea agregar esta actividad al recorrido?", "", "Sí", "No");
+                if (answer)
                 {
-                    await DisplayAlert("Error!", "Ya se agregaron todas las actividades!", "OK");
-                }
-                else
-                {
-                    listaDeOperarios[index].activity_id = newAct.id;
-                    listaDeOperarios[index].nombre_activity = newAct.nombre;
-                    listaDeOperarios[index].activity_type_id = newAct.activity_type_id;
-                    if (listaDeOperarios[index].activity_type_id == 1)
-                    {
-                        listaDeOperarios[index].nombre_activity_type = "Trabajo productivo";
-                    }
-                    else if (listaDeOperarios[index].activity_type_id == 2)
-                    {
-                        listaDeOperarios[index].nombre_activity_type = "Trabajo contributivo";
-                    }
-                    else if (listaDeOperarios[index].activity_type_id == 3)
-                    {
-                        listaDeOperarios[index].nombre_activity_type = "Trabajo no productivo";
-                    }
-                    index = index + 1; 
-                    Application.Current.Properties["index-activity"] = index;   //Se guarda el índice en la memoria local de la app
+                    //Este if es para saber si se tiene que agregar más actividades a la lista de operarios del recorrido
                     if (index >= listaDeOperarios.Count)
                     {
-                        operarioActualLabel.Text = "Actividades asignadas a todos los operarios!";
-                        await Navigation.PopAsync();
+                        await DisplayAlert("Error!", "Ya se agregaron todas las actividades!", "OK");
                     }
                     else
                     {
-                        operarioActualLabel.Text = "Asignar actividad al Operario " + (index + 1);
+                        listaDeOperarios[index].activity_id = newAct.id;
+                        listaDeOperarios[index].nombre_activity = newAct.nombre;
+                        listaDeOperarios[index].activity_type_id = newAct.activity_type_id;
+                        if (listaDeOperarios[index].activity_type_id == 1)
+                        {
+                            listaDeOperarios[index].nombre_activity_type = "Trabajo productivo";
+                        }
+                        else if (listaDeOperarios[index].activity_type_id == 2)
+                        {
+                            listaDeOperarios[index].nombre_activity_type = "Trabajo contributivo";
+                        }
+                        else if (listaDeOperarios[index].activity_type_id == 3)
+                        {
+                            listaDeOperarios[index].nombre_activity_type = "Trabajo no productivo";
+                        }
+                        index = index + 1;
+                        Application.Current.Properties["index-activity"] = index;   //Se guarda el índice en la memoria local de la app
+                        if (index >= listaDeOperarios.Count)
+                        {
+                            operarioActualLabel.Text = "Actividades asignadas a todos los operarios!";
+                            await Navigation.PopAsync();
+                        }
+                        else
+                        {
+                            operarioActualLabel.Text = "Asignar actividad al Operario " + (index + 1);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                bool answer1 = await DisplayAlert("Desea agregar esta actividad al recorrido?", "A continuación va a asignar la siguiente actividad al siguiente operario.", "Sí", "No");
+                if (answer1)
+                {
+                    //Este if es para saber si se tiene que agregar más actividades a la lista de operarios del recorrido
+                    if (index >= listaDeOperarios.Count)
+                    {
+                        await DisplayAlert("Error!", "Ya se agregaron todas las actividades!", "OK");
+                    }
+                    else
+                    {
+                        listaDeOperarios[index].activity_id = newAct.id;
+                        listaDeOperarios[index].nombre_activity = newAct.nombre;
+                        listaDeOperarios[index].activity_type_id = newAct.activity_type_id;
+                        if (listaDeOperarios[index].activity_type_id == 1)
+                        {
+                            listaDeOperarios[index].nombre_activity_type = "Trabajo productivo";
+                        }
+                        else if (listaDeOperarios[index].activity_type_id == 2)
+                        {
+                            listaDeOperarios[index].nombre_activity_type = "Trabajo contributivo";
+                        }
+                        else if (listaDeOperarios[index].activity_type_id == 3)
+                        {
+                            listaDeOperarios[index].nombre_activity_type = "Trabajo no productivo";
+                        }
+                        index = index + 1;
+                        Application.Current.Properties["index-activity"] = index;   //Se guarda el índice en la memoria local de la app
+                        if (index >= listaDeOperarios.Count)
+                        {
+                            operarioActualLabel.Text = "Actividades asignadas a todos los operarios!";
+                            await Navigation.PopAsync();
+                        }
+                        else
+                        {
+                            operarioActualLabel.Text = "Asignar actividad al Operario " + (index + 1);
+                        }
                     }
                 }
             }

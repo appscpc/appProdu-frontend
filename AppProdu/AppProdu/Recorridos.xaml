@@ -22,14 +22,14 @@
                        FontSize="20"
                        HorizontalOptions="Center"
                        HeightRequest="50"
-                       WidthRequest="260"
+                       WidthRequest="280"
                         TextColor="Black"/>
                     <Label Text="" 
                        x:Name="muestrasActualesLabel"
                        FontSize="20"
                        HorizontalOptions="Center"
                        HeightRequest="50"
-                       WidthRequest="260"
+                       WidthRequest="280"
                        TextColor="Black"/>
                 </StackLayout>
 

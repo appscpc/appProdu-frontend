@@ -29,7 +29,10 @@
                          FontSize="20"/>
                 </StackLayout>
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                    <Label Text="q =" FontSize="18" FontAttributes="Bold"/>
+                    <Label Text="q =" 
+                           FontSize="20" 
+                           FontAttributes="Bold"/>
+                    
                     <Entry Placeholder="" 
                            WidthRequest="250"
                            Keyboard="Numeric"
@@ -37,8 +40,11 @@
                            x:Name="qEntry"/>
                 </StackLayout>
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                    <Label Text="error =" FontSize="18" FontAttributes="Bold"/>
-                    <Entry Placeholder="Error" 
+                    <Label Text="error =" 
+                           FontSize="20" 
+                           FontAttributes="Bold"/>
+                    
+                    <Entry Placeholder="ej: 0.1" 
                            WidthRequest="250"
                            Keyboard="Numeric"
                            HorizontalOptions="Center"
@@ -49,8 +55,11 @@
                     </Entry>
                 </StackLayout>
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                    <Label Text="Za/2 =" FontSize="18" FontAttributes="Bold"/>
-                    <Picker Title="Za/2"
+                    <Label Text="Za/2 =" 
+                           FontSize="20" 
+                           FontAttributes="Bold"/>
+                    
+                    <Picker Title="Seleccione"
                             WidthRequest="250"
                             HorizontalOptions="Center"
                             x:Name="zPicker"
