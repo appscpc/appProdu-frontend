@@ -81,6 +81,7 @@ namespace AppProdu
                     Console.WriteLine("AQUI5");
                     Items = new ObservableCollection<User> { };
                     //string temp;
+         
                     for (int i = 0; i < colaboradores.Count; i++)
                     {
                         User pro = colaboradores[i];

@@ -66,7 +66,7 @@ namespace AppProdu
 
                             Application.Current.Properties["muestras-mas"] = System.Convert.ToInt32(masMuestrasEntry.Text);
 
-                            var recorridosPage = new Recorridos();
+                            var recorridosPage = new Recorridos(true);
                             await Navigation.PushAsync(recorridosPage);
 
                             await PopupNavigation.Instance.PopAsync(true);

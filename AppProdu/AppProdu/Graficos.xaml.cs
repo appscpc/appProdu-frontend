@@ -217,7 +217,7 @@ namespace AppProdu
             string vlTP = Math.Round(((double)totalTP * 100.0 / (double)total), 2).ToString() + "%";
             string vlTC = Math.Round(((double)totalTC * 100.0 / (double)total), 2).ToString() + "%";
             string vlTI = Math.Round(((double)totalTI * 100.0 / (double)total), 2).ToString() + "%";
-            string[] param = { "Tareas productivas (TP)", totalTP.ToString(), vlTP, "Tareas contributivas (TC)", totalTC.ToString(), vlTC, "Tareas improductivas (TI)", totalTI.ToString(), vlTI, "Total", total.ToString(), "100%" };
+            string[] param = { "Tareas productivas (TP)", totalTP.ToString(), vlTP, "Tareas contributivas (TC)", totalTC.ToString(), vlTC, "Tareas no productivas (TI)", totalTI.ToString(), vlTI, "Total", total.ToString(), "100%" };
             generalData = param.OfType<string>().ToList();
 
             createGeneralTableHeader();

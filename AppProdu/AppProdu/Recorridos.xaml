@@ -34,6 +34,7 @@
                 </StackLayout>
 
                 <Button Text="Crear" 
+                        x:Name="btnCrear"
                         TextColor="White"
                         FontSize="20"
                         WidthRequest="140"
@@ -44,7 +45,7 @@
                         Margin="12"
                         Clicked="crearRecorrido_Clicked"
                         TranslationY="100"/>
-                
+
                 <Label Text="Seleccione para ver detalles:" 
                        x:Name="lblFecha"
                        FontSize="18"

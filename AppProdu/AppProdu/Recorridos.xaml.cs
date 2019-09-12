@@ -24,9 +24,13 @@ namespace AppProdu
         ObservableCollection<string> ItemsDates = new ObservableCollection<string> { };
         Fase currentFase = new Fase();
 
-        public Recorridos()
+        public Recorridos(bool estado)
         {
             InitializeComponent();
+            if(estado == false)
+            {
+                btnCrear.IsVisible = false;
+            }
 
             Application.Current.Properties["muestras-mas"] = 0;
 
@@ -34,7 +38,7 @@ namespace AppProdu
 
         protected override async void OnAppearing()
         {
-            //dates = new List<string>();
+
             obtenerFechas();
 
             await obtenerSamplingAsync();

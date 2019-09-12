@@ -44,23 +44,27 @@ namespace AppProdu
             if (faseActual == 1 && faseSelected.Equals("Preliminar"))
             {
                 await obtenerFaseAsync(faseActual);
-                var recorridosPage = new Recorridos();
+                var recorridosPage = new Recorridos(true);
                 await Navigation.PushAsync(recorridosPage);
             }
             else if(faseSelected.Equals("Preliminar") && faseActual == 2)
             {
-                await DisplayAlert("Error!", "Etapa Bloqueada, porque se encuentra en la etapa Definitiva.", "OK");
+                var recorridosPage = new Recorridos(false);
+                await Navigation.PushAsync(recorridosPage);
+                await DisplayAlert("Alerta!", "Etapa Bloqueada, porque se encuentra en la etapa Definitiva.", "OK");
             }
             else if (faseSelected.Equals("Preliminar") && faseActual == 3)
             {
-                await DisplayAlert("Error!", "Etapa Bloqueada, porque se encuentra en la etapa Estadísticas Finales.", "OK");
+                var recorridosPage = new Recorridos(false);
+                await Navigation.PushAsync(recorridosPage);
+                await DisplayAlert("Alerta!", "Etapa Bloqueada, porque se encuentra en la etapa Estadísticas Finales.", "OK");
             }
 
 
             else if (faseActual == 2 && faseSelected.Equals("Definitivo"))
             {
                 await obtenerFaseAsync(faseActual);
-                var recorridosPage = new Recorridos();
+                var recorridosPage = new Recorridos(true);
                 await Navigation.PushAsync(recorridosPage);  
             }
             else if (faseSelected.Equals("Definitivo") && faseActual == 1)
@@ -69,7 +73,9 @@ namespace AppProdu
             }
             else if (faseSelected.Equals("Definitivo") && faseActual == 3)
             {
-                await DisplayAlert("Error!", "Etapa Bloqueada, porque se encuentra en la etapa Estadísticas Finales.", "OK");
+                var recorridosPage = new Recorridos(false);
+                await Navigation.PushAsync(recorridosPage);
+                await DisplayAlert("Alerta!", "Etapa Bloqueada, porque se encuentra en la etapa Estadísticas Finales.", "OK");
             }
 
 
