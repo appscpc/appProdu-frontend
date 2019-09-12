@@ -121,7 +121,7 @@ namespace AppProdu
                     var result = await response.Content.ReadAsStringAsync();
                     var jobject = JObject.Parse(result);
                     var data = JsonConvert.DeserializeObject<List<Fase>>(jobject["fase"].ToString());
-                    Application.Current.Properties["id-fase"] = data[0].id;
+                    Application.Current.Properties["id-fase"] = data[0].id; 
 
                 }
             }
