@@ -851,21 +851,21 @@ namespace AppProdu
             IniData(sampling_id.ToString());
             CrossDeviceOrientation.Current.LockOrientation(DeviceOrientations.Landscape);
 
-            Chart1.Chart = new DonutChart() { Entries = generalChart() };
-            Chart2.Chart = new DonutChart()
+            Chart1.Chart = new BarChart() { Entries = generalChart() };
+            Chart2.Chart = new BarChart()
             {
                 Entries = tpList,
-                HoleRadius = 0.5f,
+                //HoleRadius = 0.5f,
             };
-            Chart3.Chart = new DonutChart()
+            Chart3.Chart = new BarChart()
             {
                 Entries = tcList,
-                HoleRadius = 0.5f,
+                //HoleRadius = 0.5f,
             };
-            Chart4.Chart = new DonutChart()
+            Chart4.Chart = new BarChart()
             {
                 Entries = tiList,
-                HoleRadius = 0.5f,
+                //HoleRadius = 0.5f,
             };
             Chart5.Chart = new LineChart()
             {

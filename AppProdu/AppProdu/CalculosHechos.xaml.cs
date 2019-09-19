@@ -31,7 +31,14 @@ namespace AppProdu
             //Despliega los datos en la pantalla
             NEntry.Text = N.ToString();
             nEntry.Text = n.ToString();
-            nDefEntry.Text = (N-n).ToString();
+            if ((N-n) < 0)
+            {
+                nDefEntry.Text = (0).ToString();
+            }
+            else
+            {
+                nDefEntry.Text = (N - n).ToString();
+            }
         }
 
         //Método para regresar a la página anterior y repetir los cálculos

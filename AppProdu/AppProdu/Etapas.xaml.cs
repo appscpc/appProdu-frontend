@@ -51,13 +51,13 @@ namespace AppProdu
             {
                 var recorridosPage = new Recorridos(false);
                 await Navigation.PushAsync(recorridosPage);
-                await DisplayAlert("Alerta!", "Etapa Bloqueada, porque se encuentra en la etapa Definitiva.", "OK");
+                await DisplayAlert("Alerta!", "Etapa Bloqueada, solo se permite ver resultados.", "OK");
             }
             else if (faseSelected.Equals("Preliminar") && faseActual == 3)
             {
                 var recorridosPage = new Recorridos(false);
                 await Navigation.PushAsync(recorridosPage);
-                await DisplayAlert("Alerta!", "Etapa Bloqueada, porque se encuentra en la etapa Estadísticas Finales.", "OK");
+                await DisplayAlert("Alerta!", "Etapa Bloqueada, solo se permite ver resultados.", "OK");
             }
 
 
@@ -75,7 +75,7 @@ namespace AppProdu
             {
                 var recorridosPage = new Recorridos(false);
                 await Navigation.PushAsync(recorridosPage);
-                await DisplayAlert("Alerta!", "Etapa Bloqueada, porque se encuentra en la etapa Estadísticas Finales.", "OK");
+                await DisplayAlert("Alerta!", "Etapa Bloqueada, solo se permite ver resultados.", "OK");
             }
 
 
