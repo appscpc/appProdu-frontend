@@ -6,7 +6,7 @@
              Title="Agregar Comentario">
     <ContentPage.Content>
         <StackLayout>
-            <Grid>
+            <Grid >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
@@ -15,10 +15,13 @@
                     <RowDefinition Height="auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                
-                <Label x:Name="lblComentario"   
-                    TranslationX="70"
+
+                <StackLayout Grid.Row="1" Grid.Column="0" TranslationY="60">
+
+                    <Label x:Name="lblComentario"   
+                    TextColor="Black"
                     Text="Comentario:"
+                    HorizontalOptions="Center"
                     FontSize="20"/>
                 
                 <Controls:PlaceholderEditor Grid.Row="1"
@@ -26,11 +29,13 @@
                     Placeholder="Opcional"
                     WidthRequest="250"
                     HorizontalOptions="Center"
+                    Margin="30"
                     HeightRequest="50"
                     FontSize="20"/>
                 
                 <Button Text="Guardar" Grid.Row="2"
                     TextColor="White"
+                    Margin="50"
                     WidthRequest="200"
                     HeightRequest="55"
                     BorderRadius="10"
@@ -39,7 +44,9 @@
                     VerticalOptions="Center"
                     HorizontalOptions="Center"
                     Clicked="agregarComentario_Clicked"/>
+                </StackLayout>
             </Grid>
+                
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -19,8 +19,8 @@
             <!-- Place new controls here -->
             
             <Label x:Name="lblNombre"   
-                TranslationX="80"
-                Text="Nombre: "
+                HorizontalOptions="Center"
+                Text="Nombre "
                 FontSize="20"
                 TextColor="Black"/>
             
@@ -31,8 +31,8 @@
                 FontSize="18"/>
 
             <Label x:Name="lblPrimerApellido"   
-                TranslationX="80"
-                Text="Primer Apellido: "
+                HorizontalOptions="Center"
+                Text="Primer Apellido "
                 FontSize="20"
                 TextColor="Black"/>
 
@@ -43,8 +43,8 @@
                 FontSize="18"/>
             
              <Label x:Name="lblSegundoApellido"   
-                TranslationX="80"
-                Text="Segundo Apellido: "
+                HorizontalOptions="Center"
+                Text="Segundo Apellido "
                 FontSize="20"
                 TextColor="Black"/>
             
@@ -55,8 +55,8 @@
                 FontSize="18"/>
             
           <Label x:Name="lblCorreo"   
-                TranslationX="80"
-                Text="Correo: "
+                HorizontalOptions="Center"
+                Text="Correo "
                 FontSize="20"
                 TextColor="Black"/>   
             
@@ -67,8 +67,8 @@
                 FontSize="18"/>
             
              <Label x:Name="lblConstrasena"   
-                TranslationX="80"
-                Text="Contraseña: "
+                HorizontalOptions="Center"
+                Text="Contraseña "
                 FontSize="20"
                 TextColor="Black"/>
             
@@ -80,8 +80,8 @@
                 FontSize="18"/>
             
              <Label x:Name="lblTipoUsuario"   
-                TranslationX="80"
-                Text="Tipo Usuario: "
+                HorizontalOptions="Center"
+                Text="Tipo Usuario "
                 FontSize="20"
                 TextColor="Black"/>
             
@@ -101,7 +101,7 @@
                 BorderRadius="10"
                 BackgroundColor="#D37506"
                 HorizontalOptions="Center"
-                Margin="25"
+                Margin="10"
                 Clicked="registrarButton_Clicked" />
             
             <Label Text="¿Ya tienes cuenta?"

@@ -18,71 +18,65 @@
             <StackLayout Grid.Row="1">
                 
                 <Label x:Name="lblNombreMuestreo"   
-                    TranslationX="70"
-                    Text="Nombre Muestreo:"
+                    HorizontalOptions="Center"
+                    Text="Nombre Muestreo"
                     FontSize="20"
-                    TextColor="Black"
-                    TranslationY="20"/>
+                    TextColor="Black"/>
                 
                 <Entry x:Name="nombreMuestreoEntry" Placeholder="Muestreo #1" 
-                       WidthRequest="270"
+                       WidthRequest="310"
                        HorizontalOptions="Center"
-                       FontSize="18"
-                       TranslationY="30"/>
+                       FontSize="18"/>
 
                 <Label x:Name="lblCantMuestras"   
-                    TranslationX="70"
-                    Text="Cantidad Muestras Preliminares:"
+                    HorizontalOptions="Center"
+                    Text="Cantidad Muestras Preliminares"
                     FontSize="17"
-                    TextColor="Black"
-                    TranslationY="40"/>
+                    TextColor="Black"/>
 
                 <Entry x:Name="cantMuestrasEntry" Placeholder="10" 
-                       WidthRequest="270"
+                       WidthRequest="310"
                        HorizontalOptions="Center"
-                       FontSize="18"
-                       TranslationY="50"/>
+                       FontSize="18"/>
 
                 <Label x:Name="lblActividad"   
-                    TranslationX="70"
-                    Text="Actividad:"
+                    HorizontalOptions="Center"
+                    Text="Actividad"
                     FontSize="20"
-                    TextColor="Black"
-                    TranslationY="60"/>
+                    TextColor="Black"/>
 
                 <Picker Title="Seleccione"
                         HorizontalOptions="Center"
                         x:Name="tipo"
-                        WidthRequest="270"
-                        HeightRequest="65"
+                        WidthRequest="310"
+                        HeightRequest="50"
                         FontSize="18"
-                        SelectedIndexChanged="Tipo_SelectedIndexChanged"
-                        TranslationY="60"/>
+                        SelectedIndexChanged="Tipo_SelectedIndexChanged"/>
 
                 <Label x:Name="lblDescripcion"   
-                    TranslationX="70"
-                    Text="Descripción:"
+                    HorizontalOptions="Center"
+                    Text="Descripción"
                     FontSize="20"
-                    TextColor="Black"
-                    TranslationY="80"/>
+                    TextColor="Black"/>
 
-                <Controls:PlaceholderEditor x:Name="descripcionMuestreoEditor" Placeholder="Opcional"
-                                        WidthRequest="270"
-                                        HorizontalOptions="Center"
-                                        HeightRequest="50"
-                                        FontSize="18"
-                                        TranslationY="90"/>
+                <Controls:PlaceholderEditor 
+                    x:Name="descripcionMuestreoEditor" 
+                    Placeholder="Opcional"
+                    WidthRequest="310"
+                    HorizontalOptions="Center"
+                    HeightRequest="50"
+                    FontSize="18"/>
                 
                 <Button Text="Crear" 
                         TextColor="White"
-                        WidthRequest="200"
-                        HeightRequest="45"
+                        WidthRequest="150"
+                        HeightRequest="55"
                         BorderRadius="10"
                         BackgroundColor="#D37506"
                         HorizontalOptions="Center"
-                        Margin="90"
-                        Clicked="crearMue_Clicked"
-                        TranslationY="50"/>
+                        FontSize="20"
+                        Margin="70"
+                        Clicked="crearMue_Clicked"/>
             </StackLayout>
 
         </Grid>

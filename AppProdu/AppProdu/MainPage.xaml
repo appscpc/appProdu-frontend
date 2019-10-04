@@ -17,9 +17,8 @@
 
         <StackLayout Grid.Row="1" Grid.Column="0">
 
-
             <Grid>
-                <Grid TranslationX="50">
+                <Grid HorizontalOptions="Center">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="300"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
@@ -31,17 +30,17 @@
                 </Grid>
             </Grid>
 
+                <Label x:Name="lblCorreo"    
+                Text="Correo "
+                HorizontalOptions="Center"
+                Font="Bold"
+                FontSize="23"
+                TextColor="White"/>
+
             <BoxView x:Name="underlineBoxView" 
                 HeightRequest="1" 
                 BackgroundColor="#803130" 
                 IsVisible="false"/>
-
-                <Label x:Name="lblCorreo"   
-                TranslationX="77"
-                Text="Correo: "
-                Font="Bold"
-                FontSize="23"
-                TextColor="White"/>
 
             <Entry Placeholder="ejemplo@gmail.com" x:Name="correoEntry"
                WidthRequest="270"
@@ -52,12 +51,11 @@
                BackgroundColor="White"/>
 
             <Label x:Name="lblPassword"   
-                TranslationX="77"
-                Text="Contraseña:"
+                HorizontalOptions="Center"
+                Text="Contraseña"
                 Font="Bold"
                 FontSize="23"
-                TextColor="White"
-                TranslationY="20"/>
+                TextColor="White"/>
 
             <Entry Placeholder="ej: ********" x:Name="passEntry"
                HorizontalOptions="Center"
@@ -66,7 +64,6 @@
                IsPassword="True" 
                Text=""
                FontSize="20"
-               TranslationY="20"
                BackgroundColor="White"
                TextColor="Black"/>
 
@@ -80,22 +77,18 @@
                 BackgroundColor="#D37506"
                 HorizontalOptions="Center"
                 Margin="40"
-                Clicked="ingresarButton_Clicked"
-                TranslationY="40"/>
+                Clicked="ingresarButton_Clicked"/>
 
             <Label Text="¿No tienes cuenta?"
                    x:Name="registrar"
                    TextColor="White"
                    HorizontalOptions="Center"
                    FontSize="17"
-                   Font="Bold"
-                   TranslationY="30"
-                   />
+                   Font="Bold"/>
             <Label Text="" 
                    TextColor="Red"
                    x:Name="errorLabel"
-                   HorizontalOptions="Center"
-                   TranslationY="20"/>
+                   HorizontalOptions="Center"/>
         </StackLayout>
 
     </Grid>

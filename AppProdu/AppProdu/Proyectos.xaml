@@ -5,36 +5,6 @@
              Title="Proyectos">
   
     <StackLayout>
-        <!--
-        <ListView x:Name="MyListView"
-            ItemsSource="{Binding Items}"
-            ItemTapped="Handle_ItemTapped"
-            CachingStrategy="RecycleElement">
-
-            Built in Cells
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <TextCell Text="{Binding nombre}" />
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        -->
-
-        <!--Custom View Cells-->
-            <!--
-        <ListView.ItemTemplate>
-          <DataTemplate>
-            <ViewCell>
-              <StackLayout>
-                <Label Text="{Binding Text}" 
-                       Style="{DynamicResource ListItemTextStyle}" />
-                <Label Text="{Binding Detail}" 
-                       Style="{DynamicResource ListItemDetailTextStyle}"/>
-              </StackLayout>
-            </ViewCell>
-          </DataTemplate>
-        </ListView.ItemTemplate>
-        </ListView>
-        -->
 
         <ListView x:Name="MyListView"
             ItemsSource="{Binding Items}"
@@ -60,7 +30,7 @@
             Text="Crear Nuevo Proyecto" 
             TextColor="White"
             FontSize="18"
-            WidthRequest="275"
+            WidthRequest="265"
             HeightRequest="55"
             BorderRadius="10"
             BackgroundColor="#D37506"

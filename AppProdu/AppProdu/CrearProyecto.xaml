@@ -11,41 +11,42 @@
             
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="60" />
+            <RowDefinition Height="100" />
             <RowDefinition Height="200" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <StackLayout Grid.Row="1">
+
+        <StackLayout Grid.Row="1" Grid.Column="0" TranslationY="40">
 
             <Label x:Name="lblNombre"   
-                TranslationX="70"
-                Text="Nombre del Proyecto:"
+                HorizontalOptions="Center"
+                VerticalOptions="FillAndExpand"
+                Text="Nombre del Proyecto"
                 FontSize="23"
                 TextColor="Black"
-                TranslationY="120"/>
+                />
 
             <Entry Placeholder="ej: Proyecto #1" 
+                   VerticalOptions="FillAndExpand"
                    x:Name="nombreProyectoEntry"
                    WidthRequest="270"
                    HorizontalOptions="Center"
-                   FontSize="20"
-                   TranslationY="120"/>
+                   FontSize="20"/>
 
             <Label x:Name="lblDescripcion"   
-                TranslationX="70"
-                Text="Descripción:"
+                VerticalOptions="FillAndExpand"
+                HorizontalOptions="Center"
+                Text="Descripción"
                 FontSize="23"
-                TextColor="Black"
-                TranslationY="140"/>
+                TextColor="Black"/>
             
-           <!-- <Controls:PlaceholderEditor -->
-            <Entry
-                Placeholder="Opcional"
+            <Entry Placeholder="Opcional"
                 x:Name="descripcionProyectoEditor"
                 WidthRequest="270"
+
                 HorizontalOptions="Center"
-                FontSize="20"
-                TranslationY="170"/>
+                VerticalOptions="FillAndExpand"
+                FontSize="20"/>
 
         </StackLayout>
 
@@ -59,8 +60,8 @@
                     BorderRadius="10"
                     BackgroundColor="#D37506"
                     HorizontalOptions="Center"
-                    Margin="10"
-                    TranslationY="220"
+                    TranslationY="60"
+                    Margin="50"
                     Clicked="crearPro_Clicked"/>
         </StackLayout>
     </Grid>
